@@ -1,11 +1,9 @@
 package pl.com.dolittle.mkelo.boundary;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import pl.com.dolittle.mkelo.entity.Player;
-import pl.com.dolittle.mkelo.entity.Players;
+import pl.com.dolittle.mkelo.control.Players;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +22,7 @@ public class PlayerController {
     }
 
     @PostMapping("/player")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void addPlayer(@RequestBody PlayerShort player) {
         players.addPlayer(new Player(UUID.randomUUID().toString(), player.name, player.email),
                 UUID.randomUUID().toString());

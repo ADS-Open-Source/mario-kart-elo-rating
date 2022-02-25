@@ -5,5 +5,5 @@ import java.util.Set;
 
 public class GameShort {
     public String reportedBySecret;
-    public List<Set<String>> result;
+    public List<List<String>> results;
 }
