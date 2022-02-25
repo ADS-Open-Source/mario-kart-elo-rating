@@ -9,7 +9,7 @@ import java.util.List;
 
 @Controller
 public class Games {
-    private LinkedList<Game> games = new LinkedList<>();
+    private final LinkedList<Game> games = new LinkedList<>();
 
     public void addGame(ZonedDateTime zonedDateTime, String addedBySecret, List<List<String>> ranking) {
 
