@@ -1,0 +1,36 @@
+POST http://localhost:8080/api/player
+Content-Type: application/json
+
+{
+  "name":  "Arti",
+  "email":  "arti@gmail.com"
+}
+
+###
+
+POST http://localhost:8080/api/player
+Content-Type: application/json
+
+{
+  "name":  "Marek",
+  "email":  "marek@gmail.com"
+}
+
+###
+GET http://localhost:8080/api/player
+Accept: application/json
+
+<> 2022-03-01T145036.200.json
+
+###
+
+POST http://localhost:8080/api/game
+Content-Type: application/json
+
+{
+  "reportedBySecret":  "75513f88-d8e9-4611-a0b7-8d2bfd88966f",
+  "results":  [
+    ["77db48f9-aa34-4b97-a9e6-c0546ac852f3"],
+    ["da7f7669-588c-4dee-8caa-71556704a752"]
+  ]
+}
