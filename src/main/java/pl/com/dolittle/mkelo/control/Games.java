@@ -9,8 +9,10 @@ import pl.com.dolittle.mkelo.entity.Result;
 import pl.com.dolittle.mkelo.util.AuthenticationFailedException;
 
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
@@ -46,11 +48,20 @@ public class Games {
                 .map(l -> l.stream().map(p -> {
                     var oldElo = p.elo;
                     p.elo = match.getELO(p.uuid);
+                    p.gamesPlayed++;
                     return new Result(p, oldElo, p.elo);
                 })
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
 
         games.addFirst(new Game(reportedTime, reportedBy.orElseThrow(), rankingResult));
+    }
+
+    public List<Game> getGames(Integer count) {
+        if (Objects.isNull(count) || count <= 0) {
+            return Collections.unmodifiableList(games);
+        } else {
+            return Collections.unmodifiableList(games.subList(0, Math.min(count, games.size())));
+        }
     }
 }
