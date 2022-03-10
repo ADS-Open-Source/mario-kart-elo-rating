@@ -2,17 +2,17 @@ package pl.com.dolittle.mkelo.boundary;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pl.com.dolittle.mkelo.control.PersistentData;
 import pl.com.dolittle.mkelo.entity.Player;
-import pl.com.dolittle.mkelo.control.Players;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 public class PlayerController {
-    private final Players players;
+    private final PersistentData players;
 
-    public PlayerController(Players players) {
+    public PlayerController(PersistentData players) {
         this.players = players;
     }
 

@@ -1,6 +1,8 @@
 package pl.com.dolittle.mkelo.entity;
 
-public class Result {
+import java.io.Serializable;
+
+public class Result implements Serializable {
     public Player player;
     public int eloBefore, eloAfter;
 

@@ -1,9 +1,10 @@
 package pl.com.dolittle.mkelo.entity;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public class Game {
+public class Game implements Serializable {
     public ZonedDateTime reportedTime;
     public Player reportedBy;
     public List<List<Result>> result;
