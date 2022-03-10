@@ -28,16 +28,16 @@ POST http://localhost:8080/api/game
 Content-Type: application/json
 
 {
-  "reportedBySecret":  "0bf82aa2-1ce2-4aa8-914b-cad5fbe20777",
+  "reportedBySecret":  "556a4dd6-718c-40d7-ac00-901b588ab536",
   "results":  [
-    ["bb8087cc-537d-4666-9636-963ead21e56f"],
-    ["636d9a73-75f0-4846-bcad-56a3db5d1b22"]
+    ["e268aa65-1f51-4e2d-868f-b9c4d62d6c9d"],
+    ["9bf8f31c-e1a7-4ffe-af2e-33ebf1486209"]
   ]
 }
 
 ###
 
-GET http://localhost:8080/api/game
+GET http://localhost:8080/api/game?count=1
 Accept: application/json
 
 <> 2022-03-01T145036.200.json
