@@ -2,7 +2,7 @@ package pl.com.dolittle.mkelo.boundary;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pl.com.dolittle.mkelo.control.Games;
+import pl.com.dolittle.mkelo.control.PersistentData;
 import pl.com.dolittle.mkelo.entity.Game;
 
 import java.time.ZonedDateTime;
@@ -11,9 +11,9 @@ import java.util.List;
 @RestController
 public class GameController {
 
-    private final Games games;
+    private final PersistentData games;
 
-    public GameController(Games games) {
+    public GameController(PersistentData games) {
         this.games = games;
     }
 
