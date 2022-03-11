@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
-import pl.com.dolittle.mkelo.control.PersistentData;
+import pl.com.dolittle.mkelo.control.Players;
 import pl.com.dolittle.mkelo.entity.Player;
 
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.UUID;
 
 @RestController
 public class PlayerController {
-    private final PersistentData players;
+    private final Players players;
     private JavaMailSender emailSender;
 
-    public PlayerController(PersistentData players, JavaMailSender emailSender) {
+    public PlayerController(Players players, JavaMailSender emailSender) {
         this.players = players;
         this.emailSender = emailSender;
     }

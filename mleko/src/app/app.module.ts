@@ -14,6 +14,7 @@ import {MatButtonModule} from "@angular/material/button";
 import { UserAddComponent } from './user-add/user-add.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatTableModule} from "@angular/material/table";
 
 const appRoutes: Routes = [
   { path: 'last-results', component: LastResultsComponent },
@@ -41,6 +42,8 @@ const appRoutes: Routes = [
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
+    MatTableModule,
     MatButtonModule,
     MatIconModule,
     DragDropModule,
