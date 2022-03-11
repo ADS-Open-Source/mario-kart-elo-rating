@@ -12,7 +12,7 @@
       margin-bottom: 48px;     margin-top: 24px;">Nowe wyniki</p>
     </div>
     <div>
-      <button mat-raised-button color="primary" class="save-button" (click)="saveResult()" [disabled]="!secret">Zapisz wyniki</button>
+      <button mat-raised-button color="primary" class="save-button" (click)="saveResult()" [disabled]="saveButtonDisabled()">Zapisz wyniki</button>
     </div>
   </div>
 
@@ -25,7 +25,7 @@
           cdkDropList
           #playerList="cdkDropList"
           [cdkDropListData]="players"
-          [cdkDropListConnectedTo]="[firstList, secondList]"
+          [cdkDropListConnectedTo]="[firstList, secondList, thirdList, fourthList]"
           class="example-list"
           (cdkDropListDropped)="drop($event)">
           <div class="example-box" *ngFor="let item of players" cdkDrag>{{item.name}}</div>
@@ -86,7 +86,7 @@
           [cdkDropListConnectedTo]="[playerList, firstList, secondList, thirdList]"
           class="example-list"
           (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of fourthPlace" cdkDrag>{{item}}</div>
+          <div class="example-box" *ngFor="let item of fourthPlace" cdkDrag>{{item.name}}</div>
         </div>
       </div>
     </div>

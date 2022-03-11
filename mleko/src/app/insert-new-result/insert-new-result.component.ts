@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {MlekoService} from "src/app/service/mleko.service";
 import {Player, Result} from "src/app/model/models";
-import {ActivatedRoute} from "@angular/router";
+import {Router} from "@angular/router";
+import {AppComponent} from "src/app/app.component";
 
 @Component({
   selector: 'app-insert-new-result',
@@ -21,18 +22,14 @@ export class InsertNewResultComponent implements OnInit {
 
   constructor(
     private mlekoService: MlekoService,
-    private activationRoute: ActivatedRoute
+    private route: Router
   ) {
-    this.activationRoute.queryParams.subscribe(params => {
-      if (params['secret']) {
-        this.secret = params['secret'];
-      }
-    })
   }
 
   ngOnInit(): void {
     this.mlekoService.getPlayers()
       .subscribe(players => this.players = players);
+    AppComponent.secret.subscribe(secret => this.secret = secret);
   }
 
   drop(event: CdkDragDrop<Player[], any>) {
@@ -58,6 +55,12 @@ export class InsertNewResultComponent implements OnInit {
         this.fourthPlace.map(place => place.uuid),
       ]
     }
-    this.mlekoService.saveResult(result).subscribe(()=> window.alert('Saved'));
+    this.mlekoService.saveResult(result).subscribe(()=> {
+      this.route.navigateByUrl('last-results')
+    });
+  }
+
+  saveButtonDisabled() {
+    return !this.secret || (this.firstPlace.length + this.secondPlace.length + this.thirdPlace.length + this.fourthPlace.length < 2)
   }
 }
