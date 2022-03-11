@@ -1,14 +1,14 @@
 <mat-toolbar>
-  <span routerLink="/last-results">MLEKO</span>
+  <span (click)="navigate('last-results')">MLEKO</span>
   <span class="spacer"></span>
   <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon routerLink="/user-add">person_add</mat-icon>
+    <mat-icon (click)="navigate('user-add')">person_add</mat-icon>
   </button>
   <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon routerLink="/new-result">note_add</mat-icon>
+    <mat-icon (click)="navigate('new-result')">note_add</mat-icon>
   </button>
   <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon routerLink="/last-results">directions_car</mat-icon>
+    <mat-icon (click)="navigate('last-results')">directions_car</mat-icon>
   </button>
 </mat-toolbar>
 <router-outlet></router-outlet>
