@@ -17,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 
 const appRoutes: Routes = [
   { path: 'last-results', component: LastResultsComponent },
-  { path: 'user-add', component: UserAddComponent }
+  { path: 'user-add', component: UserAddComponent },
   { path: 'new-result', component: InsertNewResultComponent },
 ];
 
