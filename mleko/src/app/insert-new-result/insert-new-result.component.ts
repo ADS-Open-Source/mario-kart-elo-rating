@@ -56,7 +56,7 @@ export class InsertNewResultComponent implements OnInit {
       ]
     }
     this.mlekoService.saveResult(result).subscribe(()=> {
-      this.route.navigateByUrl('last-results')
+      this.route.navigate(['last-results'], { queryParams: { secret: this.secret } })
     });
   }
 
