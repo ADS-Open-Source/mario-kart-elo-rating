@@ -34,7 +34,7 @@ export class LastResultsComponent implements OnInit {
     for (const array of results) {
       i++;
       for (const result of array) {
-        text += " " + i + ". " + result.player.name + "(" + (result.eloAfter - result.eloBefore) + " -> "
+        text += " " + i + ". " + result.player.name + " (" + (result.eloAfter - result.eloBefore) + " -> "
           + result.eloAfter + ")";
       }
     }

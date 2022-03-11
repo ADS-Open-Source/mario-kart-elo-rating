@@ -10,3 +10,8 @@ export interface Result {
   reportedBySecret:  string;
   results:  Array<Array<string>>
 }
+
+export interface PlayerShort {
+  "name":  string;
+  "email":  string;
+}
