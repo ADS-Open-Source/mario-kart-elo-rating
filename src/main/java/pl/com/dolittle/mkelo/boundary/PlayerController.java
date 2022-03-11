@@ -34,7 +34,7 @@ public class PlayerController {
         message.setFrom("noreply@izb-mail.dolittle.com.pl");
         message.setTo(player.email);
         message.setSubject("Your link to mleko");
-        message.setText("https://mleko.dolittle.com.pl/index.html?secret=" + secret);
+        message.setText("http://mleko.dolittle.com.pl/new-result?secret=" + secret);
         emailSender.send(message);
     }
 }
