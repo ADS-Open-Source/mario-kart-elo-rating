@@ -1,6 +1,8 @@
 package pl.com.dolittle.mkelo.boundary;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 import pl.com.dolittle.mkelo.control.PersistentData;
 import pl.com.dolittle.mkelo.entity.Player;
@@ -11,9 +13,11 @@ import java.util.UUID;
 @RestController
 public class PlayerController {
     private final PersistentData players;
+    private JavaMailSender emailSender;
 
-    public PlayerController(PersistentData players) {
+    public PlayerController(PersistentData players, JavaMailSender emailSender) {
         this.players = players;
+        this.emailSender = emailSender;
     }
 
     @GetMapping("/player")
@@ -24,7 +28,13 @@ public class PlayerController {
     @PostMapping("/player")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void addPlayer(@RequestBody PlayerShort player) {
-        players.addPlayer(new Player(UUID.randomUUID().toString(), player.name, player.email),
-                UUID.randomUUID().toString());
+        var secret = UUID.randomUUID().toString();
+        players.addPlayer(new Player(UUID.randomUUID().toString(), player.name, player.email), secret);
+        var message = new SimpleMailMessage();
+        message.setFrom("noreply@izb-mail.dolittle.com.pl");
+        message.setTo(player.email);
+        message.setSubject("Your link to mleko");
+        message.setText("https://mleko.dolittle.com.pl/index.html?secret=" + secret);
+        emailSender.send(message);
     }
 }
