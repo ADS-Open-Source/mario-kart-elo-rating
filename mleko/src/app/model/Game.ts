@@ -3,22 +3,22 @@ import {Result} from "./Result";
 import {Player} from "src/app/model/Player";
 
 export class Game {
-  private readonly _reportedTime:any;
-  private readonly _player:Player;
+  private readonly _reportedTime:string;
+  private readonly _reportedBy:Player;
   private readonly _result:Result[][];
 
   constructor(reportedTime: any, player: Player, result: Result[][]) {
     this._reportedTime = reportedTime;
-    this._player = player;
+    this._reportedBy = player;
     this._result = result;
   }
 
-  get reportedTime(): any {
+  get reportedTime(): string {
     return this._reportedTime;
   }
 
-  get player(): Player {
-    return this._player;
+  get reportedBy(): Player {
+    return this._reportedBy;
   }
 
   get result(): Result[][] {

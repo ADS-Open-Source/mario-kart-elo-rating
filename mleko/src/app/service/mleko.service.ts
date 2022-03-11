@@ -9,7 +9,7 @@ import {Player, Result} from "src/app/model/models";
 })
 export class MlekoService {
 
-  private DOMAIN = 'http://mleko.deloitte.com.pl/api/'
+  private DOMAIN = 'http://mleko.dolittle.com.pl/api/'
 
   constructor(
     private httpClient: HttpClient
@@ -24,7 +24,7 @@ export class MlekoService {
     return this.httpClient.post<Observable<any>>(this.DOMAIN + 'game', result);
   }
 
-  getGames(count: number): Game[] {
-    return [];
+  getGames(count: number): Observable<Array<Game>> {
+    return this.httpClient.get<Array<Game>>(this.DOMAIN + 'game?count=' + count);
   }
 }
