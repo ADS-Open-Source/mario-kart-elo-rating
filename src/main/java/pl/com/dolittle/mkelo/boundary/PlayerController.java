@@ -20,12 +20,12 @@ public class PlayerController {
         this.emailSender = emailSender;
     }
 
-    @GetMapping("/player")
+    @GetMapping("/api/player")
     public List<Player> getAllSorted() {
         return players.getAllSorted();
     }
 
-    @PostMapping("/player")
+    @PostMapping("/api/player")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void addPlayer(@RequestBody PlayerShort player) {
         var secret = UUID.randomUUID().toString();

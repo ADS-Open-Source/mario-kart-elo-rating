@@ -17,13 +17,13 @@ public class GameController {
         this.games = games;
     }
 
-    @PostMapping("/game")
+    @PostMapping("/api/game")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void add(@RequestBody GameShort game) {
         games.addGame(ZonedDateTime.now(), game.reportedBySecret, game.results);
     }
 
-    @GetMapping("/game")
+    @GetMapping("/api/game")
     public List<Game> get(@RequestParam(required = false) Integer count) {
         return games.getGames(count);
     }

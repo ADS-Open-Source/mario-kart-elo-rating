@@ -9,7 +9,7 @@ import {Player, Result} from "src/app/model/models";
 })
 export class MlekoService {
 
-  private DOMAIN = 'http://localhost:8080/api/'
+  private DOMAIN = 'http://mleko.deloitte.com.pl/api/'
 
   constructor(
     private httpClient: HttpClient
