@@ -1,0 +1,55 @@
+POST http://mleko.dolittle.com.pl/api/player
+Content-Type: application/json
+
+{
+  "name":  "Kamil",
+  "email":  "marpuch+kamil@gmail.com"
+}
+
+###
+
+POST http://mleko.dolittle.com.pl/api/player
+Content-Type: application/json
+
+{
+  "name":  "Arti",
+  "email":  "marpuch+arti@gmail.com"
+}
+
+###
+
+POST http://mleko.dolittle.com.pl/api/player
+Content-Type: application/json
+
+{
+  "name":  "Marek",
+  "email":  "marpuch@gmail.com"
+}
+
+###
+GET http://mleko.dolittle.com.pl/api/player
+Accept: application/json
+
+<> 2022-03-01T145036.200.json
+
+###
+
+POST http://mleko.dolittle.com.pl/api/game
+Content-Type: application/json
+
+{
+  "reportedBySecret":  "10a3230e-f80d-43c7-89b1-57729ee353c7",
+  "results":  [
+    ["7af296ed-d13d-430b-8711-fc9373c27552", "bbbe289a-b564-4e80-a743-e457483e986b"],
+    ["55f798a9-850f-4aa7-99df-99787d3a3752"]
+  ]
+}
+
+###
+
+GET http://mleko.dolittle.com.pl/api/game?count=2
+Accept: application/json
+
+<> 2022-03-01T145036.200.json
+
+###
