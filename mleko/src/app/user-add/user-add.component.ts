@@ -17,6 +17,7 @@ export class UserAddComponent implements OnInit {
   }
 
   saveResult(username: string, email: string) {
+
     this.mlekoService.savePlayer({name: username, email: email}).subscribe(()=> {
       this.route.navigate(['last-results']);
     });
