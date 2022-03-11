@@ -1,4 +1,4 @@
-import {Player} from "./Player";
+import {Player} from "src/app/model/Player";
 
 export class Result {
   private readonly _player:Player;

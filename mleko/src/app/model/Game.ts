@@ -1,5 +1,6 @@
-import {Player} from "./Player";
+
 import {Result} from "./Result";
+import {Player} from "src/app/model/Player";
 
 export class Game {
   private readonly _reportedTime:any;
