@@ -28,7 +28,7 @@
           [cdkDropListConnectedTo]="[firstList, secondList, thirdList, fourthList]"
           class="example-list"
           (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of players" cdkDrag>{{item.name}}</div>
+          <div class="example-box" *ngFor="let item of players" cdkDrag>{{item.name}} <p style="margin: 0;">ELO: {{item.elo}}</p></div>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
           [cdkDropListConnectedTo]="[playerList, secondList, thirdList, fourthList]"
           class="example-list"
           (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of firstPlace" cdkDrag>{{item.name}}</div>
+          <div class="example-box" *ngFor="let item of firstPlace" cdkDrag>{{item.name}} <p style="margin: 0;">ELO: {{item.elo}}</p></div>
         </div>
       </div>
 
@@ -58,7 +58,7 @@
           [cdkDropListConnectedTo]="[playerList, firstList, thirdList, fourthList]"
           class="example-list"
           (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of secondPlace" cdkDrag>{{item.name}}</div>
+          <div class="example-box" *ngFor="let item of secondPlace" cdkDrag>{{item.name}} <p style="margin: 0;">ELO: {{item.elo}}</p></div>
         </div>
       </div>
 
@@ -72,7 +72,7 @@
           [cdkDropListConnectedTo]="[playerList, firstList, secondList, fourthList]"
           class="example-list"
           (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of thirdPlace" cdkDrag>{{item.name}}</div>
+          <div class="example-box" *ngFor="let item of thirdPlace" cdkDrag>{{item.name}} <p style="margin: 0;">ELO: {{item.elo}}</p></div>
         </div>
       </div>
 
@@ -86,7 +86,7 @@
           [cdkDropListConnectedTo]="[playerList, firstList, secondList, thirdList]"
           class="example-list"
           (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of fourthPlace" cdkDrag>{{item.name}}</div>
+          <div class="example-box" *ngFor="let item of fourthPlace" cdkDrag>{{item.name}} <p style="margin: 0;">ELO: {{item.elo}}</p></div>
         </div>
       </div>
     </div>
