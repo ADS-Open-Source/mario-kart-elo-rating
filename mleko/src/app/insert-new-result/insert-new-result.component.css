@@ -37,3 +37,15 @@
   height: 50px;
   font-size: 24px;
 }
+
+.no-secret-info {
+  text-align: center;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-radius: 4px;
+  background: red;
+  color: white;
+  font-size: 20px;
+  width: 50%;
+  margin: auto;
+}

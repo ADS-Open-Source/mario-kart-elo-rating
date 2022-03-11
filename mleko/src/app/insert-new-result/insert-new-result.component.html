@@ -1,3 +1,6 @@
+<div class="no-secret-info" *ngIf="!secret">
+  You don't have SECRET in query, so your are not allowed to insert new results.
+</div>
 <div style="width: 50%; margin: auto;background-color: #dcdcdc80;
     border-radius: 4px;
     padding-left: 16px;
@@ -9,7 +12,7 @@
       margin-bottom: 48px;     margin-top: 24px;">Nowe wyniki</p>
     </div>
     <div>
-      <button mat-raised-button color="primary" class="save-button" (click)="saveResult()">Zapisz wyniki</button>
+      <button mat-raised-button color="primary" class="save-button" (click)="saveResult()" [disabled]="!secret">Zapisz wyniki</button>
     </div>
   </div>
 
