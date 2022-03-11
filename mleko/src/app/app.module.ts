@@ -42,9 +42,7 @@ const appRoutes: Routes = [
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatTableModule,
-    MatButtonModule,
     MatIconModule,
     DragDropModule,
     MatButtonModule
