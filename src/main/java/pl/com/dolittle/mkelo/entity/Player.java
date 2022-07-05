@@ -10,6 +10,9 @@ public class Player implements Serializable {
     public int gamesPlayed;
     public String email;
 
+    public Player() {
+    }
+
     public Player(String uuid, String name, String email) {
         this.uuid = uuid;
         this.name = name;

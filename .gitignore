@@ -36,3 +36,4 @@ build/
 
 ### Iromem data ###
 persistentData/
+/mkeloData.json

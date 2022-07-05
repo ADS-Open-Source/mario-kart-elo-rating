@@ -27,14 +27,14 @@ public class PlayerController {
 
     @PostMapping("/api/player")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void addPlayer(@RequestBody PlayerShort player) {
+    public void addPlayer(@RequestBody PlayerShort player){
         var secret = UUID.randomUUID().toString();
         players.addPlayer(new Player(UUID.randomUUID().toString(), player.name, player.email), secret);
         var message = new SimpleMailMessage();
         message.setFrom("noreply@izb-mail.dolittle.com.pl");
         message.setTo(player.email);
         message.setSubject("Your link to mleko");
-        message.setText("http://mleko.dolittle.com.pl/new-result?secret=" + secret);
+        message.setText("http://localhost:4200/new-result?secret=" + secret);
         emailSender.send(message);
     }
 }
