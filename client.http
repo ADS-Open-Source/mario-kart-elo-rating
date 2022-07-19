@@ -37,7 +37,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/api/game?count=2
+GET http://localhost:8080/api/game?count=10
 Accept: application/json
 
 <> 2022-03-01T145036.200.json

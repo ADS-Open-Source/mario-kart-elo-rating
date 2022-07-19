@@ -6,6 +6,10 @@ public class Result implements Serializable {
     public Player player;
     public int eloBefore, eloAfter;
 
+    public Result() {
+
+    }
+
     public Result(Player player, int eloBefore, int eloAfter) {
         this.player = player;
         this.eloBefore = eloBefore;

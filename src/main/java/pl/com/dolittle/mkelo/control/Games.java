@@ -2,24 +2,25 @@ package pl.com.dolittle.mkelo.control;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import pl.com.dolittle.mkelo.control.third.ELOMatch;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Result;
+import pl.com.dolittle.mkelo.services.FileService;
 import pl.com.dolittle.mkelo.util.AuthenticationFailedException;
 
-import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
 public class Games {
     private static final Logger LOGGER = LoggerFactory.getLogger(Games.class);
 
-    private final LinkedList<Game> games = new LinkedList<>();
+    @Autowired
+    private FileService fileService;
+    private LinkedList<Game> games = new LinkedList<>();
 
     private final Players players;
 
@@ -27,7 +28,9 @@ public class Games {
         this.players = players;
     }
 
-    public void addGame(ZonedDateTime reportedTime, String reportedBySecret, List<List<String>> ranking) {
+    public void addGame(LocalDateTime reportedTime, String reportedBySecret, List<List<String>> ranking) {
+
+        games = fileService.getGamesDataFromS3();
         var reportedBy = players.getBySecret(reportedBySecret);
         if (reportedBy.isEmpty()) {
             throw new AuthenticationFailedException();
@@ -55,9 +58,11 @@ public class Games {
                 .collect(Collectors.toList());
 
         games.addFirst(new Game(reportedTime, reportedBy.orElseThrow(), rankingResult));
+        fileService.putGamesDataToS3(games);
     }
 
     public List<Game> getGames(Integer count) {
+        games = fileService.getGamesDataFromS3();
         if (Objects.isNull(count) || count <= 0) {
             return Collections.unmodifiableList(games);
         } else {

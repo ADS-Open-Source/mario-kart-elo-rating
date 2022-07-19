@@ -1,53 +1,74 @@
-POST http://mleko.dolittle.com.pl/api/player
+POST http://localhost:8080/api/player
 Content-Type: application/json
 
 {
   "name":  "Kamil",
-  "email":  "marpuch+kamil@gmail.com"
+  "email":  "kamil223@gmail.com"
 }
 
 ###
 
-POST http://mleko.dolittle.com.pl/api/player
+POST http://localhost:8080/api/player
 Content-Type: application/json
 
 {
   "name":  "Arti",
-  "email":  "marpuch+arti@gmail.com"
+  "email":  "arti123i@gmail.com"
 }
 
 ###
 
-POST http://mleko.dolittle.com.pl/api/player
+POST http://localhost:8080/api/player
 Content-Type: application/json
 
 {
   "name":  "Marek",
-  "email":  "marpuch@gmail.com"
+  "email":  "marek111@gmail.com"
 }
 
 ###
-GET http://mleko.dolittle.com.pl/api/player
+POST http://localhost:8080/api/player
+Content-Type: application/json
+
+{
+  "name":  "Marian",
+  "email":  "mario223@gmail.com"
+}
+
+###
+GET http://localhost:8080/api/player
 Accept: application/json
 
 <> 2022-03-01T145036.200.json
 
 ###
 
-POST http://mleko.dolittle.com.pl/api/game
+POST http://localhost:8080/api/game
 Content-Type: application/json
 
 {
-  "reportedBySecret":  "10a3230e-f80d-43c7-89b1-57729ee353c7",
+  "reportedBySecret":  "97781e03-90e0-424d-98d1-681f511ce88c",
   "results":  [
-    ["7af296ed-d13d-430b-8711-fc9373c27552", "bbbe289a-b564-4e80-a743-e457483e986b"],
-    ["55f798a9-850f-4aa7-99df-99787d3a3752"]
+    ["a365aa3b-fa2e-49a8-b1c4-721c8ee38988", "bf840f63-266a-4f66-a9ae-3662889d4687"],
+    ["9d74807f-72b3-4abf-bfb7-86e5f2d94a15"]
+  ]
+}
+
+###
+POST http://localhost:8080/api/game
+Content-Type: application/json
+
+{
+  "reportedBySecret":  "e47f212b-7c1b-48c0-9c6b-c762ee4ce928",
+  "results":  [
+    ["9d74807f-72b3-4abf-bfb7-86e5f2d94a15", "a365aa3b-fa2e-49a8-b1c4-721c8ee38988"],
+    ["bf840f63-266a-4f66-a9ae-3662889d4687"]
   ]
 }
 
 ###
 
-GET http://mleko.dolittle.com.pl/api/game?count=2
+GET http://localhost:8080/api/game?count=10
 Accept: application/json
 
 <> 2022-03-01T145036.200.json

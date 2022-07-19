@@ -1,0 +1,13 @@
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAQLP52OJMGH7UDCF5
+      secret-key: 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
+    region:
+      ststic: eu-central-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: mkelo-persist-data
