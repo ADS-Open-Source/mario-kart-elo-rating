@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import pl.com.dolittle.mkelo.control.third.ELOMatch;
 import pl.com.dolittle.mkelo.entity.Game;
+import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.entity.Result;
 import pl.com.dolittle.mkelo.services.FileService;
 import pl.com.dolittle.mkelo.util.AuthenticationFailedException;
@@ -57,6 +58,7 @@ public class Games {
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
 
+        updatePlayersData(match);
         games.addFirst(new Game(reportedTime, reportedBy.orElseThrow(), rankingResult));
         fileService.putGamesDataToS3(games);
     }
@@ -68,5 +70,13 @@ public class Games {
         } else {
             return Collections.unmodifiableList(games.subList(0, Math.min(count, games.size())));
         }
+    }
+
+    private void updatePlayersData(ELOMatch match){
+        Map<String, Player> playersData = fileService.getPlayersDataFromS3();
+        playersData.forEach((k, v) -> { if(match.checkIfIsPlayer(v.uuid)){v.elo = match.getELO(v.uuid);
+        v.gamesPlayed++;}
+        });
+        fileService.putPlayersDataToS3(playersData);
     }
 }

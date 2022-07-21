@@ -47,10 +47,10 @@ POST http://localhost:8080/api/game
 Content-Type: application/json
 
 {
-  "reportedBySecret":  "97781e03-90e0-424d-98d1-681f511ce88c",
+  "reportedBySecret":  "c2341fe9-a045-4b99-a913-93f82799b7ce",
   "results":  [
-    ["a365aa3b-fa2e-49a8-b1c4-721c8ee38988", "bf840f63-266a-4f66-a9ae-3662889d4687"],
-    ["9d74807f-72b3-4abf-bfb7-86e5f2d94a15"]
+    ["d60911f4-bf35-4aab-82aa-d6d170073346", "6edd3c77-4488-4819-b7bd-6545207c1bde"],
+    ["c728e5f1-ac64-4ffa-a6b3-1344c4989a6e"]
   ]
 }
 

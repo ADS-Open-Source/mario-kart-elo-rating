@@ -1,6 +1,7 @@
 package pl.com.dolittle.mkelo.control.third;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ELOMatch {
     private ArrayList<ELOPlayer> players = new ArrayList<ELOPlayer>();
@@ -17,7 +18,7 @@ public class ELOMatch {
 
     public int getELO(String name) {
         for (ELOPlayer p : players) {
-            if (p.name == name)
+            if (Objects.equals(p.name.toString(), name))
                 return p.eloPost;
         }
         return 1500;
@@ -31,6 +32,14 @@ public class ELOMatch {
         return 0;
     }
 
+    public boolean checkIfIsPlayer(String name){
+
+        for (ELOPlayer p : players) {
+            if (Objects.equals(p.name.toString(), name))
+                return true;
+        }
+        return false;
+    }
     public void calculateELOs() {
         int n = players.size();
         float K = 32 / (float) (n - 1);
