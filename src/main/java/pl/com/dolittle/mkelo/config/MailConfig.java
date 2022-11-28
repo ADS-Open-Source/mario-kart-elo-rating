@@ -1,4 +1,4 @@
-package pl.com.dolittle.mkelo.util;
+package pl.com.dolittle.mkelo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 @Configuration
-public class MailConfiguration {
+public class MailConfig {
 
     @Bean
     public JavaMailSender getJavaMailSender() {
