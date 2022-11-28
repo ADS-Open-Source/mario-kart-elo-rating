@@ -4,54 +4,51 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ELOMatch {
-    private ArrayList<ELOPlayer> players = new ArrayList<ELOPlayer>();
+
+    private final ArrayList<ELOPlayer> players = new ArrayList<>();
 
     public void addPlayer(String name, int place, int elo) {
-        ELOPlayer player = new ELOPlayer();
-
-        player.name = name;
-        player.place = place;
-        player.eloPre = elo;
-
+        ELOPlayer player = new ELOPlayer(name, place, elo);
         players.add(player);
     }
 
     public int getELO(String name) {
         for (ELOPlayer p : players) {
-            if (Objects.equals(p.name.toString(), name))
-                return p.eloPost;
+            if (Objects.equals(p.getName(), name))
+                return p.getEloPost();
         }
         return 1500;
     }
 
     public int getELOChange(String name) {
         for (ELOPlayer p : players) {
-            if (p.name == name)
-                return p.eloChange;
+            if (p.getName().equals(name))
+                return p.getEloChange();
         }
         return 0;
     }
 
-    public boolean checkIfIsPlayer(String name){
+    public boolean checkIfIsPlayer(String name) {
 
         for (ELOPlayer p : players) {
-            if (Objects.equals(p.name.toString(), name))
+            if (Objects.equals(p.getName(), name))
                 return true;
         }
         return false;
     }
+
     public void calculateELOs() {
         int n = players.size();
         float K = 32 / (float) (n - 1);
 
         for (int i = 0; i < n; i++) {
-            int curPlace = players.get(i).place;
-            int curELO = players.get(i).eloPre;
+            int curPlace = players.get(i).getPlace();
+            int curELO = players.get(i).getEloPre();
 
             for (int j = 0; j < n; j++) {
                 if (i != j) {
-                    int opponentPlace = players.get(j).place;
-                    int opponentELO = players.get(j).eloPre;
+                    int opponentPlace = players.get(j).getPlace();
+                    int opponentELO = players.get(j).getEloPre();
 
                     //work out S
                     float S;
@@ -67,11 +64,11 @@ public class ELOMatch {
 
                     //calculate ELO change vs this one opponent, add it to our change bucket
                     //I currently round at this point, this keeps rounding changes symetrical between EA and EB, but changes K more than it should
-                    players.get(i).eloChange += Math.round(K * (S - EA));
+                    players.get(i).addToEloPre(Math.round(K * (S - EA)));
                 }
             }
             //add accumulated change to initial ELO for final ELO
-            players.get(i).eloPost = players.get(i).eloPre + players.get(i).eloChange;
+            players.get(i).updateEloPost();
         }
     }
 
