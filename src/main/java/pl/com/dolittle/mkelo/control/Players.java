@@ -25,14 +25,14 @@ public class Players implements Serializable {
     public void addPlayer(Player player, String secret) {
         secrets = fileService.getPlayersDataFromS3();
         players = new HashSet<>(secrets.values());
-        Validate.notNull(player.name);
-        Validate.isTrue(players.stream().noneMatch(i -> Objects.equals(i.name, player.name)),
+        Validate.notNull(player.getName());
+        Validate.isTrue(players.stream().noneMatch(i -> Objects.equals(i.getName(), player.getName())),
                 "Player with the given name already exists");
-        Validate.isTrue(players.stream().noneMatch(i -> Objects.equals(i.email, player.email)),
+        Validate.isTrue(players.stream().noneMatch(i -> Objects.equals(i.getEmail(), player.getEmail())),
                 "Player with the given email already exists");
         players.add(player);
         secrets.put(secret, player);
-        LOGGER.info("Player {} has been given secret {}", player.name, secret);
+        LOGGER.info("Player {} has been given secret {}", player.getName(), secret);
         fileService.putPlayersDataToS3(secrets);
     }
 
@@ -41,9 +41,9 @@ public class Players implements Serializable {
         players = new HashSet<>(secrets.values());
         List<Player> result = new ArrayList<>(players);
         result.sort((o1, o2) -> new CompareToBuilder()
-                .append(o2.elo, o1.elo)
-                .append(o1.gamesPlayed, o2.gamesPlayed)
-                .append(o1.name, o2.name)
+                .append(o2.getElo(), o1.getElo())
+                .append(o1.getGamesPlayed(), o2.getGamesPlayed())
+                .append(o1.getName(), o2.getName())
                 .toComparison());
         return result;
     }
@@ -56,7 +56,7 @@ public class Players implements Serializable {
     public Optional<Player> getById(String uuid) {
         secrets = fileService.getPlayersDataFromS3();
         players = new HashSet<>(secrets.values());
-        return players.stream().filter(p -> Objects.equals(uuid, p.uuid)).findAny();
+        return players.stream().filter(p -> Objects.equals(uuid, p.getUuid())).findAny();
     }
 }
 

@@ -1,17 +1,21 @@
 package pl.com.dolittle.mkelo.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
-import java.util.Objects;
 
+
+@NoArgsConstructor
+@Data
 public class Player implements Serializable {
-    public String uuid;
-    public String name;
-    public int elo;
-    public int gamesPlayed;
-    public String email;
 
-    public Player() {
-    }
+    private String uuid;
+    private String name;
+    private String email;
+    private int elo;
+    private int gamesPlayed;
+
 
     public Player(String uuid, String name, String email) {
         this.uuid = uuid;
@@ -21,16 +25,21 @@ public class Player implements Serializable {
         this.gamesPlayed = 0;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return uuid.equals(player.uuid);
+    public void incrementGamesPlayed() {
+        this.gamesPlayed++;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(uuid);
-    }
+//  TODO purge that
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Player player = (Player) o;
+//        return uuid.equals(player.uuid);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(uuid);
+//    }
 }

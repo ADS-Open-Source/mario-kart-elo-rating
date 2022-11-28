@@ -9,7 +9,7 @@ import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.entity.Result;
 import pl.com.dolittle.mkelo.services.FileService;
-import pl.com.dolittle.mkelo.util.AuthenticationFailedException;
+import pl.com.dolittle.mkelo.exception.AuthenticationFailedException;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -42,7 +42,7 @@ public class Games {
         var match = new ELOMatch();
         for (int i = 0; i < rankingPlayers.size(); i++) {
             for (var player : rankingPlayers.get(i)) {
-                match.addPlayer(player.uuid, i+1, player.elo);
+                match.addPlayer(player.getUuid(), i+1, player.getElo());
             }
         }
         match.calculateELOs();
@@ -50,10 +50,10 @@ public class Games {
 
         var rankingResult = rankingPlayers.stream()
                 .map(l -> l.stream().map(p -> {
-                            var oldElo = p.elo;
-                            p.elo = match.getELO(p.uuid);
-                            p.gamesPlayed++;
-                            return new Result(p, oldElo, p.elo);
+                            var oldElo = p.getElo();
+                            p.setElo(match.getELO(p.getUuid()));
+                            p.incrementGamesPlayed();
+                            return new Result(p, oldElo, p.getElo());
                         })
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
@@ -74,8 +74,8 @@ public class Games {
 
     private void updatePlayersData(ELOMatch match){
         Map<String, Player> playersData = fileService.getPlayersDataFromS3();
-        playersData.forEach((k, v) -> { if(match.checkIfIsPlayer(v.uuid)){v.elo = match.getELO(v.uuid);
-        v.gamesPlayed++;}
+        playersData.forEach((k, v) -> { if(match.checkIfIsPlayer(v.getUuid())){v.setElo(match.getELO(v.getUuid()));
+        v.incrementGamesPlayed();}
         });
         fileService.putPlayersDataToS3(playersData);
     }
