@@ -1,13 +1,12 @@
 package pl.com.dolittle.mkelo.services.impl;
 
 import lombok.AllArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import pl.com.dolittle.mkelo.control.Players;
 import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
 import pl.com.dolittle.mkelo.mapstruct.mapper.PlayerMapper;
+import pl.com.dolittle.mkelo.services.EmailService;
 import pl.com.dolittle.mkelo.services.PlayerService;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     private final Players players;
     private final PlayerMapper playerMapper;
-    private JavaMailSender emailSender;
+    private final EmailService emailService;
 
     @Override
     public List<PlayerDto> getAllSorted() {
@@ -28,14 +27,12 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public String createPlayer(PlayerDto playerDto) {
+
         var secret = UUID.randomUUID().toString();
         players.addPlayer(new Player(UUID.randomUUID().toString(), playerDto.getName(), playerDto.getEmail()), secret);
-        var message = new SimpleMailMessage();
-        message.setFrom("noreply@izb-mail.dolittle.com.pl");
-        message.setTo(playerDto.getEmail());
-        message.setSubject("Your link to mleko");
-        message.setText("http://localhost:4200/new-result?secret=" + secret);
-        emailSender.send(message);
+
+        String messageContent = "http://localhost:4200/new-result?secret=" + secret;
+        emailService.send(playerDto.getEmail(), "Your link to mleko", messageContent);
         return "email sent to " + playerDto.getEmail();
     }
 
