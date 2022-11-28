@@ -1,40 +1,35 @@
 package pl.com.dolittle.mkelo.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pl.com.dolittle.mkelo.control.Players;
-import pl.com.dolittle.mkelo.entity.Player;
-import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerShortDto;
+import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
+import pl.com.dolittle.mkelo.mapstruct.validation.CreatePlayerValidation;
+import pl.com.dolittle.mkelo.mapstruct.views.GenericViews;
+import pl.com.dolittle.mkelo.services.PlayerService;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api/players")
 public class PlayerController {
 
-    private final Players players;
-    private JavaMailSender emailSender;
+    private PlayerService playerService;
 
 
-    @GetMapping("/api/player")
-    public List<Player> getAllSorted() {
-        return players.getAllSorted();
+    @JsonView(GenericViews.Private.class)
+    @GetMapping("/all")
+    public List<PlayerDto> getAllSorted() {
+        return playerService.getAllSorted();
     }
 
-    @PostMapping("/api/player")
+    @JsonView(GenericViews.Public.class)
+    @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void addPlayer(@RequestBody PlayerShortDto player) {
-        var secret = UUID.randomUUID().toString();
-        players.addPlayer(new Player(UUID.randomUUID().toString(), player.getName(), player.getEmail()), secret);
-        var message = new SimpleMailMessage();
-        message.setFrom("noreply@izb-mail.dolittle.com.pl");
-        message.setTo(player.getEmail());
-        message.setSubject("Your link to mleko");
-        message.setText("http://localhost:4200/new-result?secret=" + secret);
-        emailSender.send(message);
+    public String addPlayer(@RequestBody @Validated(CreatePlayerValidation.class) PlayerDto player) {
+        return playerService.createPlayer(player);
     }
 }
