@@ -28,18 +28,4 @@ public class Player implements Serializable {
     public void incrementGamesPlayed() {
         this.gamesPlayed++;
     }
-
-//  TODO purge that
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Player player = (Player) o;
-//        return uuid.equals(player.uuid);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(uuid);
-//    }
 }
