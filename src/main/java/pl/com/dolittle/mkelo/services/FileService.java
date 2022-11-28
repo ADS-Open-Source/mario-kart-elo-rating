@@ -17,7 +17,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Player;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -53,7 +56,7 @@ public class FileService {
         return map;
     }
 
-    public LinkedList<Game> getGamesDataFromS3(){
+    public List<Game> getGamesDataFromS3() {
 
         LinkedList<Game> gameList = new LinkedList<>();
 
@@ -75,26 +78,26 @@ public class FileService {
         return gameList;
     }
 
-    public void putPlayersDataToS3(Map<String, Player> playersToS3){
+    public void putPlayersDataToS3(Map<String, Player> playersToS3) {
 
-        LinkedList<Game> gamesToS3 = getGamesDataFromS3();
+        List<Game> gamesToS3 = getGamesDataFromS3();
         putDataToS3(playersToS3, gamesToS3);
     }
 
-    public void putGamesDataToS3(LinkedList<Game> gamesToS3){
+    public void putGamesDataToS3(List<Game> gamesToS3) {
 
         Map<String, Player> playersToS3 = getPlayersDataFromS3();
         putDataToS3(playersToS3, gamesToS3);
     }
 
-    private void putDataToS3(Map<String, Player> playersToS3, LinkedList<Game> gamesToS3) {
+    private void putDataToS3(Map<String, Player> playersToS3, List<Game> gamesToS3) {
         Set<String> playerKeys = playersToS3.keySet();
         Collection<Player> playerValues = playersToS3.values();
         JSONArray playersJsonArray = new JSONArray();
         JSONObject jsonData = new JSONObject();
         Gson gson = new Gson();
 
-        for(int i = 0; i< playersToS3.size(); i++) {
+        for (int i = 0; i < playersToS3.size(); i++) {
             JSONObject playerDataObject = new JSONObject();
             playerDataObject.put("key", playerKeys.toArray()[i]);
             String playerValueJson = gson.toJson(playerValues.toArray()[i]);
@@ -106,10 +109,10 @@ public class FileService {
         mapper.registerModule(new JavaTimeModule());
         mapper.setDateFormat(new SimpleDateFormat(LOCAL_DATE_PATTERN));
         try {
-           String gamesString = mapper.writeValueAsString(gamesToS3);
-           JSONArray gamesJsonArray = new JSONArray(gamesString);
-           jsonData.put(PLAYERS_KEY, playersJsonArray);
-           jsonData.put(GAMES_KEY,gamesJsonArray);
+            String gamesString = mapper.writeValueAsString(gamesToS3);
+            JSONArray gamesJsonArray = new JSONArray(gamesString);
+            jsonData.put(PLAYERS_KEY, playersJsonArray);
+            jsonData.put(GAMES_KEY, gamesJsonArray);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -119,10 +122,8 @@ public class FileService {
     }
 
     private void writeJsonToFile(JSONObject jsonData) {
-        try {
-            FileWriter fileWriter = new FileWriter(FILEPATH);
-            fileWriter.write(jsonData.toString());
-            fileWriter.close();
+        try (FileWriter fw = new FileWriter(FILEPATH)) {
+            fw.write(jsonData.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }

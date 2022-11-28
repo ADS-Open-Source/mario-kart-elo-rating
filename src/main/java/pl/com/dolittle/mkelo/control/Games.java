@@ -8,12 +8,11 @@ import pl.com.dolittle.mkelo.control.third.ELOMatch;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.entity.Result;
-import pl.com.dolittle.mkelo.services.FileService;
 import pl.com.dolittle.mkelo.exception.AuthenticationFailedException;
+import pl.com.dolittle.mkelo.services.FileService;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class Games {
@@ -21,7 +20,7 @@ public class Games {
 
     @Autowired
     private FileService fileService;
-    private LinkedList<Game> games = new LinkedList<>();
+    private List<Game> games = new LinkedList<>();
 
     private final Players players;
 
@@ -37,8 +36,8 @@ public class Games {
             throw new AuthenticationFailedException();
         }
         var rankingPlayers = ranking.stream()
-                .map(l -> l.stream().map(uuid -> players.getById(uuid).orElseThrow()).collect(Collectors.toList()))
-                .collect(Collectors.toList());
+                .map(l -> l.stream().map(uuid -> players.getById(uuid).orElseThrow()).toList())
+                .toList();
         var match = new ELOMatch();
         for (int i = 0; i < rankingPlayers.size(); i++) {
             for (var player : rankingPlayers.get(i)) {
@@ -46,7 +45,7 @@ public class Games {
             }
         }
         match.calculateELOs();
-        LOGGER.info(match.toString());
+        LOGGER.info("match info: {}", match);
 
         var rankingResult = rankingPlayers.stream()
                 .map(l -> l.stream().map(p -> {
@@ -55,11 +54,11 @@ public class Games {
                             p.incrementGamesPlayed();
                             return new Result(p, oldElo, p.getElo());
                         })
-                        .collect(Collectors.toList()))
-                .collect(Collectors.toList());
+                        .toList())
+                .toList();
 
         updatePlayersData(match);
-        games.addFirst(new Game(reportedTime, reportedBy.orElseThrow(), rankingResult));
+        games.add(0, new Game(reportedTime, reportedBy.orElseThrow(), rankingResult));
         fileService.putGamesDataToS3(games);
     }
 
