@@ -1,4 +1,4 @@
-package pl.com.dolittle.mkelo.boundary;
+package pl.com.dolittle.mkelo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;

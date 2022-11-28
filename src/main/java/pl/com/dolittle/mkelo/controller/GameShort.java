@@ -1,4 +1,4 @@
-package pl.com.dolittle.mkelo.boundary;
+package pl.com.dolittle.mkelo.controller;
 
 import java.util.List;
 

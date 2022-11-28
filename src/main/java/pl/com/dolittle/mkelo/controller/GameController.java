@@ -1,5 +1,6 @@
-package pl.com.dolittle.mkelo.boundary;
+package pl.com.dolittle.mkelo.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.com.dolittle.mkelo.control.Games;
@@ -9,13 +10,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 public class GameController {
 
     private final Games games;
-
-    public GameController(Games games) {
-        this.games = games;
-    }
 
     @PostMapping("/api/game")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
