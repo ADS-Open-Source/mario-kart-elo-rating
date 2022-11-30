@@ -12,7 +12,7 @@ public interface GameMapper {
     // DTO to Entity
 
     // Entity to DTO
-    @Mapping(target = "reportedBySecret", source = "reportedBy.uuid")  // TODO ask whether uuid == secret
+    @Mapping(target = "reportedBySecret", source = "reportedBy.uuid")  // TODO ask whether uuid == secret NIE JEST
     @Mapping(target = "results", source = "result")
     GameDto toDto(Game game);
 }
