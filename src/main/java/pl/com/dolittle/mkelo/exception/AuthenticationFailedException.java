@@ -1,6 +1,7 @@
-package pl.com.dolittle.mkelo.util;
+package pl.com.dolittle.mkelo.exception;
 
 public class AuthenticationFailedException extends RuntimeException {
+
     public AuthenticationFailedException() {
     }
 
