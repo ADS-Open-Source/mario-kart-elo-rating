@@ -5,10 +5,12 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import pl.com.dolittle.mkelo.services.StorageService;
 
+import java.io.File;
+
 @RestController
+@CrossOrigin("http://localhost:4200")
 @AllArgsConstructor
 @RequestMapping("/file")
 public class StorageController {
@@ -16,7 +18,7 @@ public class StorageController {
     private StorageService storageService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam(value = "file") MultipartFile file){
+    public ResponseEntity<String> uploadFile(@RequestParam(value = "file") File file){
        return new ResponseEntity<>(storageService.uploadFile(file), HttpStatus.OK);
     }
 

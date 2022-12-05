@@ -1,13 +1,13 @@
 cloud:
   aws:
     credentials:
-      access-key:
-      secret-key:
+      profile-name: ads-mleko
     region:
-      ststic: eu-central-1
+      static: eu-north-1
+      auto: false
     stack:
       auto: false
 
 application:
   bucket:
-    name: mkelo-persist-data
+    name: mleko-persist-data

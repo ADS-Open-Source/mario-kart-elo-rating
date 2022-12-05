@@ -13,8 +13,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 @AllArgsConstructor
-@RequestMapping("/api/game")
+@RequestMapping("/api/games")
 public class GameController {
 
     private final Games games;

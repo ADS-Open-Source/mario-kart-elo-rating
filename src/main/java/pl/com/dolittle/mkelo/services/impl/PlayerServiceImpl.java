@@ -32,7 +32,8 @@ public class PlayerServiceImpl implements PlayerService {
         players.addPlayer(new Player(UUID.randomUUID().toString(), playerDto.getName(), playerDto.getEmail()), secret);
 
         String messageContent = "http://localhost:4200/new-result?secret=" + secret;
-        emailService.send(playerDto.getEmail(), "Your link to mleko", messageContent);
+//        emailService.send(playerDto.getEmail(), "Your link to mleko", messageContent);
+        System.out.println(secret);  // TODO DELETE THIS LINE
         return "email sent to " + playerDto.getEmail();
     }
 

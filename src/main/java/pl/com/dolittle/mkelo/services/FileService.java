@@ -1,27 +1,20 @@
 package pl.com.dolittle.mkelo.services;
 
-import com.amazonaws.util.IOUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.gson.Gson;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Player;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -62,8 +55,10 @@ public class FileService {
 
         if (storageService != null) {
             byte[] playersFile = storageService.downloadFile(FILENAME);
+
             JSONObject jsonObject = new JSONObject(new String(playersFile));
             JSONArray jsonArray = jsonObject.getJSONArray(GAMES_KEY);
+
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.registerModule(new JavaTimeModule());
             objectMapper.setDateFormat(new SimpleDateFormat(LOCAL_DATE_PATTERN));
@@ -122,7 +117,7 @@ public class FileService {
     }
 
     private void writeJsonToFile(JSONObject jsonData) {
-        try (FileWriter fw = new FileWriter(FILEPATH)) {
+        try (FileWriter fw = new FileWriter(FILENAME)) {
             fw.write(jsonData.toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -130,15 +125,8 @@ public class FileService {
     }
 
     private void uploadJsonToS3() {
-        File file = new File(FILEPATH);
-        try {
-            FileItem fileItem = new DiskFileItem("mainFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
-            IOUtils.copy(new FileInputStream(file), fileItem.getOutputStream());
-            MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
-            storageService.uploadFile(multipartFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        File file = new File(FILENAME);
+        storageService.uploadFile(file);
     }
 }
 

@@ -1,4 +1,4 @@
-POST http://localhost:8080/api/player
+POST http://localhost:8080/api/players
 Content-Type: application/json
 
 {
@@ -8,7 +8,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8080/api/player
+POST http://localhost:8080/api/players
 Content-Type: application/json
 
 {
@@ -18,7 +18,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8080/api/player
+POST http://localhost:8080/api/players
 Content-Type: application/json
 
 {
@@ -27,7 +27,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/api/player
+POST http://localhost:8080/api/players
 Content-Type: application/json
 
 {
@@ -36,39 +36,39 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/api/player
+GET http://localhost:8080/api/players/all
 Accept: application/json
 
 <> 2022-03-01T145036.200.json
 
 ###
 
-POST http://localhost:8080/api/game
+POST http://localhost:8080/api/games
 Content-Type: application/json
 
 {
-  "reportedBySecret":  "c2341fe9-a045-4b99-a913-93f82799b7ce",
+  "reportedBySecret":  "4ae4e496-12a7-4873-b4d8-294a871cebbf",
   "results":  [
-    ["d60911f4-bf35-4aab-82aa-d6d170073346", "6edd3c77-4488-4819-b7bd-6545207c1bde"],
-    ["c728e5f1-ac64-4ffa-a6b3-1344c4989a6e"]
+    ["0bbce9d0-10e5-4666-a83c-b5f797830ba3"],
+    ["d5e8cfcc-33cf-4901-9117-eb87caf33691"]
   ]
 }
 
 ###
-POST http://localhost:8080/api/game
+POST http://localhost:8080/api/games
 Content-Type: application/json
 
 {
-  "reportedBySecret":  "e47f212b-7c1b-48c0-9c6b-c762ee4ce928",
+  "reportedBySecret":  "c9e5f453-b7dc-4076-a9d6-90d11759afbb",
   "results":  [
-    ["9d74807f-72b3-4abf-bfb7-86e5f2d94a15", "a365aa3b-fa2e-49a8-b1c4-721c8ee38988"],
-    ["bf840f63-266a-4f66-a9ae-3662889d4687"]
+    ["d5e8cfcc-33cf-4901-9117-eb87caf33691", "ff355620-271d-43ee-9a60-f530417b0698"],
+    ["69dd04d3-6062-45aa-92ee-7229c991f9ec"]
   ]
 }
 
 ###
 
-GET http://localhost:8080/api/game?count=10
+GET http://localhost:8080/api/games?count=10
 Accept: application/json
 
 <> 2022-03-01T145036.200.json

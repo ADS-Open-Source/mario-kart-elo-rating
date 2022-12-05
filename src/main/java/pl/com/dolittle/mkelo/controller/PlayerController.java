@@ -13,6 +13,7 @@ import pl.com.dolittle.mkelo.services.PlayerService;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 @AllArgsConstructor
 @RequestMapping("/api/players")
 public class PlayerController {
