@@ -17,18 +17,18 @@ export class MlekoService {
   }
 
   getPlayers(): Observable<Array<Player>> {
-    return this.httpClient.get<Array<Player>>(this.DOMAIN + 'player');
+    return this.httpClient.get<Array<Player>>(this.DOMAIN + 'players/all');
   }
 
   saveResult(result: Result): Observable<any> {
-    return this.httpClient.post<Observable<any>>(this.DOMAIN + 'game', result);
+    return this.httpClient.post<Observable<any>>(this.DOMAIN + 'games', result);
   }
 
   getGames(count: number): Observable<Array<Game>> {
-    return this.httpClient.get<Array<Game>>(this.DOMAIN + 'game?count=' + count);
+    return this.httpClient.get<Array<Game>>(this.DOMAIN + 'games?count=' + count);
   }
 
   savePlayer(playerShort: PlayerShort): Observable<any> {
-    return this.httpClient.post<Observable<any>>(this.DOMAIN + 'player', playerShort);
+    return this.httpClient.post<Observable<any>>(this.DOMAIN + 'players', playerShort);
   }
 }

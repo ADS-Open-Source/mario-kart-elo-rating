@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 cdk/node_modules
 cdk/cdk.out
+out/
 
 ### STS ###
 .apt_generated
