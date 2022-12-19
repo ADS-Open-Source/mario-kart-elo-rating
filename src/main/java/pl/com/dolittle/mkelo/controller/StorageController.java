@@ -2,7 +2,6 @@ package pl.com.dolittle.mkelo.controller;
 
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +15,10 @@ import pl.com.dolittle.mkelo.services.PersistenceService;
 public class StorageController {
 
     private PersistenceService persistenceService;
-    @Value("${application.bucket.name}")
-    private String s3BucketName;
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam(value = "file") JSONObject json) {
-        persistenceService.uploadData(s3BucketName, json);
+        persistenceService.uploadData("mkeloData.json", json);
         return new ResponseEntity<>("file uploaded", HttpStatus.OK);
     }
 
