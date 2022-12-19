@@ -54,7 +54,7 @@ export class CdkStack extends cdk.Stack {
       {
         namespace: 'aws:elasticbeanstalk:environment:process:default',
         optionName: 'HealthCheckPath ',
-        value: '/api/player'
+        value: '/api/players'
       },
       {
         namespace: 'aws:elasticbeanstalk:environment:process:default',
@@ -67,7 +67,7 @@ export class CdkStack extends cdk.Stack {
       environmentName: 'mkelo-EB-Env',
       applicationName: 'mkelo-EB-App',
       platformArn: platform,
-      solutionStackName: '64bit Amazon Linux 2 v3.2.12 running Corretto 11',
+      solutionStackName: '64bit Amazon Linux 2 v3.4.2 running Corretto 17',
       optionSettings: optionSettingProperties
     });
 
