@@ -18,7 +18,10 @@ public class CorsConfig {
             "Access-Control-Request-Headers", "Access-Control-Request-Method", "Age", "Allow", "Alternates",
             "Content-Type", "Content-Range", "Content-Disposition", "Content-Description");
     protected static final List<String> ALLOWED_METHODS = Arrays.asList("GET", "POST");
-    public static final List<String> ALLOWED_ORIGINS = List.of("http://localhost:4200");
+    public static final List<String> ALLOWED_ORIGINS = List.of(
+            "http://localhost:4200",
+            "http://mleko.dolittle.com.pl",
+            "http://mleko.deloitte.cyou");
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {

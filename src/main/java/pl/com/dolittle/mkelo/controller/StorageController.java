@@ -10,7 +10,7 @@ import pl.com.dolittle.mkelo.services.StorageService;
 import java.io.File;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin({"http://mleko.dolittle.com.pl", "http://mleko.deloitte.cyou"})
 @AllArgsConstructor
 @RequestMapping("/file")
 public class StorageController {

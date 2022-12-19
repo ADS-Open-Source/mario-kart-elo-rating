@@ -1,6 +1,6 @@
 package pl.com.dolittle.mkelo.config;
 
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -14,7 +14,7 @@ public class AWSConfig {
     public AmazonS3 amazonS3() {
         return AmazonS3ClientBuilder
                 .standard()
-                .withCredentials(new ProfileCredentialsProvider("ads-mleko"))
+                .withCredentials(new EnvironmentVariableCredentialsProvider())
                 .withRegion(Regions.EU_NORTH_1)
                 .build();
     }
