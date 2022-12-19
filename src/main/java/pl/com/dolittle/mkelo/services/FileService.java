@@ -12,9 +12,6 @@ import org.springframework.stereotype.Service;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Player;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -22,9 +19,8 @@ import java.util.*;
 public class FileService {
 
     @Autowired
-    private StorageService storageService;
+    private PersistenceService persistenceService;
     private static final String FILENAME = "mkeloData.json";
-    private static final String FILEPATH = "mario-kart-elo-rating\\mkeloData.json";
     private static final String LOCAL_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String PLAYERS_KEY = "players";
     private static final String GAMES_KEY = "games";
@@ -34,8 +30,8 @@ public class FileService {
         Gson gson = new Gson();
         Map<String, Player> map = new HashMap<>();
 
-        if (storageService != null) {
-            byte[] playersFile = storageService.downloadFile(FILENAME);
+        if (persistenceService != null) {
+            byte[] playersFile = persistenceService.downloadFile(FILENAME);
 
             JSONObject jsonObject = new JSONObject(new String(playersFile));
             JSONArray jsonArray = jsonObject.getJSONArray(PLAYERS_KEY);
@@ -53,8 +49,8 @@ public class FileService {
 
         LinkedList<Game> gameList = new LinkedList<>();
 
-        if (storageService != null) {
-            byte[] playersFile = storageService.downloadFile(FILENAME);
+        if (persistenceService != null) {
+            byte[] playersFile = persistenceService.downloadFile(FILENAME);
 
             JSONObject jsonObject = new JSONObject(new String(playersFile));
             JSONArray jsonArray = jsonObject.getJSONArray(GAMES_KEY);
@@ -112,21 +108,7 @@ public class FileService {
             e.printStackTrace();
         }
 
-        writeJsonToFile(jsonData);
-        uploadJsonToS3();
-    }
-
-    private void writeJsonToFile(JSONObject jsonData) {
-        try (FileWriter fw = new FileWriter(FILENAME)) {
-            fw.write(jsonData.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void uploadJsonToS3() {
-        File file = new File(FILENAME);
-        storageService.uploadFile(file);
+        persistenceService.uploadData(FILENAME, jsonData);
     }
 }
 
