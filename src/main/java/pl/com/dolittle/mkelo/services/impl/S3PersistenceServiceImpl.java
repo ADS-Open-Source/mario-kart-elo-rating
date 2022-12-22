@@ -5,10 +5,10 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.com.dolittle.mkelo.entity.Game;
@@ -17,10 +17,10 @@ import pl.com.dolittle.mkelo.services.PersistenceService;
 import java.io.IOException;
 
 @Service
-@AllArgsConstructor
 public class S3PersistenceServiceImpl implements PersistenceService {
 
     private static final Logger LOG = LoggerFactory.getLogger(S3PersistenceServiceImpl.class);
+    @Autowired
     AmazonS3 amazonS3;
     @Value("${application.bucket.name}")
     private String s3BucketName;
