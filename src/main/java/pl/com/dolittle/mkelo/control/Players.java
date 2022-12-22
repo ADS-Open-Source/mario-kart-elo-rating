@@ -49,8 +49,9 @@ public class Players implements Serializable {
     }
 
     public Optional<Player> getBySecret(String secret) {
+        LOGGER.info("Looking for a player with secret {}", secret);
         secrets = fileService.getPlayersDataFromS3();
-        return Optional.of(secrets.get(secret));
+        return Optional.ofNullable(secrets.get(secret));
     }
 
     public Optional<Player> getById(String uuid) {

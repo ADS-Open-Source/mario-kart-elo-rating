@@ -2,6 +2,7 @@ package pl.com.dolittle.mkelo.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.com.dolittle.mkelo.control.Games;
@@ -26,8 +27,8 @@ public class GameController {
     }
 
     @PostMapping
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void addGame(@RequestBody @Validated(AddGameValidation.class) GameDto game) {
+    public ResponseEntity<String> addGame(@RequestBody @Validated(AddGameValidation.class) GameDto game) {
         games.addGame(LocalDateTime.now(), game.getReportedBySecret(), game.getResults());
+        return new ResponseEntity<>("game added", HttpStatus.OK);
     }
 }

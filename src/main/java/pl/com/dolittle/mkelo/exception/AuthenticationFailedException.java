@@ -4,10 +4,7 @@ import java.text.MessageFormat;
 
 public class AuthenticationFailedException extends RuntimeException {
 
-    public AuthenticationFailedException() {
-    }
-
     public AuthenticationFailedException(String secret) {
-        super(MessageFormat.format("no player found with secret {}", secret));
+        super(MessageFormat.format("no_player_found_with_secret_{0}", secret));
     }
 }
