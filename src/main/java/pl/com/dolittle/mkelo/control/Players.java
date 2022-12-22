@@ -55,6 +55,7 @@ public class Players implements Serializable {
     }
 
     public Optional<Player> getById(String uuid) {
+        LOGGER.info("Looking for a player with uuid {}", uuid);
         secrets = fileService.getPlayersDataFromS3();
         players = new HashSet<>(secrets.values());
         return players.stream().filter(p -> Objects.equals(uuid, p.getUuid())).findAny();

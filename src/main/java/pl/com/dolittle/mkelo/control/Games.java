@@ -9,6 +9,7 @@ import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.entity.Result;
 import pl.com.dolittle.mkelo.exception.AuthenticationFailedException;
+import pl.com.dolittle.mkelo.exception.PlayerUUIDNotFoundException;
 import pl.com.dolittle.mkelo.services.FileService;
 
 import java.time.LocalDateTime;
@@ -37,7 +38,8 @@ public class Games {
             throw new AuthenticationFailedException(reportedBySecret);
         }
         var rankingPlayers = ranking.stream()
-                .map(l -> l.stream().map(uuid -> players.getById(uuid).orElseThrow()).toList())
+                .map(l -> l.stream().map(uuid -> players.getById(uuid).orElseThrow(() -> new PlayerUUIDNotFoundException(uuid)))
+                        .toList())
                 .toList();
         var match = new ELOMatch();
         for (int i = 0; i < rankingPlayers.size(); i++) {
