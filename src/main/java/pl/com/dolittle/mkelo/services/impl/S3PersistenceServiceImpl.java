@@ -27,6 +27,7 @@ public class S3PersistenceServiceImpl implements PersistenceService {
 
     @Override
     public byte[] downloadFile(String filename) {
+        // TODO get rid of this
         S3Object object = amazonS3.getObject(s3BucketName, filename);
         S3ObjectInputStream objectContent = object.getObjectContent();
         try {
@@ -38,6 +39,7 @@ public class S3PersistenceServiceImpl implements PersistenceService {
 
     @Override
     public Game downloadData(String filename) {
+        // Create a new class and map it directly
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             S3Object s3Object = amazonS3.getObject(new GetObjectRequest(s3BucketName, filename));

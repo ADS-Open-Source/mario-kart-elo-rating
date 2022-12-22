@@ -31,10 +31,7 @@ public class Games {
     public void addGame(LocalDateTime reportedTime, String reportedBySecret, List<List<String>> ranking) {
 
         games = fileService.getGamesDataFromS3();
-        var reportedBy = players.getBySecret(reportedBySecret);
-        if (reportedBy.isEmpty()) {
-            throw new AuthenticationFailedException();
-        }
+        Player reportedBy = players.getBySecret(reportedBySecret).orElseThrow(() -> new AuthenticationFailedException(reportedBySecret));
         var rankingPlayers = ranking.stream()
                 .map(l -> l.stream().map(uuid -> players.getById(uuid).orElseThrow()).toList())
                 .toList();
@@ -58,7 +55,7 @@ public class Games {
                 .toList();
 
         updatePlayersData(match);
-        games.add(0, new Game(reportedTime, reportedBy.orElseThrow(), rankingResult));
+        games.add(0, new Game(reportedTime, reportedBy, rankingResult));
         fileService.putGamesDataToS3(games);
     }
 
