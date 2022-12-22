@@ -22,7 +22,7 @@ public class FileService {
     @Autowired
     private PersistenceService persistenceService;
     @Value("${bucket-data-filename}")
-    private static String FILENAME;
+    private String FILENAME;
     private static final String LOCAL_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String PLAYERS_KEY = "players";
     private static final String GAMES_KEY = "games";
