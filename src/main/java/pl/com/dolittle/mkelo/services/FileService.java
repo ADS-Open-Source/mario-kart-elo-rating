@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Player;
@@ -20,7 +21,8 @@ public class FileService {
 
     @Autowired
     private PersistenceService persistenceService;
-    private static final String FILENAME = "mkeloData.json";
+    @Value("${bucket-data-filename}")
+    private static String FILENAME;
     private static final String LOCAL_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String PLAYERS_KEY = "players";
     private static final String GAMES_KEY = "games";
