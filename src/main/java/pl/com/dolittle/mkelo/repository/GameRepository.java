@@ -1,8 +1,7 @@
 package pl.com.dolittle.mkelo.repository;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import pl.com.dolittle.mkelo.control.third.ELOMatch;
 import pl.com.dolittle.mkelo.control.third.ELOPlayer;
@@ -17,26 +16,20 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Repository
+@Slf4j
+@AllArgsConstructor
 public class GameRepository {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameRepository.class);
-
-    @Autowired
     private FileService fileService;
-    private List<Game> games = new LinkedList<>();
-    @Autowired
     private PlayerRepository playerRepository;
 
-    public GameRepository(PlayerRepository playerRepository) {
-        this.playerRepository = playerRepository;
-    }
 
     public void addGame(LocalDateTime reportedTime, String reportedBySecret, List<List<String>> ranking) {
 
-        games = fileService.getGamesDataFromS3();
+        List<Game> games = fileService.getGamesDataFromS3();
         Optional<Player> reportedBy = playerRepository.getBySecret(reportedBySecret);
         if (reportedBy.isEmpty()) {
-            LOGGER.error("Player with a secret {} doesn't exist", reportedBySecret);
+            log.error("Player with a secret {} doesn't exist", reportedBySecret);
             throw new AuthenticationFailedException(reportedBySecret);
         }
         var rankingPlayers = ranking.stream()
@@ -50,7 +43,7 @@ public class GameRepository {
             }
         }
         match.calculateELOs();
-        LOGGER.info("match info: {}", match);
+        log.info("match info: {}", match);
 
         var rankingResult = rankingPlayers.stream()
                 .map(l -> l.stream().map(p -> {
@@ -68,7 +61,7 @@ public class GameRepository {
     }
 
     public List<Game> getGames(Integer count) {
-        games = fileService.getGamesDataFromS3();
+        List<Game> games = fileService.getGamesDataFromS3();
         if (Objects.isNull(count) || count <= 0) {
             return Collections.unmodifiableList(games);
         } else {

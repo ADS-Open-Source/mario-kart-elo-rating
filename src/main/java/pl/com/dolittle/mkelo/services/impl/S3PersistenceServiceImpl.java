@@ -5,9 +5,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,9 @@ import pl.com.dolittle.mkelo.services.PersistenceService;
 import java.io.IOException;
 
 @Service
+@Slf4j
 public class S3PersistenceServiceImpl implements PersistenceService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(S3PersistenceServiceImpl.class);
     @Autowired
     AmazonS3 amazonS3;
     @Value("${application.bucket.name}")
@@ -54,7 +53,7 @@ public class S3PersistenceServiceImpl implements PersistenceService {
         try {
             PutObjectResult por = amazonS3.putObject(s3BucketName, filename, jsonObject.toString());
             ObjectMetadata om = por.getMetadata();
-            LOG.info("Uploaded {} ({}) with a size of {} bytes", filename, om.getETag(), om.getContentLength());
+            log.info("Uploaded {} ({}) with a size of {} bytes", filename, om.getETag(), om.getContentLength());
         } catch (AmazonServiceException e) {
             throw new AmazonServiceException(e.getErrorMessage());
         }
