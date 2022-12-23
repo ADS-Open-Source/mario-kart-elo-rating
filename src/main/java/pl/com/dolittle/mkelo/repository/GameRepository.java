@@ -1,10 +1,11 @@
-package pl.com.dolittle.mkelo.control;
+package pl.com.dolittle.mkelo.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import pl.com.dolittle.mkelo.control.third.ELOMatch;
+import pl.com.dolittle.mkelo.control.third.ELOPlayer;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.entity.Result;
@@ -15,36 +16,37 @@ import pl.com.dolittle.mkelo.services.FileService;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Controller
-public class Games {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Games.class);
+@Repository
+public class GameRepository {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameRepository.class);
 
     @Autowired
     private FileService fileService;
     private List<Game> games = new LinkedList<>();
+    @Autowired
+    private PlayerRepository playerRepository;
 
-    private final Players players;
-
-    public Games(Players players) {
-        this.players = players;
+    public GameRepository(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
     }
 
     public void addGame(LocalDateTime reportedTime, String reportedBySecret, List<List<String>> ranking) {
 
         games = fileService.getGamesDataFromS3();
-        Optional<Player> reportedBy = players.getBySecret(reportedBySecret);
+        Optional<Player> reportedBy = playerRepository.getBySecret(reportedBySecret);
         if (reportedBy.isEmpty()) {
             LOGGER.error("Player with a secret {} doesn't exist", reportedBySecret);
             throw new AuthenticationFailedException(reportedBySecret);
         }
         var rankingPlayers = ranking.stream()
-                .map(l -> l.stream().map(uuid -> players.getById(uuid).orElseThrow(() -> new PlayerUUIDNotFoundException(uuid)))
+                .map(l -> l.stream().map(uuid -> playerRepository.getById(uuid).orElseThrow(() -> new PlayerUUIDNotFoundException(uuid)))
                         .toList())
                 .toList();
-        var match = new ELOMatch();
+        ELOMatch match = new ELOMatch();
         for (int i = 0; i < rankingPlayers.size(); i++) {
             for (var player : rankingPlayers.get(i)) {
-                match.addPlayer(player.getUuid(), i+1, player.getElo());
+                match.addPlayer(new ELOPlayer(player.getUuid(), i+1, player.getElo()));
             }
         }
         match.calculateELOs();

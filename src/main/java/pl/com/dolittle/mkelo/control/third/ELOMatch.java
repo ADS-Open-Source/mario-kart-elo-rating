@@ -7,8 +7,7 @@ public class ELOMatch {
 
     private final ArrayList<ELOPlayer> players = new ArrayList<>();
 
-    public void addPlayer(String name, int place, int elo) {
-        ELOPlayer player = new ELOPlayer(name, place, elo);
+    public void addPlayer(ELOPlayer player) {
         players.add(player);
     }
 
@@ -18,14 +17,6 @@ public class ELOMatch {
                 return p.getEloPost();
         }
         return 1500;
-    }
-
-    public int getELOChange(String name) {
-        for (ELOPlayer p : players) {
-            if (p.getName().equals(name))
-                return p.getEloChange();
-        }
-        return 0;
     }
 
     public boolean checkIfIsPlayer(String name) {

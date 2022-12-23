@@ -1,23 +1,23 @@
-package pl.com.dolittle.mkelo.control;
+package pl.com.dolittle.mkelo.repository;
 
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.services.FileService;
 
 import java.io.Serializable;
 import java.util.*;
 
-@Component
-public class Players implements Serializable {
+@Repository
+public class PlayerRepository implements Serializable {
 
     @Autowired
     private FileService fileService;
-    private static final Logger LOGGER = LoggerFactory.getLogger(Players.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerRepository.class);
     private Map<String, Player> secrets = new HashMap<>();
     private Set<Player> players = new HashSet<>(secrets.values());
 
