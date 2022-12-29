@@ -10,7 +10,7 @@ import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.entity.Result;
 import pl.com.dolittle.mkelo.exception.AuthenticationFailedException;
 import pl.com.dolittle.mkelo.exception.PlayerUUIDNotFoundException;
-import pl.com.dolittle.mkelo.services.FileService;
+import pl.com.dolittle.mkelo.services.DataService;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -23,13 +23,13 @@ import java.util.Optional;
 @AllArgsConstructor
 public class GameRepository {
 
-    private FileService fileService;
+    private DataService dataService;
     private PlayerRepository playerRepository;
 
 
     public void addGame(LocalDateTime reportedTime, String reportedBySecret, List<List<String>> ranking) {
 
-        List<Game> games = fileService.getGamesDataFromS3();
+        List<Game> games = dataService.getGamesDataFromS3();
         Optional<Player> reportedBy = playerRepository.getBySecret(reportedBySecret);
         if (reportedBy.isEmpty()) {
             log.error("Player with a secret {} doesn't exist", reportedBySecret);
@@ -61,11 +61,11 @@ public class GameRepository {
 
         updatePlayersData(match);
         games.add(0, new Game(reportedTime, reportedBy.orElseThrow(() -> new AuthenticationFailedException(reportedBySecret)), rankingResult));
-        fileService.putGamesDataToS3(games);
+        dataService.putGamesDataToS3(games);
     }
 
     public List<Game> getGames(Integer count) {
-        List<Game> games = fileService.getGamesDataFromS3();
+        List<Game> games = dataService.getGamesDataFromS3();
         if (Objects.isNull(count) || count <= 0) {
             return Collections.unmodifiableList(games);
         } else {
@@ -74,13 +74,13 @@ public class GameRepository {
     }
 
     private void updatePlayersData(ELOMatch match) {
-        List<Player> playersData = fileService.getPlayersDataFromS3();
+        List<Player> playersData = dataService.getPlayersDataFromS3();
         playersData.forEach(v -> {
             if (match.checkIfIsPlayer(v.getUuid())) {
                 v.setElo(match.getELO(v.getUuid()));
                 v.incrementGamesPlayed();
             }
         });
-        fileService.putPlayersDataToS3(playersData);
+        dataService.putPlayersDataToS3(playersData);
     }
 }

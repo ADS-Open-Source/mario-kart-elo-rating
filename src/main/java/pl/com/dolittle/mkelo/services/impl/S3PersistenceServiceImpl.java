@@ -5,15 +5,19 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pl.com.dolittle.mkelo.entity.Game;
+import pl.com.dolittle.mkelo.entity.MKEloData;
 import pl.com.dolittle.mkelo.services.PersistenceService;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+
+import static pl.com.dolittle.mkelo.services.DataService.LOCAL_DATE_PATTERN;
 
 @Service
 @Slf4j
@@ -36,12 +40,13 @@ public class S3PersistenceServiceImpl implements PersistenceService {
     }
 
     @Override
-    public Game downloadData(String filename) {
-        // Create a new class and map it directly
+    public MKEloData downloadData(String filename) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.setDateFormat(new SimpleDateFormat(LOCAL_DATE_PATTERN));
+        S3Object s3Object = amazonS3.getObject(new GetObjectRequest(s3BucketName, filename));
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            S3Object s3Object = amazonS3.getObject(new GetObjectRequest(s3BucketName, filename));
-            return objectMapper.readValue(s3Object.getObjectContent(), Game.class);
+            return objectMapper.readValue(s3Object.getObjectContent(), MKEloData.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

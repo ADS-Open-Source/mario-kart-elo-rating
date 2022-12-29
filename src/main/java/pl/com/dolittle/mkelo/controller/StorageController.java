@@ -18,7 +18,7 @@ public class StorageController {
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam(value = "file") JSONObject json) {
-        // persistenceService.uploadData("mkeloData.json", json);
+        // persistenceService.uploadData("MKEloData.json", json);
         return new ResponseEntity<>("not supported", HttpStatus.METHOD_NOT_ALLOWED);
     }
 

@@ -1,7 +1,6 @@
 package pl.com.dolittle.mkelo.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.json.JSONArray;
@@ -9,61 +8,54 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.com.dolittle.mkelo.entity.Game;
+import pl.com.dolittle.mkelo.entity.MKEloData;
 import pl.com.dolittle.mkelo.entity.Player;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
-public class FileService {
+public class DataService {
 
-    private final PersistenceService persistenceService;
     @Value("${bucket-data-filename}")
     private String filename;
-    private static final String LOCAL_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    private final PersistenceService persistenceService;
+
+    private final MKEloData eloData = new MKEloData();
+
+    public static final String LOCAL_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String PLAYERS_KEY = "players";
     private static final String GAMES_KEY = "games";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public FileService(PersistenceService persistenceService) {
+    public DataService(PersistenceService persistenceService) {
         this.persistenceService = persistenceService;
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.setDateFormat(new SimpleDateFormat(LOCAL_DATE_PATTERN));
+        this.eloData.setFilename(filename);
+        this.objectMapper.registerModule(new JavaTimeModule());
+        this.objectMapper.setDateFormat(new SimpleDateFormat(LOCAL_DATE_PATTERN));
     }
 
     public List<Player> getPlayersDataFromS3() {
 
-        List<Player> playerList = new LinkedList<>();
-        byte[] playersFile = persistenceService.downloadFile(filename);
-
-        JSONObject jsonObject = new JSONObject(new String(playersFile));
-        JSONArray jsonArray = jsonObject.getJSONArray(PLAYERS_KEY);
-
         try {
-            playerList = objectMapper.readValue(jsonArray.toString(), new TypeReference<>() {
-            });
-        } catch (JsonProcessingException e) {
+            MKEloData s3EloData = persistenceService.downloadData(filename);
+            this.eloData.setPlayers(s3EloData.getPlayers());
+            return s3EloData.getPlayers();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return playerList;
     }
 
     public List<Game> getGamesDataFromS3() {
 
-        List<Game> gameList = new LinkedList<>();
-        byte[] playersFile = persistenceService.downloadFile(filename);
-
-        JSONObject jsonObject = new JSONObject(new String(playersFile));
-        JSONArray jsonArray = jsonObject.getJSONArray(GAMES_KEY);
-
         try {
-            gameList = objectMapper.readValue(jsonArray.toString(), new TypeReference<>() {
-            });
-        } catch (JsonProcessingException e) {
+            MKEloData s3EloData = persistenceService.downloadData(filename);
+            this.eloData.setGames(s3EloData.getGames());
+            return s3EloData.getGames();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return gameList;
     }
 
     public void putPlayersDataToS3(List<Player> playersToS3) {
