@@ -16,5 +16,5 @@ public class Game implements Serializable {
 
     private LocalDateTime reportedTime;
     private Player reportedBy;
-    private List<List<Result>> result;
+    private List<List<Player>> ranking;
 }

@@ -1,45 +1,55 @@
-POST http://localhost:8080/api/player
+POST http://localhost:8080/api/players
 Content-Type: application/json
 
 {
-  "name":  "Arti",
-  "email":  "arti@gmail.com"
+  "name": "Arti",
+  "email": "arti@gmail.com"
 }
 
 ###
 
-POST http://localhost:8080/api/player
+POST http://localhost:8080/api/players
 Content-Type: application/json
 
 {
-  "name":  "Marek",
-  "email":  "marek@gmail.com"
+  "name": "Marek",
+  "email": "marek@gmail.com"
 }
 
 ###
-GET http://localhost:8080/api/player
+GET http://localhost:8080/api/players/all
 Accept: application/json
 
 <> 2022-03-01T145036.200.json
 
 ###
 
-POST http://localhost:8080/api/game
+POST http://localhost:8080/api/games
 Content-Type: application/json
 
 {
-  "reportedBySecret":  "8d8534c7-5af0-4c0c-b7bc-aa58597ea259",
-  "results":  [
-    ["fb2dbf33-621b-45b8-8c8d-671b830d6097"],
-    ["76195472-c0f5-48a2-a4e2-1899cc5ac1fb"]
+  "reportedBy": {
+    "secret": "dfbbf7d3-ec40-4f2a-b968-a2de7cc03275"
+  },
+  "ranking": [
+    [
+      {
+        "uuid": "b72cf377-b79d-4010-93ef-85a3e396f517"
+      }
+    ],
+    [
+      {
+        "uuid": "4f6e3b9d-d1cc-4c4c-8c6d-370f2b8e5571"
+      }
+    ]
   ]
 }
 
 ###
 
-GET http://localhost:8080/api/game?count=10
+GET http://localhost:8080/api/games?count=10
 Accept: application/json
 
 <> 2022-03-01T145036.200.json
 
-###
+

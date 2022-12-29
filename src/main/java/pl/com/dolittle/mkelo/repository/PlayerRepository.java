@@ -6,38 +6,36 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.com.dolittle.mkelo.entity.Player;
-import pl.com.dolittle.mkelo.services.FileService;
+import pl.com.dolittle.mkelo.services.DataService;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 @Slf4j
-public class PlayerRepository implements Serializable {
+public class PlayerRepository {
 
     @Autowired
-    private FileService fileService;
-    private Map<String, Player> secrets = new HashMap<>();
-    private Set<Player> players = new HashSet<>(secrets.values());
+    private DataService dataService;
+    private List<Player> players = new ArrayList<>();
 
 
-    public void addPlayer(Player player, String secret) {
-        secrets = fileService.getPlayersDataFromS3();
-        players = new HashSet<>(secrets.values());
+    public void addPlayer(Player player) {
+        players = dataService.getPlayersData();
         Validate.notNull(player.getName());
         Validate.isTrue(players.stream().noneMatch(i -> Objects.equals(i.getName(), player.getName())),
                 "Player with the given name already exists");
         Validate.isTrue(players.stream().noneMatch(i -> Objects.equals(i.getEmail(), player.getEmail())),
                 "Player with the given email already exists");
         players.add(player);
-        secrets.put(secret, player);
-        log.info("Player {} has been given secret {}", player.getName(), secret);
-        fileService.putPlayersDataToS3(secrets);
+        log.info("Player {} has been given secret {}", player.getName(), player.getSecret());
+        dataService.putPlayersData(players);
     }
 
     public List<Player> getAllSorted() {
-        secrets = fileService.getPlayersDataFromS3();
-        players = new HashSet<>(secrets.values());
+        players = dataService.getPlayersData();
         List<Player> result = new ArrayList<>(players);
         result.sort((o1, o2) -> new CompareToBuilder()
                 .append(o2.getElo(), o1.getElo())
@@ -49,14 +47,13 @@ public class PlayerRepository implements Serializable {
 
     public Optional<Player> getBySecret(String secret) {
         log.info("Looking for a player with secret {}", secret);
-        secrets = fileService.getPlayersDataFromS3();
-        return Optional.ofNullable(secrets.get(secret));
+        players = dataService.getPlayersData();
+        return players.stream().filter(p -> Objects.equals(secret, p.getSecret())).findAny();
     }
 
     public Optional<Player> getById(String uuid) {
         log.info("Looking for a player with uuid {}", uuid);
-        secrets = fileService.getPlayersDataFromS3();
-        players = new HashSet<>(secrets.values());
+        players = dataService.getPlayersData();
         return players.stream().filter(p -> Objects.equals(uuid, p.getUuid())).findAny();
     }
 }
