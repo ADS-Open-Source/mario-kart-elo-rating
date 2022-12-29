@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,11 @@ import org.springframework.stereotype.Service;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Player;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class FileService {
@@ -27,10 +29,10 @@ public class FileService {
     private static final String PLAYERS_KEY = "players";
     private static final String GAMES_KEY = "games";
 
-    public Map<String, Player> getPlayersDataFromS3() {
+    public List<Player> getPlayersDataFromS3() {
 
-        Gson gson = new Gson();
-        Map<String, Player> map = new HashMap<>();
+        List<Player> players = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
 
         if (persistenceService != null) {
             byte[] playersFile = persistenceService.downloadFile(FILENAME);
@@ -39,12 +41,16 @@ public class FileService {
             JSONArray jsonArray = jsonObject.getJSONArray(PLAYERS_KEY);
 
             for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject obj = jsonArray.getJSONObject(i);
-                map.put(obj.getString("key"), gson.fromJson(String.valueOf(obj.getJSONObject("value")), Player.class));
+                String obj = jsonArray.getJSONObject(i).toString();
+                try {
+                    players.add(objectMapper.readValue(obj, Player.class));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            return map;
+            return players;
         }
-        return map;
+        return players;
     }
 
     public List<Game> getGamesDataFromS3() {
@@ -71,7 +77,7 @@ public class FileService {
         return gameList;
     }
 
-    public void putPlayersDataToS3(Map<String, Player> playersToS3) {
+    public void putPlayersDataToS3(List<Player> playersToS3) {
 
         List<Game> gamesToS3 = getGamesDataFromS3();
         putDataToS3(playersToS3, gamesToS3);
@@ -79,29 +85,19 @@ public class FileService {
 
     public void putGamesDataToS3(List<Game> gamesToS3) {
 
-        Map<String, Player> playersToS3 = getPlayersDataFromS3();
+        List<Player> playersToS3 = getPlayersDataFromS3();
         putDataToS3(playersToS3, gamesToS3);
     }
 
-    private void putDataToS3(Map<String, Player> playersToS3, List<Game> gamesToS3) {
-        Set<String> playerKeys = playersToS3.keySet();
-        Collection<Player> playerValues = playersToS3.values();
-        JSONArray playersJsonArray = new JSONArray();
-        JSONObject jsonData = new JSONObject();
-        Gson gson = new Gson();
+    private void putDataToS3(List<Player> playersToS3, List<Game> gamesToS3) {
 
-        for (int i = 0; i < playersToS3.size(); i++) {
-            JSONObject playerDataObject = new JSONObject();
-            playerDataObject.put("key", playerKeys.toArray()[i]);
-            String playerValueJson = gson.toJson(playerValues.toArray()[i]);
-            JSONObject playerValueObject = new JSONObject(playerValueJson);
-            playerDataObject.put("value", playerValueObject);
-            playersJsonArray.put(playerDataObject);
-        }
+        JSONObject jsonData = new JSONObject();
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.setDateFormat(new SimpleDateFormat(LOCAL_DATE_PATTERN));
         try {
+            String playersString = mapper.writeValueAsString(playersToS3);
+            JSONArray playersJsonArray = new JSONArray(playersString);
             String gamesString = mapper.writeValueAsString(gamesToS3);
             JSONArray gamesJsonArray = new JSONArray(gamesString);
             jsonData.put(PLAYERS_KEY, playersJsonArray);

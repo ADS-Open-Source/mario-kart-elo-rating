@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Data
 public class Player implements Serializable {
 
+    private String secret;
     private String uuid;
     private String name;
     private String email;
@@ -17,7 +18,8 @@ public class Player implements Serializable {
     private int gamesPlayed;
 
 
-    public Player(String uuid, String name, String email) {
+    public Player(String secret, String uuid, String name, String email) {
+        this.secret = secret;
         this.uuid = uuid;
         this.name = name;
         this.email = email;

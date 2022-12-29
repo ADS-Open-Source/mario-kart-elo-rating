@@ -29,7 +29,7 @@ public class PlayerServiceImpl implements PlayerService {
     public String createPlayer(PlayerDto playerDto) {
 
         var secret = UUID.randomUUID().toString();
-        playerRepository.addPlayer(new Player(UUID.randomUUID().toString(), playerDto.getName(), playerDto.getEmail()), secret);
+        playerRepository.addPlayer(new Player(secret, UUID.randomUUID().toString(), playerDto.getName(), playerDto.getEmail()));
 
         String messageContent = "http://mleko.dolittle.com.pl/new-result?secret=" + secret;
         emailService.send(playerDto.getEmail(), "Your link to mleko", messageContent);

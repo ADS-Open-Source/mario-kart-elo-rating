@@ -17,27 +17,23 @@ public class PlayerRepository implements Serializable {
 
     @Autowired
     private FileService fileService;
-    private Map<String, Player> secrets = new HashMap<>();
-    private Set<Player> players = new HashSet<>(secrets.values());
+    private List<Player> players = new ArrayList<>();
 
 
-    public void addPlayer(Player player, String secret) {
-        secrets = fileService.getPlayersDataFromS3();
-        players = new HashSet<>(secrets.values());
+    public void addPlayer(Player player) {
+        players = fileService.getPlayersDataFromS3();
         Validate.notNull(player.getName());
         Validate.isTrue(players.stream().noneMatch(i -> Objects.equals(i.getName(), player.getName())),
                 "Player with the given name already exists");
         Validate.isTrue(players.stream().noneMatch(i -> Objects.equals(i.getEmail(), player.getEmail())),
                 "Player with the given email already exists");
         players.add(player);
-        secrets.put(secret, player);
-        log.info("Player {} has been given secret {}", player.getName(), secret);
-        fileService.putPlayersDataToS3(secrets);
+        log.info("Player {} has been given secret {}", player.getName(), player.getSecret());
+        fileService.putPlayersDataToS3(players);
     }
 
     public List<Player> getAllSorted() {
-        secrets = fileService.getPlayersDataFromS3();
-        players = new HashSet<>(secrets.values());
+        players = fileService.getPlayersDataFromS3();
         List<Player> result = new ArrayList<>(players);
         result.sort((o1, o2) -> new CompareToBuilder()
                 .append(o2.getElo(), o1.getElo())
@@ -49,14 +45,13 @@ public class PlayerRepository implements Serializable {
 
     public Optional<Player> getBySecret(String secret) {
         log.info("Looking for a player with secret {}", secret);
-        secrets = fileService.getPlayersDataFromS3();
-        return Optional.ofNullable(secrets.get(secret));
+        players = fileService.getPlayersDataFromS3();
+        return players.stream().filter(p -> Objects.equals(secret, p.getSecret())).findAny();
     }
 
     public Optional<Player> getById(String uuid) {
         log.info("Looking for a player with uuid {}", uuid);
-        secrets = fileService.getPlayersDataFromS3();
-        players = new HashSet<>(secrets.values());
+        players = fileService.getPlayersDataFromS3();
         return players.stream().filter(p -> Objects.equals(uuid, p.getUuid())).findAny();
     }
 }

@@ -13,7 +13,10 @@ import pl.com.dolittle.mkelo.exception.PlayerUUIDNotFoundException;
 import pl.com.dolittle.mkelo.services.FileService;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 @Slf4j
@@ -39,7 +42,7 @@ public class GameRepository {
         ELOMatch match = new ELOMatch();
         for (int i = 0; i < rankingPlayers.size(); i++) {
             for (var player : rankingPlayers.get(i)) {
-                match.addPlayer(new ELOPlayer(player.getUuid(), i+1, player.getElo()));
+                match.addPlayer(new ELOPlayer(player.getUuid(), i + 1, player.getElo()));
             }
         }
         match.calculateELOs();
@@ -69,10 +72,13 @@ public class GameRepository {
         }
     }
 
-    private void updatePlayersData(ELOMatch match){
-        Map<String, Player> playersData = fileService.getPlayersDataFromS3();
-        playersData.forEach((k, v) -> { if(match.checkIfIsPlayer(v.getUuid())){v.setElo(match.getELO(v.getUuid()));
-        v.incrementGamesPlayed();}
+    private void updatePlayersData(ELOMatch match) {
+        List<Player> playersData = fileService.getPlayersDataFromS3();
+        playersData.forEach(v -> {
+            if (match.checkIfIsPlayer(v.getUuid())) {
+                v.setElo(match.getELO(v.getUuid()));
+                v.incrementGamesPlayed();
+            }
         });
         fileService.putPlayersDataToS3(playersData);
     }

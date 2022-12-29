@@ -26,7 +26,6 @@ public class S3PersistenceServiceImpl implements PersistenceService {
 
     @Override
     public byte[] downloadFile(String filename) {
-        // TODO get rid of this
         S3Object object = amazonS3.getObject(s3BucketName, filename);
         S3ObjectInputStream objectContent = object.getObjectContent();
         try {

@@ -16,7 +16,7 @@ import javax.validation.constraints.NotBlank;
 public class PlayerDto {
 
     @JsonView(GenericViews.Private.class)
-    private String uuid;
+    private String secret;
 
     @NotBlank(groups = CreatePlayerValidation.class)
     @JsonView(GenericViews.Public.class)
