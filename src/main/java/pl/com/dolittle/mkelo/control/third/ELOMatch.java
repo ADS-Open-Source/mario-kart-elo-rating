@@ -15,19 +15,19 @@ public class ELOMatch {
         players.add(player);
     }
 
-    public int getELO(String name) {
+    public int getELO(String uuid) {
         for (ELOPlayer p : players) {
-            if (Objects.equals(p.getName(), name))
-                return p.getEloPost();
+            if (Objects.equals(p.getUuid(), uuid))
+                return p.getElo();
         }
-        log.warn("no player {} found", name);
+        log.warn("no player {} found", uuid);
         return 1500;
     }
 
-    public boolean checkIfIsPlayer(String name) {
+    public boolean checkIfIsPlayer(String uuid) {
 
         for (ELOPlayer p : players) {
-            if (Objects.equals(p.getName(), name))
+            if (Objects.equals(p.getUuid(), uuid))
                 return true;
         }
         return false;
@@ -39,12 +39,12 @@ public class ELOMatch {
 
         for (int i = 0; i < n; i++) {
             int curPlace = players.get(i).getPlace();
-            int curELO = players.get(i).getEloPre();
+            int curELO = players.get(i).getElo();
 
             for (int j = 0; j < n; j++) {
                 if (i != j) {
                     int opponentPlace = players.get(j).getPlace();
-                    int opponentELO = players.get(j).getEloPre();
+                    int opponentELO = players.get(j).getElo();
 
                     //work out S
                     float S;
@@ -60,11 +60,10 @@ public class ELOMatch {
 
                     //calculate ELO change vs this one opponent, add it to our change bucket
                     //I currently round at this point, this keeps rounding changes symetrical between EA and EB, but changes K more than it should
-                    players.get(i).addToEloPre(Math.round(K * (S - EA)));
+                    players.get(i).addToElo(Math.round(K * (S - EA)));
                 }
             }
             //add accumulated change to initial ELO for final ELO
-            players.get(i).updateEloPost();
         }
     }
 
