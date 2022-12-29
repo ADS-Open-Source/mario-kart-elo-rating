@@ -22,7 +22,7 @@ public class DataService {
     private String filename;
     private final PersistenceService persistenceService;
 
-    private final MKEloData eloData = new MKEloData();
+    private final MKEloData eloData = new MKEloData();  //  place to store in memory all the data
 
     public static final String LOCAL_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String PLAYERS_KEY = "players";
@@ -36,7 +36,7 @@ public class DataService {
         this.objectMapper.setDateFormat(new SimpleDateFormat(LOCAL_DATE_PATTERN));
     }
 
-    public List<Player> getPlayersDataFromS3() {
+    public List<Player> getPlayersData() {
 
         try {
             MKEloData s3EloData = persistenceService.downloadData(filename);
@@ -47,7 +47,7 @@ public class DataService {
         }
     }
 
-    public List<Game> getGamesDataFromS3() {
+    public List<Game> getGamesData() {
 
         try {
             MKEloData s3EloData = persistenceService.downloadData(filename);
@@ -58,19 +58,19 @@ public class DataService {
         }
     }
 
-    public void putPlayersDataToS3(List<Player> playersToS3) {
+    public void putPlayersData(List<Player> playersToS3) {
 
-        List<Game> gamesToS3 = getGamesDataFromS3();
-        putDataToS3(playersToS3, gamesToS3);
+        List<Game> gamesToS3 = getGamesData();
+        putData(playersToS3, gamesToS3);
     }
 
-    public void putGamesDataToS3(List<Game> gamesToS3) {
+    public void putGamesData(List<Game> gamesToS3) {
 
-        List<Player> playersToS3 = getPlayersDataFromS3();
-        putDataToS3(playersToS3, gamesToS3);
+        List<Player> playersToS3 = getPlayersData();
+        putData(playersToS3, gamesToS3);
     }
 
-    private void putDataToS3(List<Player> playersToS3, List<Game> gamesToS3) {
+    private void putData(List<Player> playersToS3, List<Game> gamesToS3) {
 
         JSONObject jsonData = new JSONObject();
         try {

@@ -29,7 +29,7 @@ public class GameRepository {
 
     public void addGame(LocalDateTime reportedTime, String reportedBySecret, List<List<String>> ranking) {
 
-        List<Game> games = dataService.getGamesDataFromS3();
+        List<Game> games = dataService.getGamesData();
         Optional<Player> reportedBy = playerRepository.getBySecret(reportedBySecret);
         if (reportedBy.isEmpty()) {
             log.error("Player with a secret {} doesn't exist", reportedBySecret);
@@ -61,11 +61,11 @@ public class GameRepository {
 
         updatePlayersData(match);
         games.add(0, new Game(reportedTime, reportedBy.orElseThrow(() -> new AuthenticationFailedException(reportedBySecret)), rankingResult));
-        dataService.putGamesDataToS3(games);
+        dataService.putGamesData(games);
     }
 
     public List<Game> getGames(Integer count) {
-        List<Game> games = dataService.getGamesDataFromS3();
+        List<Game> games = dataService.getGamesData();
         if (Objects.isNull(count) || count <= 0) {
             return Collections.unmodifiableList(games);
         } else {
@@ -74,13 +74,13 @@ public class GameRepository {
     }
 
     private void updatePlayersData(ELOMatch match) {
-        List<Player> playersData = dataService.getPlayersDataFromS3();
+        List<Player> playersData = dataService.getPlayersData();
         playersData.forEach(v -> {
             if (match.checkIfIsPlayer(v.getUuid())) {
                 v.setElo(match.getELO(v.getUuid()));
                 v.incrementGamesPlayed();
             }
         });
-        dataService.putPlayersDataToS3(playersData);
+        dataService.putPlayersData(playersData);
     }
 }

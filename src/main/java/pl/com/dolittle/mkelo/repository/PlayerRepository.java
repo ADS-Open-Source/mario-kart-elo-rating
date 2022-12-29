@@ -23,7 +23,7 @@ public class PlayerRepository {
 
 
     public void addPlayer(Player player) {
-        players = dataService.getPlayersDataFromS3();
+        players = dataService.getPlayersData();
         Validate.notNull(player.getName());
         Validate.isTrue(players.stream().noneMatch(i -> Objects.equals(i.getName(), player.getName())),
                 "Player with the given name already exists");
@@ -31,11 +31,11 @@ public class PlayerRepository {
                 "Player with the given email already exists");
         players.add(player);
         log.info("Player {} has been given secret {}", player.getName(), player.getSecret());
-        dataService.putPlayersDataToS3(players);
+        dataService.putPlayersData(players);
     }
 
     public List<Player> getAllSorted() {
-        players = dataService.getPlayersDataFromS3();
+        players = dataService.getPlayersData();
         List<Player> result = new ArrayList<>(players);
         result.sort((o1, o2) -> new CompareToBuilder()
                 .append(o2.getElo(), o1.getElo())
@@ -47,13 +47,13 @@ public class PlayerRepository {
 
     public Optional<Player> getBySecret(String secret) {
         log.info("Looking for a player with secret {}", secret);
-        players = dataService.getPlayersDataFromS3();
+        players = dataService.getPlayersData();
         return players.stream().filter(p -> Objects.equals(secret, p.getSecret())).findAny();
     }
 
     public Optional<Player> getById(String uuid) {
         log.info("Looking for a player with uuid {}", uuid);
-        players = dataService.getPlayersDataFromS3();
+        players = dataService.getPlayersData();
         return players.stream().filter(p -> Objects.equals(uuid, p.getUuid())).findAny();
     }
 }
