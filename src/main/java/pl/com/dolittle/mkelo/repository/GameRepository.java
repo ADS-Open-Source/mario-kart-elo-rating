@@ -3,7 +3,7 @@ package pl.com.dolittle.mkelo.repository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
-import pl.com.dolittle.mkelo.control.third.ELOMatch;
+import pl.com.dolittle.mkelo.entity.ELOMatch;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.exception.AuthenticationFailedException;

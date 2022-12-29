@@ -1,7 +1,6 @@
-package pl.com.dolittle.mkelo.control.third;
+package pl.com.dolittle.mkelo.entity;
 
 import lombok.extern.slf4j.Slf4j;
-import pl.com.dolittle.mkelo.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
