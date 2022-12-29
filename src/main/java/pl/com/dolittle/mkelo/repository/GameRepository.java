@@ -36,7 +36,8 @@ public class GameRepository {
             throw new AuthenticationFailedException(reportedBySecret);
         }
         var rankingPlayers = ranking.stream()
-                .map(l -> l.stream().map(uuid -> playerRepository.getById(uuid).orElseThrow(() -> new PlayerUUIDNotFoundException(uuid)))
+                .map(l -> l.stream()
+                        .map(uuid -> playerRepository.getById(uuid).orElseThrow(() -> new PlayerUUIDNotFoundException(uuid)))
                         .toList())
                 .toList();
         ELOMatch match = new ELOMatch();

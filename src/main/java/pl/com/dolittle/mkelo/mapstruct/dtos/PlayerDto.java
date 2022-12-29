@@ -18,17 +18,20 @@ public class PlayerDto {
     @JsonView(GenericViews.Private.class)
     private String secret;
 
+    @JsonView(GenericViews.Private.class)
+    private String uuid;
+
     @NotBlank(groups = CreatePlayerValidation.class)
     @JsonView(GenericViews.Public.class)
     private String name;
 
     @NotBlank(groups = CreatePlayerValidation.class)
-    @JsonView(GenericViews.Public.class)
+    @JsonView(GenericViews.Private.class)
     private String email;
 
-    @JsonView(GenericViews.Private.class)
+    @JsonView(GenericViews.Public.class)
     private int elo;
 
-    @JsonView(GenericViews.Private.class)
+    @JsonView(GenericViews.Public.class)
     private int gamesPlayed;
 }

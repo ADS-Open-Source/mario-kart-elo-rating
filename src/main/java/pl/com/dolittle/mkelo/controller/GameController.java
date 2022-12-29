@@ -1,10 +1,12 @@
 package pl.com.dolittle.mkelo.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.com.dolittle.mkelo.mapstruct.views.GenericViews;
 import pl.com.dolittle.mkelo.repository.GameRepository;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.mapstruct.dtos.GameDto;
@@ -21,6 +23,7 @@ public class GameController {
 
     private final GameRepository gameRepository;
 
+    @JsonView(GenericViews.Public.class)
     @GetMapping
     public List<Game> get(@RequestParam(required = false) Integer count) {
         return gameRepository.getGames(count);

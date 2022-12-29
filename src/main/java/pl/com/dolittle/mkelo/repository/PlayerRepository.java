@@ -8,12 +8,14 @@ import org.springframework.stereotype.Repository;
 import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.services.FileService;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 @Slf4j
-public class PlayerRepository implements Serializable {
+public class PlayerRepository {
 
     @Autowired
     private FileService fileService;
