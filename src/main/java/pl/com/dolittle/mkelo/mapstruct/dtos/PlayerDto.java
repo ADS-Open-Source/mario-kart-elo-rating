@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.com.dolittle.mkelo.mapstruct.validation.AddGameValidation;
 import pl.com.dolittle.mkelo.mapstruct.validation.CreatePlayerValidation;
+import pl.com.dolittle.mkelo.mapstruct.views.GameViews;
 import pl.com.dolittle.mkelo.mapstruct.views.GenericViews;
 
 import javax.validation.constraints.NotBlank;
@@ -33,6 +34,9 @@ public class PlayerDto {
 
     @JsonView(GenericViews.Public.class)
     private int elo;
+
+    @JsonView(GameViews.GameHistory.class)
+    private int preElo;
 
     @JsonView(GenericViews.Public.class)
     private int gamesPlayed;

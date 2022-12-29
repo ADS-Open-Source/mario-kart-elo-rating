@@ -7,12 +7,10 @@ import pl.com.dolittle.mkelo.control.third.ELOMatch;
 import pl.com.dolittle.mkelo.control.third.ELOPlayer;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Player;
-import pl.com.dolittle.mkelo.entity.Result;
 import pl.com.dolittle.mkelo.exception.AuthenticationFailedException;
 import pl.com.dolittle.mkelo.exception.PlayerUUIDNotFoundException;
 import pl.com.dolittle.mkelo.services.DataService;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -27,9 +25,12 @@ public class GameRepository {
     private PlayerRepository playerRepository;
 
 
-    public void addGame(LocalDateTime reportedTime, String reportedBySecret, List<List<String>> ranking) {
+    public void addGame(Game game) {
 
+        String reportedBySecret = game.getReportedBy().getSecret();
+        List<List<Player>> ranking = game.getRanking();
         List<Game> games = dataService.getGamesData();
+
         Optional<Player> reportedBy = playerRepository.getBySecret(reportedBySecret);
         if (reportedBy.isEmpty()) {
             log.error("Player with a secret {} doesn't exist", reportedBySecret);
@@ -37,7 +38,7 @@ public class GameRepository {
         }
         var rankingPlayers = ranking.stream()
                 .map(l -> l.stream()
-                        .map(uuid -> playerRepository.getById(uuid).orElseThrow(() -> new PlayerUUIDNotFoundException(uuid)))
+                        .map(player -> playerRepository.getById(player.getUuid()).orElseThrow(() -> new PlayerUUIDNotFoundException(player.getUuid())))
                         .toList())
                 .toList();
         ELOMatch match = new ELOMatch();
@@ -53,14 +54,15 @@ public class GameRepository {
                 .map(l -> l.stream().map(p -> {
                             var oldElo = p.getElo();
                             p.setElo(match.getELO(p.getUuid()));
+                            p.setPreElo(oldElo);
                             p.incrementGamesPlayed();
-                            return new Result(p, oldElo, p.getElo());
+                            return p;
                         })
                         .toList())
                 .toList();
 
         updatePlayersData(match);
-        games.add(0, new Game(reportedTime, reportedBy.orElseThrow(() -> new AuthenticationFailedException(reportedBySecret)), rankingResult));
+        games.add(0, new Game(game.getReportedTime(), reportedBy.orElseThrow(() -> new AuthenticationFailedException(reportedBySecret)), rankingResult));
         dataService.putGamesData(games);
     }
 

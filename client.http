@@ -29,14 +29,18 @@ Content-Type: application/json
 
 {
   "reportedBy": {
-    "secret": "309b307d-292e-4a48-90ef-8f937b2ddb52"
+    "secret": "dfbbf7d3-ec40-4f2a-b968-a2de7cc03275"
   },
-  "results": [
+  "ranking": [
     [
-      "d95732b0-b9c6-4825-b7d6-8a03c5e04f13"
+      {
+        "uuid": "b72cf377-b79d-4010-93ef-85a3e396f517"
+      }
     ],
     [
-      "5a63dc42-f086-4884-ae8a-51931a37ce17"
+      {
+        "uuid": "4f6e3b9d-d1cc-4c4c-8c6d-370f2b8e5571"
+      }
     ]
   ]
 }

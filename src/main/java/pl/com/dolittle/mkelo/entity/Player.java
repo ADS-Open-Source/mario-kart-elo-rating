@@ -15,6 +15,7 @@ public class Player implements Serializable {
     private String name;
     private String email;
     private int elo;
+    private transient int preElo;
     private int gamesPlayed;
 
 

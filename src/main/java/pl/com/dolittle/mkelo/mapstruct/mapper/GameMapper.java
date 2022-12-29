@@ -1,20 +1,18 @@
 package pl.com.dolittle.mkelo.mapstruct.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.mapstruct.dtos.GameDto;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = PlayerMapper.class)
 public interface GameMapper {
 
-    //  DTO to Entity
-    Game toEntity(GameDto gameDto);
-
-    // Entity to DTO
+    @Named("gameToGameDto")
+    @Mapping(source = "ranking", target = "ranking", qualifiedByName = "rankingMapper")
     GameDto toDto(Game game);
 
+    @IterableMapping(qualifiedByName = "gameToGameDto")
     List<GameDto> toDtoList(List<Game> games);
 }

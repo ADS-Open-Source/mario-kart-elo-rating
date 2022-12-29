@@ -7,4 +7,6 @@ import java.util.List;
 public interface GameService {
 
     List<GameDto> getGames(Integer count);
+
+    void addGame(GameDto gameDto);
 }
