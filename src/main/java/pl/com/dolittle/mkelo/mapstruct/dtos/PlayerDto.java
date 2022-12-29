@@ -38,6 +38,9 @@ public class PlayerDto {
     @JsonView(GameViews.GameHistory.class)
     private int preElo;
 
+    @JsonView(GameViews.GameHistory.class)
+    private int place;
+
     @JsonView(GenericViews.Public.class)
     private int gamesPlayed;
 }

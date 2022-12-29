@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import pl.com.dolittle.mkelo.control.third.ELOMatch;
-import pl.com.dolittle.mkelo.control.third.ELOPlayer;
 import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.exception.AuthenticationFailedException;
@@ -44,7 +43,8 @@ public class GameRepository {
         ELOMatch match = new ELOMatch();
         for (int i = 0; i < rankingPlayers.size(); i++) {
             for (var player : rankingPlayers.get(i)) {
-                match.addPlayer(new ELOPlayer(player.getUuid(), i + 1, player.getElo()));
+                player.setPlace(i+1);
+                match.addPlayer(player);
             }
         }
         match.calculateELOs();

@@ -1,6 +1,7 @@
 package pl.com.dolittle.mkelo.control.third;
 
 import lombok.extern.slf4j.Slf4j;
+import pl.com.dolittle.mkelo.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +10,14 @@ import java.util.Objects;
 @Slf4j
 public class ELOMatch {
 
-    private final List<ELOPlayer> players = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
 
-    public void addPlayer(ELOPlayer player) {
+    public void addPlayer(Player player) {
         players.add(player);
     }
 
     public int getELO(String uuid) {
-        for (ELOPlayer p : players) {
+        for (Player p : players) {
             if (Objects.equals(p.getUuid(), uuid))
                 return p.getElo();
         }
@@ -26,7 +27,7 @@ public class ELOMatch {
 
     public boolean checkIfIsPlayer(String uuid) {
 
-        for (ELOPlayer p : players) {
+        for (Player p : players) {
             if (Objects.equals(p.getUuid(), uuid))
                 return true;
         }

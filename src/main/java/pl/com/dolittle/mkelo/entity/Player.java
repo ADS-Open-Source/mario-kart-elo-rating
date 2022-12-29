@@ -16,6 +16,7 @@ public class Player implements Serializable {
     private String email;
     private int elo;
     private transient int preElo;
+    private transient int place;
     private int gamesPlayed;
 
 
@@ -30,5 +31,9 @@ public class Player implements Serializable {
 
     public void incrementGamesPlayed() {
         this.gamesPlayed++;
+    }
+
+    public void addToElo(float number) {
+        this.elo += number;
     }
 }
