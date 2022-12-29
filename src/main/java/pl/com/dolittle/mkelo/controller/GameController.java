@@ -6,11 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.com.dolittle.mkelo.mapstruct.dtos.GameDto;
+import pl.com.dolittle.mkelo.mapstruct.dtos.PostGameDto;
+import pl.com.dolittle.mkelo.mapstruct.validation.AddGameValidation;
 import pl.com.dolittle.mkelo.mapstruct.views.GenericViews;
 import pl.com.dolittle.mkelo.repository.GameRepository;
-import pl.com.dolittle.mkelo.entity.Game;
-import pl.com.dolittle.mkelo.mapstruct.dtos.GameDto;
-import pl.com.dolittle.mkelo.mapstruct.validation.AddGameValidation;
+import pl.com.dolittle.mkelo.services.GameService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,15 +23,16 @@ import java.util.List;
 public class GameController {
 
     private final GameRepository gameRepository;
+    private final GameService gameService;
 
     @JsonView(GenericViews.Public.class)
     @GetMapping
-    public List<Game> get(@RequestParam(required = false) Integer count) {
-        return gameRepository.getGames(count);
+    public List<GameDto> get(@RequestParam(required = false) Integer count) {
+        return gameService.getGames(count);
     }
 
     @PostMapping
-    public ResponseEntity<String> addGame(@RequestBody @Validated(AddGameValidation.class) GameDto game) {
+    public ResponseEntity<String> addGame(@RequestBody @Validated(AddGameValidation.class) PostGameDto game) {
         gameRepository.addGame(LocalDateTime.now(), game.getReportedBySecret(), game.getResults());
         return new ResponseEntity<>("game added", HttpStatus.OK);
     }
