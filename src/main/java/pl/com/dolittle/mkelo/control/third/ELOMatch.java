@@ -36,7 +36,7 @@ public class ELOMatch {
 
     public void calculateELOs() {
         int n = players.size();
-        float K = 32 / (float) (n - 1);
+        float k = 32 / (float) (n - 1);
 
         for (int i = 0; i < n; i++) {
             int curPlace = players.get(i).getPlace();
@@ -48,20 +48,20 @@ public class ELOMatch {
                     int opponentELO = players.get(j).getElo();
 
                     //work out S
-                    float S;
+                    float s;
                     if (curPlace < opponentPlace)
-                        S = 1.0F;
+                        s = 1.0F;
                     else if (curPlace == opponentPlace)
-                        S = 0.5F;
+                        s = 0.5F;
                     else
-                        S = 0.0F;
+                        s = 0.0F;
 
                     //work out EA
-                    float EA = 1 / (1.0f + (float) Math.pow(10.0f, (opponentELO - curELO) / 400.0f));
+                    float ea = 1 / (1.0f + (float) Math.pow(10.0f, (opponentELO - curELO) / 400.0f));
 
                     //calculate ELO change vs this one opponent, add it to our change bucket
                     //I currently round at this point, this keeps rounding changes symetrical between EA and EB, but changes K more than it should
-                    players.get(i).addToElo(Math.round(K * (S - EA)));
+                    players.get(i).addToElo(Math.round(k * (s - ea)));
                 }
             }
             //add accumulated change to initial ELO for final ELO
