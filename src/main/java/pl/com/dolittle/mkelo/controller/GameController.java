@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.com.dolittle.mkelo.mapstruct.dtos.GameDto;
-import pl.com.dolittle.mkelo.mapstruct.dtos.PostGameDto;
 import pl.com.dolittle.mkelo.mapstruct.validation.AddGameValidation;
 import pl.com.dolittle.mkelo.mapstruct.views.GenericViews;
 import pl.com.dolittle.mkelo.repository.GameRepository;
@@ -32,8 +31,8 @@ public class GameController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addGame(@RequestBody @Validated(AddGameValidation.class) PostGameDto game) {
-        gameRepository.addGame(LocalDateTime.now(), game.getReportedBySecret(), game.getResults());
+    public ResponseEntity<String> addGame(@RequestBody @Validated(AddGameValidation.class) GameDto game) {
+        gameRepository.addGame(LocalDateTime.now(), game.getReportedBy().getSecret(), game.getResults());
         return new ResponseEntity<>("game added", HttpStatus.OK);
     }
 }

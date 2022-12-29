@@ -2,8 +2,8 @@ POST http://localhost:8080/api/players
 Content-Type: application/json
 
 {
-  "name":  "Arti",
-  "email":  "arti@gmail.com"
+  "name": "Arti",
+  "email": "arti@gmail.com"
 }
 
 ###
@@ -12,8 +12,8 @@ POST http://localhost:8080/api/players
 Content-Type: application/json
 
 {
-  "name":  "Marek",
-  "email":  "marek@gmail.com"
+  "name": "Marek",
+  "email": "marek@gmail.com"
 }
 
 ###
@@ -28,10 +28,16 @@ POST http://localhost:8080/api/games
 Content-Type: application/json
 
 {
-  "reportedBySecret":  "309b307d-292e-4a48-90ef-8f937b2ddb52",
-  "results":  [
-    ["d95732b0-b9c6-4825-b7d6-8a03c5e04f13"],
-    ["5a63dc42-f086-4884-ae8a-51931a37ce17"]
+  "reportedBy": {
+    "secret": "309b307d-292e-4a48-90ef-8f937b2ddb52"
+  },
+  "results": [
+    [
+      "d95732b0-b9c6-4825-b7d6-8a03c5e04f13"
+    ],
+    [
+      "5a63dc42-f086-4884-ae8a-51931a37ce17"
+    ]
   ]
 }
 
