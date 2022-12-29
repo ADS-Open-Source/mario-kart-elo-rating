@@ -51,17 +51,8 @@ public class GameRepository {
         match.calculateELOs();
         log.info("match info: {}", match);
 
-        var rankingResult = ranking.stream()
-                .map(l -> l.stream().map(p -> {
-                            p.setElo(match.getELO(p.getUuid()));
-                            p.incrementGamesPlayed();
-                            return p;
-                        })
-                        .toList())
-                .toList();
-
         updatePlayersData(match);
-        games.add(0, new Game(game.getReportedTime(), reportedBy.orElseThrow(() -> new AuthenticationFailedException(reportedBySecret)), rankingResult));
+        games.add(0, new Game(game.getReportedTime(), reportedBy.orElseThrow(() -> new AuthenticationFailedException(reportedBySecret)), ranking));
         dataService.putGamesData(games);
     }
 
