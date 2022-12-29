@@ -35,26 +35,25 @@ public class GameRepository {
             log.error("Player with a secret {} doesn't exist", reportedBySecret);
             throw new AuthenticationFailedException(reportedBySecret);
         }
-        var rankingPlayers = ranking.stream()
+        ranking = ranking.stream()
                 .map(l -> l.stream()
                         .map(player -> playerRepository.getById(player.getUuid()).orElseThrow(() -> new PlayerUUIDNotFoundException(player.getUuid())))
                         .toList())
                 .toList();
         ELOMatch match = new ELOMatch();
-        for (int i = 0; i < rankingPlayers.size(); i++) {
-            for (var player : rankingPlayers.get(i)) {
+        for (int i = 0; i < ranking.size(); i++) {
+            for (var player : ranking.get(i)) {
                 player.setPlace(i+1);
+                player.setPreElo(player.getElo());
                 match.addPlayer(player);
             }
         }
         match.calculateELOs();
         log.info("match info: {}", match);
 
-        var rankingResult = rankingPlayers.stream()
+        var rankingResult = ranking.stream()
                 .map(l -> l.stream().map(p -> {
-                            var oldElo = p.getElo();
                             p.setElo(match.getELO(p.getUuid()));
-                            p.setPreElo(oldElo);
                             p.incrementGamesPlayed();
                             return p;
                         })
