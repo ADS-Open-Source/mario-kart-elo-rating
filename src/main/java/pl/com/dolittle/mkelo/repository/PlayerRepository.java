@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.com.dolittle.mkelo.entity.Player;
+import pl.com.dolittle.mkelo.exception.PlayerSecretNotFoundException;
 import pl.com.dolittle.mkelo.services.DataService;
 
 import java.util.ArrayList;
@@ -55,6 +56,13 @@ public class PlayerRepository {
         log.info("Looking for a player with uuid {}", uuid);
         players = dataService.getPlayersData();
         return players.stream().filter(p -> Objects.equals(uuid, p.getUuid())).findAny();
+    }
+
+    public void activatePlayer(String secret) {
+        Player player = this.getBySecret(secret).orElseThrow(() -> new PlayerSecretNotFoundException(secret));
+        log.info("Activating player with secret: {}", secret);
+        player.activate();
+        dataService.putPlayersData(players);
     }
 }
 

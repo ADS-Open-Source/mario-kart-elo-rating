@@ -9,4 +9,6 @@ public interface PlayerService {
     List<PlayerDto> getActivatedSorted();
 
     String createPlayer(PlayerDto playerDto);
+
+    String activatePlayer(PlayerDto playerDto);
 }

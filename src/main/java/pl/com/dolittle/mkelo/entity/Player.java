@@ -38,4 +38,8 @@ public class Player implements Serializable {
     public void addToElo(float number) {
         this.elo += number;
     }
+
+    public void activate() {
+        this.activated = true;
+    }
 }
