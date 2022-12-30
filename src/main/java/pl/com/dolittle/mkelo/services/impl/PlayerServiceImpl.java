@@ -21,8 +21,9 @@ public class PlayerServiceImpl implements PlayerService {
     private final EmailService emailService;
 
     @Override
-    public List<PlayerDto> getAllSorted() {
-        return playerMapper.toDtoList(playerRepository.getAllSorted());
+    public List<PlayerDto> getActivatedSorted() {
+        List<Player> players = playerRepository.getAllSorted();
+        return playerMapper.toDtoList(players.stream().filter(Player::isActivated).toList());
     }
 
     @Override

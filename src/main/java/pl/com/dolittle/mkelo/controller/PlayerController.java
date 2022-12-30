@@ -24,7 +24,7 @@ public class PlayerController {
     @JsonView(GenericViews.Public.class)
     @GetMapping("/all")
     public List<PlayerDto> getAllSorted() {
-        return playerService.getAllSorted();
+        return playerService.getActivatedSorted();
     }
 
     @JsonView(GenericViews.Public.class)
