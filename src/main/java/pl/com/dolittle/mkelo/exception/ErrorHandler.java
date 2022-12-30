@@ -18,4 +18,9 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> handlePlayerUUIDNotFoundException(PlayerUUIDNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(PlayerSecretNotFoundException.class)
+    public ResponseEntity<String> handlePlayerSecretNotFoundException(PlayerSecretNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }

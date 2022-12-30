@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "name": "Arti",
-  "email": "arti@gmail.com"
+  "email": "artidfghj@gmail.com"
 }
 
 ###
@@ -13,7 +13,15 @@ Content-Type: application/json
 
 {
   "name": "Marek",
-  "email": "marek@gmail.com"
+  "email": "marekszdfxgchvjbknlm@gmail.com"
+}
+
+###
+POST http://localhost:8080/api/players/activate
+Content-Type: application/json
+
+{
+  "secret": "3e6cab2f-5171-4528-8928-9590bd3c5e0f"
 }
 
 ###
