@@ -30,16 +30,19 @@ public class GameRepository {
         List<List<Player>> ranking = game.getRanking();
         List<Game> games = dataService.getGamesData();
 
+        // check if given player exists
         Optional<Player> reportedBy = playerRepository.getBySecret(reportedBySecret);
         if (reportedBy.isEmpty()) {
             log.error("Player with a secret {} doesn't exist", reportedBySecret);
             throw new AuthenticationFailedException(reportedBySecret);
         }
+        // get full players from UUID-s
         ranking = ranking.stream()
                 .map(l -> l.stream()
                         .map(player -> playerRepository.getById(player.getUuid()).orElseThrow(() -> new PlayerUUIDNotFoundException(player.getUuid())))
                         .toList())
                 .toList();
+        // calculate match
         ELOMatch match = new ELOMatch();
         for (int i = 0; i < ranking.size(); i++) {
             for (var player : ranking.get(i)) {
@@ -51,7 +54,7 @@ public class GameRepository {
         match.calculateELOs();
         log.info("match info: {}", match);
 
-        updatePlayersData(match);
+        updatePlayersData(match);  // TODO change this function
         games.add(0, new Game(game.getReportedTime(), reportedBy.orElseThrow(() -> new AuthenticationFailedException(reportedBySecret)), ranking));
         dataService.putGamesData(games);
     }

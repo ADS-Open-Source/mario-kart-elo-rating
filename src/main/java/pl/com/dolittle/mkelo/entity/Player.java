@@ -14,6 +14,7 @@ public class Player implements Serializable {
     private String uuid;
     private String name;
     private String email;
+    private boolean activated;
     private int elo;
     private transient int preElo;
     private transient int place;
@@ -25,6 +26,7 @@ public class Player implements Serializable {
         this.uuid = uuid;
         this.name = name;
         this.email = email;
+        this.activated = false;
         this.elo = 2000;
         this.gamesPlayed = 0;
     }

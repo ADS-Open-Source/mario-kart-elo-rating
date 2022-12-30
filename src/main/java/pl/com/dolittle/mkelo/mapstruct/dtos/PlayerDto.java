@@ -32,6 +32,9 @@ public class PlayerDto {
     @JsonView(GenericViews.Private.class)
     private String email;
 
+    @JsonView(GenericViews.Private.class)
+    private boolean activated;
+
     @JsonView(GenericViews.Public.class)
     private int elo;
 
