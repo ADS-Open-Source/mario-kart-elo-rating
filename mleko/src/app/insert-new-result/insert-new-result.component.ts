@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {MlekoService} from "src/app/service/mleko.service";
 import {Player, Result} from "src/app/model/models";
@@ -55,8 +55,8 @@ export class InsertNewResultComponent implements OnInit {
         this.fourthPlace.map(place => place.uuid),
       ]
     }
-    this.mlekoService.saveResult(result).subscribe(()=> {
-      this.route.navigate(['last-results'], { queryParams: { secret: this.secret } })
+    this.mlekoService.saveResult(result).subscribe(() => {
+      this.route.navigate(['last-results'], {queryParams: {secret: this.secret}})
     });
   }
 

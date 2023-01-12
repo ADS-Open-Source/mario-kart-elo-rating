@@ -1,9 +1,9 @@
 export class Player {
-  private readonly _uuid:string;
-  private readonly _name:string;
-  private readonly _elo:number;
-  private readonly _gamesPlayed:number;
-  private readonly _email:string;
+  private readonly _uuid: string;
+  private readonly _name: string;
+  private readonly _elo: number;
+  private readonly _gamesPlayed: number;
+  private readonly _email: string;
 
   constructor(uuid: string, name: string, elo: number, gamesPlayed: number, email: string) {
     this._uuid = uuid;

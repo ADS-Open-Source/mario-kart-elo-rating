@@ -1,11 +1,10 @@
-
 import {Result} from "./Result";
 import {Player} from "src/app/model/Player";
 
 export class Game {
-  private readonly _reportedTime:string;
-  private readonly _reportedBy:Player;
-  private readonly _result:Result[][];
+  private readonly _reportedTime: string;
+  private readonly _reportedBy: Player;
+  private readonly _result: Result[][];
 
   constructor(reportedTime: any, player: Player, result: Result[][]) {
     this._reportedTime = reportedTime;
