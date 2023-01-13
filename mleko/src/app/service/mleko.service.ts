@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {Game} from "../model/Game";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Player, PlayerShort, Result} from "src/app/model/models";
+import {Player, PlayerSecret, PlayerShort, Result} from "src/app/model/models";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MlekoService {
 
-  private DOMAIN = 'http://mleko.dolittle.com.pl/api/'
+  private DOMAIN = 'http://localhost:8080/api/'
 
   constructor(
     private httpClient: HttpClient
@@ -20,8 +20,17 @@ export class MlekoService {
     return this.httpClient.get<Array<Player>>(this.DOMAIN + 'players/all');
   }
 
+  activatePlayer(playerSecret: PlayerSecret): Observable<any> {
+    return this.httpClient.post<Observable<any>>(`${this.DOMAIN}players/activate`, playerSecret);
+  }
+
+  isActivated(secret: string): Observable<any> {
+    return this.httpClient.get<Observable<boolean>>(`${this.DOMAIN}players/activated/${secret}`)
+  }
+
   saveResult(result: Result): Observable<any> {
-    return this.httpClient.post<Observable<any>>(this.DOMAIN + 'games', result);
+    const headers = new HttpHeaders().set('Accept', 'text/plain');
+    return this.httpClient.post(this.DOMAIN + 'games', result, {headers: headers, responseType: 'text'});
   }
 
   getGames(count: number): Observable<Array<Game>> {

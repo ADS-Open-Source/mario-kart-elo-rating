@@ -3,6 +3,7 @@ package pl.com.dolittle.mkelo.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
@@ -33,6 +34,11 @@ public class PlayerController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public String addPlayer(@RequestBody @Validated(CreatePlayerValidation.class) PlayerDto playerDto) {
         return playerService.createPlayer(playerDto);
+    }
+
+    @GetMapping("/activated/{secret}")
+    public ResponseEntity<Boolean> checkIfActivated(@PathVariable String secret) {
+        return new ResponseEntity<>(playerService.checkIfActivated(secret), HttpStatus.OK);
     }
 
     @PostMapping("/activate")

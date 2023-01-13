@@ -1,16 +1,18 @@
-export class Player {
+export class ResultPlayer {
   private readonly _uuid: string;
   private readonly _name: string;
   private readonly _elo: number;
+  private readonly _preElo: number;
+  private readonly _place: number;
   private readonly _gamesPlayed: number;
-  private readonly _email: string;
 
-  constructor(uuid: string, name: string, elo: number, gamesPlayed: number, email: string) {
+  constructor(uuid: string, name: string, elo: number, preElo: number, place: number, gamesPlayed: number) {
     this._uuid = uuid;
     this._name = name;
     this._elo = elo;
+    this._preElo = preElo;
+    this._place = place;
     this._gamesPlayed = gamesPlayed;
-    this._email = email;
   }
 
   get uuid(): string {
@@ -25,11 +27,16 @@ export class Player {
     return this._elo;
   }
 
+  get preElo(): number {
+    return this._preElo;
+  }
+
+  get place(): number {
+    return this._place;
+  }
+
   get gamesPlayed(): number {
     return this._gamesPlayed;
   }
 
-  get email(): string {
-    return this._email;
-  }
 }

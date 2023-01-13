@@ -11,6 +11,7 @@ import pl.com.dolittle.mkelo.services.EmailService;
 import pl.com.dolittle.mkelo.services.PlayerService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -47,5 +48,15 @@ public class PlayerServiceImpl implements PlayerService {
 
         playerRepository.activatePlayer(secret);
         return "player activated";
+    }
+
+    @Override
+    public Boolean checkIfActivated(String secret) {
+
+        Optional<Player> player = playerRepository.getBySecret(secret);
+        if (player.isPresent() && player.get().isActivated()) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 }
