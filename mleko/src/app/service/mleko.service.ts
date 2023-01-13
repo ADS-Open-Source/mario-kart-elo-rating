@@ -9,7 +9,7 @@ import {Player, PlayerSecret, PlayerShort, Result} from "src/app/model/models";
 })
 export class MlekoService {
 
-  private DOMAIN = 'http://localhost:8080/api/'
+  private DOMAIN = 'http://mleko.dolittle.com.pl/api/'
 
   constructor(
     private httpClient: HttpClient
