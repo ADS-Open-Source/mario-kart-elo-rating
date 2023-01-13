@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {MlekoService} from "src/app/service/mleko.service";
-import {Player, Result} from "src/app/model/models";
+import {Player, PlayerSecret, Result} from "src/app/model/models";
 import {Router} from "@angular/router";
 import {AppComponent} from "src/app/app.component";
 
@@ -14,6 +14,7 @@ export class InsertNewResultComponent implements OnInit {
 
   // @ts-ignore
   secret: string;
+  isActivated: boolean = true;
   players: Array<Player> = [];
   firstPlace: Array<Player> = [];
   secondPlace: Array<Player> = [];
@@ -28,8 +29,14 @@ export class InsertNewResultComponent implements OnInit {
 
   ngOnInit(): void {
     this.mlekoService.getPlayers()
-      .subscribe(players => this.players = players);
-    AppComponent.secret.subscribe(secret => this.secret = secret);
+      .subscribe((players: Player[]) => this.players = players);
+
+    AppComponent.secret.subscribe((secret: string) => this.secret = secret);
+
+    if (this.secret != null) {
+      this.mlekoService.isActivated(this.secret)
+        .subscribe((isActivated: boolean) => this.isActivated = isActivated);
+    }
   }
 
   drop(event: CdkDragDrop<Player[], any>) {
@@ -47,12 +54,14 @@ export class InsertNewResultComponent implements OnInit {
 
   saveResult() {
     const result: Result = {
-      reportedBySecret: this.secret,
-      results: [
-        this.firstPlace.map(place => place.uuid),
-        this.secondPlace.map(place => place.uuid),
-        this.thirdPlace.map(place => place.uuid),
-        this.fourthPlace.map(place => place.uuid),
+      reportedBy: {
+        secret: this.secret
+      },
+      ranking: [
+        this.firstPlace,
+        this.secondPlace,
+        this.thirdPlace,
+        this.fourthPlace,
       ]
     }
     this.mlekoService.saveResult(result).subscribe(() => {
@@ -62,5 +71,16 @@ export class InsertNewResultComponent implements OnInit {
 
   saveButtonDisabled() {
     return !this.secret || (this.firstPlace.length + this.secondPlace.length + this.thirdPlace.length + this.fourthPlace.length < 2)
+  }
+
+  activatePlayer() {
+    const playerSecret: PlayerSecret = {
+      secret: this.secret
+    }
+    this.mlekoService.activatePlayer(playerSecret).subscribe();
+  }
+
+  activateButtonDisabled() {
+    return !this.secret;
   }
 }

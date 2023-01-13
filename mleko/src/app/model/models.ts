@@ -7,11 +7,15 @@ export interface Player {
 }
 
 export interface Result {
-  reportedBySecret: string;
-  results: Array<Array<string>>
+  reportedBy: PlayerSecret;
+  ranking: Array<Array<Player>>
 }
 
 export interface PlayerShort {
   "name": string;
   "email": string;
+}
+
+export interface PlayerSecret {
+  "secret": string;
 }
