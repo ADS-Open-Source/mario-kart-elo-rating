@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Game} from "../model/Game";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Player, PlayerSecret, PlayerShort, Result} from "src/app/model/models";
 
@@ -29,7 +29,8 @@ export class MlekoService {
   }
 
   saveResult(result: Result): Observable<any> {
-    return this.httpClient.post<Observable<any>>(this.DOMAIN + 'games', result);
+    const headers = new HttpHeaders().set('Accept', 'text/plain');
+    return this.httpClient.post(this.DOMAIN + 'games', result, {headers: headers, responseType: 'text'});
   }
 
   getGames(count: number): Observable<Array<Game>> {
