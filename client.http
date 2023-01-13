@@ -25,6 +25,10 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:8080/api/players/activated/3e6cab2f-5171-4528-8928-9590bd3c5e0f
+Accept: application/json
+
+###
 GET http://localhost:8080/api/players/all
 Accept: application/json
 
