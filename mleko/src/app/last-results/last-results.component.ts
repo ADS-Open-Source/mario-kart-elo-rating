@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MlekoService} from "../service/mleko.service";
 import {Game} from "../model/Game";
-import {Player} from "../model/models";
-import {Result} from "../model/Result";
+import {ResultPlayer} from "../model/ResultPlayer";
 
 export interface ProcessedGame {
   date: string;
@@ -28,28 +27,26 @@ export class LastResultsComponent implements OnInit {
   displayedColumns: string[] = ['date', 'result', 'reportedBy'];
   games: Array<Game> = [];
 
-  generateText(results : Result[][]): string {
+  generateText(ranking : ResultPlayer[][]): string {
     let i = 0;
     let text = "";
-    for (const array of results) {
+    for (const array of ranking) {
       i++;
-      for (const result of array) {
-        text += " " + i + ". " + result.player.name + " (" + (result.eloAfter - result.eloBefore) + " -> "
-          + result.eloAfter + ")";
+      for (const resultPlayer of array) {
+        text += `${i}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo}) `;
       }
     }
     return text;
   }
 
   ngOnInit(): void {
-    this.mlekoService.getGames(10).subscribe(games => {
+    this.mlekoService.getGames(10).subscribe((games: Game[]) => {
       this.games = games
-      console.log(this.games);
       this.dataSource = []
       for (const game of this.games) {
         this.dataSource.push({
           date: game.reportedTime,
-          result: this.generateText(game.result),
+          result: this.generateText(game.ranking),
           reportedBy: game.reportedBy.name
         })
       }
