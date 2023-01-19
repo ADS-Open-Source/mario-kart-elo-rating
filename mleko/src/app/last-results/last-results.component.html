@@ -10,7 +10,13 @@
 
         <ng-container matColumnDef="result">
             <th mat-header-cell *matHeaderCellDef> Result </th>
-            <td mat-cell *matCellDef="let element"> {{element.result}} </td>
+            <td mat-cell *matCellDef="let element">
+                <ng-container *ngFor="let text of element.resultTable">
+                  <div>
+                    <span>{{text}}</span>
+                  </div>
+                </ng-container>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="reportedBy">

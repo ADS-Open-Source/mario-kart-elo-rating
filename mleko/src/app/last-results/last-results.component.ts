@@ -5,7 +5,7 @@ import {ResultPlayer} from "../model/ResultPlayer";
 
 export interface ProcessedGame {
   date: string;
-  result: string;
+  resultTable: string[];
   reportedBy: string;
 }
 
@@ -27,16 +27,15 @@ export class LastResultsComponent implements OnInit {
   displayedColumns: string[] = ['date', 'result', 'reportedBy'];
   games: Array<Game> = [];
 
-  generateText(ranking : ResultPlayer[][]): string {
-    let i = 0;
-    let text = "";
+  generateText(ranking : ResultPlayer[][]): string[] {
+    let resultTexts: string [];
+    resultTexts = [];
     for (const array of ranking) {
-      i++;
       for (const resultPlayer of array) {
-        text += `${i}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo}) `;
+        resultTexts.push(`${resultPlayer.place}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo} Δ${resultPlayer.elo-resultPlayer.preElo})`);
       }
     }
-    return text;
+    return resultTexts;
   }
 
   ngOnInit(): void {
@@ -46,7 +45,7 @@ export class LastResultsComponent implements OnInit {
       for (const game of this.games) {
         this.dataSource.push({
           date: game.reportedTime,
-          result: this.generateText(game.ranking),
+          resultTable: this.generateText(game.ranking),
           reportedBy: game.reportedBy.name
         })
       }
