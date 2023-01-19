@@ -1,15 +1,16 @@
 package pl.com.dolittle.mkelo.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pl.com.dolittle.mkelo.control.Games;
-import pl.com.dolittle.mkelo.entity.Game;
 import pl.com.dolittle.mkelo.mapstruct.dtos.GameDto;
 import pl.com.dolittle.mkelo.mapstruct.validation.AddGameValidation;
+import pl.com.dolittle.mkelo.mapstruct.views.GameViews;
+import pl.com.dolittle.mkelo.services.GameService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -18,16 +19,17 @@ import java.util.List;
 @RequestMapping("/api/games")
 public class GameController {
 
-    private final Games games;
+    private final GameService gameService;
 
+    @JsonView(GameViews.GameHistory.class)
     @GetMapping
-    public List<Game> get(@RequestParam(required = false) Integer count) {
-        return games.getGames(count);
+    public List<GameDto> get(@RequestParam(required = false) Integer count) {
+        return gameService.getGames(count);
     }
 
     @PostMapping
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void addGame(@RequestBody @Validated(AddGameValidation.class) GameDto game) {
-        games.addGame(LocalDateTime.now(), game.getReportedBySecret(), game.getResults());
+    public ResponseEntity<String> addGame(@RequestBody @Validated(AddGameValidation.class) GameDto gameDto) {
+        gameService.addGame(gameDto);
+        return new ResponseEntity<>("game added", HttpStatus.OK);
     }
 }

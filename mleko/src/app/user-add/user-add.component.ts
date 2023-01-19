@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MlekoService} from "../service/mleko.service";
 import {Router} from "@angular/router";
 
@@ -18,7 +18,7 @@ export class UserAddComponent implements OnInit {
 
   saveResult(username: string, email: string) {
 
-    this.mlekoService.savePlayer({name: username, email: email}).subscribe(()=> {
+    this.mlekoService.savePlayer({name: username, email: email}).subscribe(() => {
       this.route.navigate(['last-results']);
     });
 

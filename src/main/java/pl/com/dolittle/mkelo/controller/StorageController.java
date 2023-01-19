@@ -1,13 +1,12 @@
 package pl.com.dolittle.mkelo.controller;
 
 import lombok.AllArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.com.dolittle.mkelo.services.StorageService;
-
-import java.io.File;
+import pl.com.dolittle.mkelo.services.PersistenceService;
 
 @RestController
 @CrossOrigin({"http://mleko.dolittle.com.pl", "http://mleko.deloitte.cyou"})
@@ -15,16 +14,17 @@ import java.io.File;
 @RequestMapping("/file")
 public class StorageController {
 
-    private StorageService storageService;
+    private PersistenceService persistenceService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam(value = "file") File file){
-       return new ResponseEntity<>(storageService.uploadFile(file), HttpStatus.OK);
+    public ResponseEntity<String> uploadFile(@RequestParam(value = "file") JSONObject json) {
+        // persistenceService.uploadData("MKEloData.json", json);
+        return new ResponseEntity<>("not supported", HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @GetMapping("/download/{fileName}")
-    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String fileName){
-        byte[] data = storageService.downloadFile(fileName);
+    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String fileName) {
+        byte[] data = persistenceService.downloadFile(fileName);
         ByteArrayResource resource = new ByteArrayResource(data);
         return ResponseEntity
                 .ok()

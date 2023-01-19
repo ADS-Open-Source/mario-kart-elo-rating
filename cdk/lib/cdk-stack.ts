@@ -67,7 +67,7 @@ export class CdkStack extends cdk.Stack {
       environmentName: 'mkelo-EB-Env',
       applicationName: 'mkelo-EB-App',
       platformArn: platform,
-      solutionStackName: '64bit Amazon Linux 2 v3.4.2 running Corretto 17',
+      solutionStackName: '64bit Amazon Linux 2 v3.4.3 running Corretto 17',
       optionSettings: optionSettingProperties
     });
 

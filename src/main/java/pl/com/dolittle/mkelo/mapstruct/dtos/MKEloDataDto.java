@@ -4,23 +4,23 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.com.dolittle.mkelo.mapstruct.views.GameViews;
+import pl.com.dolittle.mkelo.entity.Game;
+import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.mapstruct.views.GenericViews;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class GameDto {
+public class MKEloDataDto {
+
+    @JsonView(GenericViews.Private.class)
+    private String filename;
 
     @JsonView(GenericViews.Public.class)
-    private LocalDateTime reportedTime;
+    private List<Player> players;
 
     @JsonView(GenericViews.Public.class)
-    private PlayerDto reportedBy;
-
-    @JsonView(GameViews.GameHistory.class)
-    private List<List<PlayerDto>> ranking;
+    private List<Game> games;
 }
