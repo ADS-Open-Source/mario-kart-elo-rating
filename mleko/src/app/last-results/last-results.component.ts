@@ -41,14 +41,11 @@ export class LastResultsComponent implements OnInit {
   ngOnInit(): void {
     this.mlekoService.getGames(10).subscribe((games: Game[]) => {
       this.games = games
-      this.dataSource = []
-      for (const game of this.games) {
-        this.dataSource.push({
-          date: game.reportedTime,
-          resultTable: this.generateText(game.ranking),
-          reportedBy: game.reportedBy.name
-        })
-      }
+      this.dataSource = this.games.map(game => ({
+        date: game.reportedTime,
+        resultTable: this.generateText(game.ranking),
+        reportedBy: game.reportedBy.name,
+      }))
     });
   }
 
