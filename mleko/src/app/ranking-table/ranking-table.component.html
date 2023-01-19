@@ -1,40 +1,35 @@
-<div style="width: 50%; margin: auto;background-color: #ffffff;
-    border-radius: 4px;
-    padding-left: 16px;
-    margin-top: 24px; box-shadow: 10px 10px lightblue;">
+<div style="width: 50%; margin: auto;">
 
-  <div>
-    <!--    ranking table    -->
-    <table mat-table [dataSource]="players">
-      <caption>MLEKO ranking</caption>
+  <!--    ranking table    -->
+  <table mat-table [dataSource]="players" class="mat-elevation-z8" style="width: 100%">
+    <caption style="font-size: 2rem; padding: 10px">MLEKO ranking</caption>
 
-      <!--    position column    -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef>No.</th>
-        <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
-      </ng-container>
+    <!--    position column    -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
+    </ng-container>
 
-      <!--    name column    -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let player">{{player.name}}</td>
-      </ng-container>
+    <!--    name column    -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let player">{{player.name}}</td>
+    </ng-container>
 
-      <!--    games played column    -->
-      <ng-container matColumnDef="gamesPlayed">
-        <th mat-header-cell *matHeaderCellDef>Games Played</th>
-        <td mat-cell *matCellDef="let player">{{player.gamesPlayed}}</td>
-      </ng-container>
+    <!--    games played column    -->
+    <ng-container matColumnDef="gamesPlayed">
+      <th mat-header-cell *matHeaderCellDef>Games Played</th>
+      <td mat-cell *matCellDef="let player">{{player.gamesPlayed}}</td>
+    </ng-container>
 
-      <!--    name column    -->
-      <ng-container matColumnDef="elo">
-        <th mat-header-cell *matHeaderCellDef>Elo</th>
-        <td mat-cell *matCellDef="let player">{{player.elo}}</td>
-      </ng-container>
+    <!--    name column    -->
+    <ng-container matColumnDef="elo">
+      <th mat-header-cell *matHeaderCellDef>Elo</th>
+      <td mat-cell *matCellDef="let player">{{player.elo}}</td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
-    </table>
-  </div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+  </table>
 
 </div>
