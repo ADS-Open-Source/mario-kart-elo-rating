@@ -32,7 +32,12 @@ export class LastResultsComponent implements OnInit {
     resultTexts = [];
     for (const array of ranking) {
       for (const resultPlayer of array) {
-        resultTexts.push(`${resultPlayer.place}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo} Δ${resultPlayer.elo-resultPlayer.preElo})`);
+        let delta: number = resultPlayer.elo - resultPlayer.preElo;
+        let arrow = '\u{25b2}'
+        if (delta < 0) {
+          arrow = '\u{25bc}'
+        }
+        resultTexts.push(`${resultPlayer.place}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo}) ${arrow}${delta}`);
       }
     }
     return resultTexts;
