@@ -1,3 +1,19 @@
 .spacer {
     flex: 1 1 auto;
 }
+
+
+.table {
+  width: 100%;
+}
+
+.table-container {
+  width: 50%;
+  margin: auto;
+}
+
+
+.table__caption {
+  font-size: 2rem;
+  padding: 10px;
+}
