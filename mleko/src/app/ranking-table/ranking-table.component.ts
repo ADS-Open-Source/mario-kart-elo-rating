@@ -6,7 +6,7 @@ import {Player} from "../model/models";
 @Component({
   selector: 'app-ranking-table',
   templateUrl: './ranking-table.component.html',
-  styleUrls: ['../app.component.css', './ranking-table.component.css']
+  styleUrls: ['./ranking-table.component.css']
 })
 export class RankingTableComponent implements OnInit {
 

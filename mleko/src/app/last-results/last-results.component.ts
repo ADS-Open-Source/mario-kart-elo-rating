@@ -12,7 +12,7 @@ export interface ProcessedGame {
 @Component({
   selector: 'app-last-results',
   templateUrl: './last-results.component.html',
-  styleUrls: ['../app.component.css', './last-results.component.css']
+  styleUrls: ['./last-results.component.css']
 })
 export class LastResultsComponent implements OnInit {
 
