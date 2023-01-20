@@ -5,7 +5,7 @@ import {ResultPlayer} from "../model/ResultPlayer";
 
 export interface ProcessedGame {
   date: string;
-  result: string;
+  resultTable: string[];
   reportedBy: string;
 }
 
@@ -27,29 +27,30 @@ export class LastResultsComponent implements OnInit {
   displayedColumns: string[] = ['date', 'result', 'reportedBy'];
   games: Array<Game> = [];
 
-  generateText(ranking : ResultPlayer[][]): string {
-    let i = 0;
-    let text = "";
+  generateText(ranking : ResultPlayer[][]): string[] {
+    let resultTexts: string [];
+    resultTexts = [];
     for (const array of ranking) {
-      i++;
       for (const resultPlayer of array) {
-        text += `${i}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo}) `;
+        let delta: number = resultPlayer.elo - resultPlayer.preElo;
+        let arrow = '\u{25b2}'
+        if (delta < 0) {
+          arrow = '\u{25bc}'
+        }
+        resultTexts.push(`${resultPlayer.place}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo}) ${arrow}${delta}`);
       }
     }
-    return text;
+    return resultTexts;
   }
 
   ngOnInit(): void {
     this.mlekoService.getGames(10).subscribe((games: Game[]) => {
       this.games = games
-      this.dataSource = []
-      for (const game of this.games) {
-        this.dataSource.push({
-          date: game.reportedTime,
-          result: this.generateText(game.ranking),
-          reportedBy: game.reportedBy.name
-        })
-      }
+      this.dataSource = this.games.map(game => ({
+        date: game.reportedTime,
+        resultTable: this.generateText(game.ranking),
+        reportedBy: game.reportedBy.name,
+      }))
     });
   }
 
