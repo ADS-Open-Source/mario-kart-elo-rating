@@ -1,0 +1,46 @@
+<mat-toolbar class="app-header" color="primary">
+
+  <a class="header__logo"
+     (click)="navigate('')">
+    <div class="header__logo__container">
+      <div class="header__logo__container__text">MLEKO</div>
+      <img src="assets/milk_bucket.webp" alt="mleko_logo">
+    </div>
+  </a>
+
+  <span class="spacer"></span>
+
+  <!-- Buttons -->
+  <button mat-button class="header__button"
+          [ngClass]="{ 'underlined': currentRoute === '/' }"
+          (click)="navigate('')">
+    <mat-icon [svgIcon]="'cloud'"></mat-icon>
+    <span class="app-header__button__text">
+      HOME
+    </span>
+  </button>
+  <button mat-button class="header__button"
+          [ngClass]="{ 'underlined': currentRoute === '/new-race' }"
+          (click)="navigate('new-race')">
+    <mat-icon [svgIcon]="'cloud'"></mat-icon>
+    <span class="app-header__button__text">
+      NEW RACE
+    </span>
+  </button>
+  <button mat-button class="header__button"
+          [ngClass]="{ 'underlined': currentRoute === '/ranking' }"
+          (click)="navigate('ranking')">
+    <mat-icon [svgIcon]="'cloud'"></mat-icon>
+    <span class="app-header__button__text">
+      RANKING
+    </span>
+  </button>
+  <button mat-button class="header__button"
+          [ngClass]="{ 'underlined': currentRoute === '/last-races' }"
+          (click)="navigate('last-races')">
+    <mat-icon [svgIcon]="'cloud'"></mat-icon>
+    <span class="app-header__button__text">
+      LAST RACES
+    </span>
+  </button>
+</mat-toolbar>

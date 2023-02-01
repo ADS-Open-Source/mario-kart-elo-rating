@@ -1,0 +1,47 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {HttpClientModule} from "@angular/common/http";
+import {RouterModule, Routes} from "@angular/router";
+import { HomepageComponent } from './homepage/homepage.component';
+import { NewRaceComponent } from './new-race/new-race.component';
+import { RankingComponent } from './ranking/ranking.component';
+import { LastResultsComponent } from './last-results/last-results.component';
+
+const appRoutes: Routes = [
+
+  {path: 'new-race', component: NewRaceComponent},
+  {path: 'ranking', component: RankingComponent},
+  {path: 'last-races', component: LastResultsComponent},
+  {path: '', component: HomepageComponent},
+  {path: '**', redirectTo: ''}
+]
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    HomepageComponent,
+    NewRaceComponent,
+    RankingComponent,
+    LastResultsComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterModule.forRoot(
+      appRoutes,
+    )
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
