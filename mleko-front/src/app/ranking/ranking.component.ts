@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Player} from "../models/Player";
+import {MlekoService} from "../services/mleko.service";
 
 @Component({
   selector: 'app-ranking',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RankingComponent implements OnInit {
 
-  constructor() { }
+  players: Array<Player> = [];
+  displayedColumns: string[] = ['position', 'username', 'gamesPlayed', 'elo'];
+
+  constructor(
+    private mlekoService: MlekoService,
+  ) {
+  }
 
   ngOnInit(): void {
+    this.mlekoService.getPlayers()
+      .subscribe((players: Player[]) => this.players = players);
   }
 
 }
