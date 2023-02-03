@@ -10,7 +10,7 @@ import {MlekoService} from "../services/mleko.service";
 export class RankingComponent implements OnInit {
 
   players: Array<Player> = [];
-  displayedColumns: string[] = ['position', 'username', 'gamesPlayed', 'elo'];
+  displayedColumns: string[] = ['position', 'username', 'elo'];
 
   constructor(
     private mlekoService: MlekoService,

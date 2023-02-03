@@ -7,8 +7,37 @@
   width: 100%;
 }
 
+.mat-table {
+  font-family: 'Orbitron', sans-serif;
+
+  background: inherit;
+}
+
+.mat-cell {
+  font-size: 1.5em;
+  color: inherit;
+}
+
+.mat-header-cell {
+  font-size: 1.25em;
+  color: inherit;
+
+  border-bottom: 2px solid white;
+  border-radius: 0;
+}
+
 .table__caption {
   font-family: 'Orbitron', sans-serif;
   font-size: 3em;
+
+  margin: 5px 0 10px 0;
   padding: 10px;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
 }
