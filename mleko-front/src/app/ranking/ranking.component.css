@@ -1,0 +1,14 @@
+.table-container {
+  width: 50%;
+  margin: auto;
+}
+
+.table {
+  width: 100%;
+}
+
+.table__caption {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3em;
+  padding: 10px;
+}
