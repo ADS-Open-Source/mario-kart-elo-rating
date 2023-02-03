@@ -1,9 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   color: #FFFFFF;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Orbitron', Roboto, "Helvetica Neue", sans-serif;
 
   background: #6096FF;
 }
