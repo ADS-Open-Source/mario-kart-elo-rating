@@ -2,7 +2,10 @@
 
   <!--    ranking table    -->
   <table mat-table [dataSource]="players" class="table">
-    <caption class="table__caption">Ranking</caption>
+    <caption class="table__caption">
+      <mat-icon svgIcon="trophy"></mat-icon>
+      Ranking
+    </caption>
 
     <!--    position column    -->
     <ng-container matColumnDef="position">
@@ -25,7 +28,10 @@
     <!--    elo column    -->
     <ng-container matColumnDef="elo">
       <th mat-header-cell class="text-right" *matHeaderCellDef>Elo</th>
-      <td mat-cell class="text-right" *matCellDef="let player">{{player.elo}}</td>
+      <td mat-cell class="text-right" *matCellDef="let player">
+        <img class="table__icon" src="assets/coin.png" alt="coin-icon">
+        {{player.elo}}
+      </td>
     </ng-container>
 
 
