@@ -13,6 +13,8 @@ import {HomepageComponent} from './homepage/homepage.component';
 import {NewRaceComponent} from './new-race/new-race.component';
 import {RankingComponent} from './ranking/ranking.component';
 import {LastResultsComponent} from './last-results/last-results.component';
+import {DatePipe} from "@angular/common";
+import {MAT_DATE_LOCALE} from "@angular/material/core";
 
 
 const appRoutes: Routes = [
@@ -44,7 +46,10 @@ const appRoutes: Routes = [
       appRoutes,
     ),
   ],
-  providers: [],
+  providers: [
+    DatePipe,
+    {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

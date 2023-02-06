@@ -1,1 +1,38 @@
-<p>last-results works!</p>
+<div class="table-container">
+
+  <table mat-table [dataSource]="dataSource" class="table text-center">
+    <caption class="table__caption">Last races results</caption>
+
+    <!-- date column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell class="text-center" *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element">
+        {{element.date | date : 'dd.MM.yyyy': 'pl-PL'}}
+        <br>
+        {{element.date | date : 'HH:mm:ss': 'pl-PL'}}
+      </td>
+    </ng-container>
+
+    <!-- result column -->
+    <ng-container matColumnDef="result">
+      <th mat-header-cell class="text-center" *matHeaderCellDef> Result </th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngFor="let text of element.resultTable">
+          <div>
+            <span>{{text}}</span>
+          </div>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <!-- reportedBy column -->
+    <ng-container matColumnDef="reportedBy">
+      <th mat-header-cell class="text-center" *matHeaderCellDef> Reported by </th>
+      <td mat-cell *matCellDef="let element"> {{element.reportedBy}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>

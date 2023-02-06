@@ -5,3 +5,17 @@ export interface Player {
   gamesPlayed: number;
   email: string;
 }
+
+export interface PlayerShort {
+  "name": string;
+  "email": string;
+}
+
+export interface PlayerSecret {
+  "secret": string;
+}
+
+export interface Result {
+  reportedBy: PlayerSecret;
+  ranking: Array<Array<Player>>
+}
