@@ -19,7 +19,6 @@ export interface ProcessedGame {
 export class LastResultsComponent implements OnInit {
 
   displayedColumns: string[] = ['date', 'result', 'reportedBy'];
-  games: Array<Game> = [];
   dataSource!: MatTableDataSource<ProcessedGame>;
 
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
@@ -31,8 +30,7 @@ export class LastResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.mlekoService.getGames(2147483647).subscribe((games: Game[]) => {
-      this.games = games
-      let processedGames = this.games.map(game => ({
+      let processedGames = games.map(game => ({
         date: game.reportedTime,
         resultTable: this.generateText(game.ranking),
         reportedBy: game.reportedBy.name,
