@@ -25,8 +25,12 @@
   border-radius: 0;
 }
 
+.mat-paginator {
+  background: inherit;
+  color: inherit;
+}
+
 .table__caption {
-  font-family: 'Orbitron', sans-serif;
   font-size: 3em;
 
   margin: 5px 0 10px 0;

@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatPaginator} from "@angular/material/paginator";
 import {MlekoService} from "../services/mleko.service";
 import {Game} from "../models/Game";
 import {ResultPlayer} from "../models/ResultPlayer";
+import {MatTableDataSource} from "@angular/material/table";
 
 export interface ProcessedGame {
   date: string;
@@ -18,7 +20,9 @@ export class LastResultsComponent implements OnInit {
 
   displayedColumns: string[] = ['date', 'result', 'reportedBy'];
   games: Array<Game> = [];
-  dataSource: ProcessedGame[] = [];
+  dataSource!: MatTableDataSource<ProcessedGame>;
+
+  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
 
   constructor(
     private mlekoService: MlekoService,
@@ -26,29 +30,26 @@ export class LastResultsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mlekoService.getGames(10).subscribe((games: Game[]) => {
+    this.mlekoService.getGames(2147483647).subscribe((games: Game[]) => {
       this.games = games
-      this.dataSource = this.games.map(game => ({
+      let processedGames = this.games.map(game => ({
         date: game.reportedTime,
         resultTable: this.generateText(game.ranking),
         reportedBy: game.reportedBy.name,
       }))
+      this.dataSource = new MatTableDataSource<ProcessedGame>(processedGames);
+      this.dataSource.paginator = this.paginator;
     });
   }
 
   generateText(ranking: ResultPlayer[][]): string[] {
     let resultTexts: string [];
     resultTexts = [];
-    for (const array of ranking) {
-      for (const resultPlayer of array) {
-        let delta: number = resultPlayer.elo - resultPlayer.preElo;
-        let arrow = '\u{25b2}'
-        if (delta < 0) {
-          arrow = '\u{25bc}'
-        }
-        resultTexts.push(`${resultPlayer.place}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo}) ${arrow}${delta}`);
-      }
-    }
+    ranking.flatMap(r => r).forEach(resultPlayer => {
+      let delta: number = resultPlayer.elo - resultPlayer.preElo;
+      let arrow = delta < 0 ? '\u{25b2}' : '\u{25bc}';
+      resultTexts.push(`${resultPlayer.place}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo}) ${arrow}${delta}`);
+    })
     return resultTexts;
   }
 

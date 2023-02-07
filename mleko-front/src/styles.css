@@ -7,7 +7,12 @@ html, body {
 body {
   margin: 0;
   color: #FFFFFF;
-  font-family: 'Orbitron', Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Orbitron', sans-serif !important;
 
   background: #6096FF;
+}
+
+@font-face {
+  font-family: mario;
+  src: url("assets/fonts/mario-kart.ttf") format("truetype");
 }

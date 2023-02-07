@@ -15,6 +15,8 @@ import {RankingComponent} from './ranking/ranking.component';
 import {LastResultsComponent} from './last-results/last-results.component';
 import {DatePipe} from "@angular/common";
 import {MAT_DATE_LOCALE} from "@angular/material/core";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 const appRoutes: Routes = [
@@ -37,8 +39,10 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     MatTableModule,
+    MatPaginatorModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
