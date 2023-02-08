@@ -129,9 +129,20 @@
   justify-content: center;
 }
 
+/*  oh how much do I love using deprecated code just because NOTHING ELSE WORKS */
 ::ng-deep .mat-form-field-underline {
   display: none;
 }
+
+::ng-deep .mat-form-field-label-wrapper {
+  font-family: 'Orbitron', sans-serif;
+  left: 10px !important;
+}
+
+::ng-deep .mat-input-element {
+  color: #000000 !important;
+}
+/* rant over */
 
 .new-user-input {
   background-color: #FFFFFF;

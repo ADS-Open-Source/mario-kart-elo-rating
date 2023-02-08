@@ -42,12 +42,13 @@
       </div>
 
       <div class="form-container">
+        <!-- TODO purge this stupid thing that is impossible to style and create a basic input -->
         <form class="registration-form" [formGroup]="registrationForm">
           <mat-form-field floatLabel="never">
-            <input class="new-user-input" matInput type="text" formControlName="username" placeholder="username">
+            <input matNativeControl class="new-user-input" type="text" formControlName="username" placeholder="username">
           </mat-form-field>
           <mat-form-field floatLabel="never">
-            <input class="new-user-input" matInput type="email" formControlName="email" placeholder="Email">
+            <input matNativeControl class="new-user-input" type="email" formControlName="email" placeholder="email">
           </mat-form-field>
         </form>
         <div class="registration-button-container">
