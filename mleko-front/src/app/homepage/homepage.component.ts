@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Player} from "../models/Player";
+import {MlekoService} from "../services/mleko.service";
+import {MatIconRegistry} from "@angular/material/icon";
+import {DomSanitizer} from "@angular/platform-browser";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-homepage',
@@ -7,9 +12,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomepageComponent implements OnInit {
 
-  constructor() { }
+  players: Array<Player> = [];
+  registrationForm: FormGroup;
 
-  ngOnInit(): void {
+  constructor(
+    private mlekoService: MlekoService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer,
+    private fb: FormBuilder,
+  ) {
+    // icons
+    this.matIconRegistry.addSvgIcon(
+      'trophy',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/trophy.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'arrow',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/arrow.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'finger',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/finger.svg')
+    );
+    // else
+    this.registrationForm = this.fb.group({
+      username: '',
+      email: '',
+    });
   }
 
+  ngOnInit(): void {
+    this.mlekoService.getPlayers()
+      .subscribe((players: Player[]) => this.players = players.slice(0, 3));
+  }
+
+  submitForm() {
+    const formData = this.registrationForm.value;
+    console.log(formData);
+  }
 }

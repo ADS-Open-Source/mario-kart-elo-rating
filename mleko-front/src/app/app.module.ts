@@ -17,6 +17,9 @@ import {DatePipe} from "@angular/common";
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatListModule} from "@angular/material/list";
+import {MatInputModule} from "@angular/material/input";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 const appRoutes: Routes = [
@@ -42,6 +45,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     HttpClientModule,
     MatTableModule,
+    MatListModule,
     MatPaginatorModule,
     MatToolbarModule,
     MatButtonModule,
@@ -49,6 +53,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
     ),
+    MatInputModule,
+    ReactiveFormsModule,
   ],
   providers: [
     DatePipe,
