@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
 import {ActivatedRoute, NavigationEnd, NavigationExtras, Router} from "@angular/router";
-import {SecretService} from "../secret.service";
+import {SecretService} from "../services/secret.service";
 
 @Component({
   selector: 'app-navbar',

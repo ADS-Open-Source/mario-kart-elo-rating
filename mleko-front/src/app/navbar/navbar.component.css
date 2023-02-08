@@ -8,7 +8,10 @@
 }
 
 .app-header {
-  margin-bottom: 10px;
+  margin: 0.5em 0 1em 0;
+  padding: 0 2em 0 2em;
+
+  background: inherit;
 }
 
 .header__logo {
@@ -54,11 +57,11 @@
 
 .header__logo__container__text {
   font-size: 1.5em;
+
+  font-family: mario, sans-serif;
 }
 
 .header__button {
-  font-family: 'Orbitron', sans-serif;
-
   margin-left: 10px;
   margin-right: 10px;
   padding: 0 5px 0 5px;
@@ -67,6 +70,12 @@
   background: inherit;
 }
 
+.header__button__text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5em;
+}
+
 .header__button mat-icon {
   margin-right: 5px;
+  transform: scale(1.5);
 }

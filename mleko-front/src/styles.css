@@ -1,9 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
+
 body {
   margin: 0;
   color: #FFFFFF;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Orbitron', sans-serif !important;
 
   background: #6096FF;
+}
+
+.mat-select-value {
+  color: #FFFFFF;
+}
+
+.mat-select-arrow {
+  color: white;
+}
+
+@font-face {
+  font-family: mario;
+  src: url("assets/fonts/mario-kart.ttf") format("truetype");
 }

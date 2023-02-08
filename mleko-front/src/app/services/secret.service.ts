@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import {Subject} from "rxjs";
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +7,8 @@ export class SecretService {
 
   private _secret: string = '';
 
-  constructor() { }
+  constructor() {
+  }
 
   public get secret(): string {
     return this._secret;
