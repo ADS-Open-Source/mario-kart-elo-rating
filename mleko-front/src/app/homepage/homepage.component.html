@@ -42,17 +42,22 @@
       </div>
 
       <div class="form-container">
-        <!-- TODO purge this stupid thing that is impossible to style and create a basic input -->
+        <!-- TODO mat-form-field seems to be borderline impossible to style, replace it with native inputs -->
         <form class="registration-form" [formGroup]="registrationForm">
           <mat-form-field floatLabel="never">
-            <input matNativeControl class="new-user-input" type="text" formControlName="username" placeholder="username">
+            <input matNativeControl class="new-user-input" type="text" placeholder="username"
+                   formControlName="username">
           </mat-form-field>
           <mat-form-field floatLabel="never">
-            <input matNativeControl class="new-user-input" type="email" formControlName="email" placeholder="email">
+            <input matNativeControl class="new-user-input" type="email" placeholder="email"
+                   formControlName="email">
           </mat-form-field>
         </form>
         <div class="registration-button-container">
-          <button class="registration-button" mat-button color="primary" (click)="submitForm()">Add</button>
+          <button mat-button class="registration-button" color="primary"
+                  [disabled]="isRegistering" (click)="submitForm()">
+            {{isRegistering ? 'Adding...' : 'Add'}}
+          </button>
         </div>
 
       </div>

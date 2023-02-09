@@ -14,6 +14,7 @@ export class HomepageComponent implements OnInit {
 
   players: Array<Player> = [];
   registrationForm: FormGroup;
+  isRegistering: boolean = false;
 
   constructor(
     private mlekoService: MlekoService,
@@ -47,7 +48,20 @@ export class HomepageComponent implements OnInit {
   }
 
   submitForm() {
+    this.isRegistering = true;
     const formData = this.registrationForm.value;
-    console.log(formData);
+    this.mlekoService.createPlayer(
+      {name: formData.username, email: formData.email}
+    ).subscribe({
+      next: (response) => {
+        console.log("user added")
+      },
+      error: (error) => {
+        console.error(error)
+      },
+      complete: () => {
+        this.isRegistering = false;
+      }
+    });
   }
 }
