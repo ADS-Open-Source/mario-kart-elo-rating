@@ -19,10 +19,11 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FilterAddedPlayersPipe} from "./new-race/FilterAddedPlayersPipe";
 import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 
 const appRoutes: Routes = [
@@ -63,6 +64,8 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatSlideToggleModule,
+    FormsModule,
   ],
   providers: [
     DatePipe,

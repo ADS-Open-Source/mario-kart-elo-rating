@@ -1,10 +1,11 @@
 <div class="table-container">
 
   <!--    ranking table    -->
-  <table mat-table [dataSource]="players" class="table">
+  <table mat-table [dataSource]="dataSource" class="table">
     <caption class="table__caption">
       <mat-icon svgIcon="trophy"></mat-icon>
       Ranking
+      <mat-slide-toggle [(ngModel)]="showOnlyChads" (change)="filterOutNewPlayers()"></mat-slide-toggle>
     </caption>
 
     <!--    position column    -->
