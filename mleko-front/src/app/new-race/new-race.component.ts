@@ -89,7 +89,7 @@ export class NewRaceComponent implements OnInit {
     }
 
     console.log(result)
-    if (this.chosenPlayers.filter(p => !p).length >= 2) {
+    if (this.chosenPlayers.filter(p => p != null).length >= 2) {
       this.mlekoService.saveResult(result)
         .subscribe((res: { text: string; }) => {
           console.log(res)
