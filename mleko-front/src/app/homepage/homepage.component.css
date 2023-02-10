@@ -6,13 +6,14 @@
 }
 
 /*  --------  LEFT  --------  */
-.list-container {
-}
-
 .header-with-icon {
   display: flex;
   font-size: 1.5em;
   align-items: center;
+}
+
+.top-players {
+  animation: up-down--animation 5s ease-in-out infinite;
 }
 
 .trophy-icon {
@@ -36,6 +37,16 @@
   width: 1em;
 }
 
+
+.player-elo:hover .player-elo__icon {
+  animation-duration: 500ms;
+  animation-name: coin--animation;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
 .player-position {
   font-size: 2em;
 
@@ -48,7 +59,7 @@
   text-align: right;
 }
 
-.list__footer {
+.see-more {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -56,9 +67,15 @@
   margin: 5px 2em 5px 2em;
 
   font-size: 1.5em;
+
+  animation: left-right--animation 2s ease-in-out infinite;
 }
 
-.list__footer .list__footer__icon {
+.see-more:hover {
+  cursor: pointer;
+}
+
+.see-more .list__footer__icon {
   padding: 10px;
   height: 1.25em;
   width: 1.25em;
@@ -77,6 +94,7 @@
 
   justify-content: center;
 
+  animation: up-down--animation 5s ease-in-out infinite;
 }
 
 .mleko-logo {
@@ -96,22 +114,8 @@
   height: 1.5em;
   width: 1.5em;
   padding: 10px;
-  animation: finger--animation 2s ease-in-out infinite;
-}
 
-@keyframes finger--animation {
-  0% {
-    transform: translateX(5px);
-  }
-  50% {
-    transform: translateX(-5px);
-  }
-  100% {
-    transform: translateX(5px);
-  }
-}
-
-.form-container {
+  animation: left-right--animation 2s ease-in-out infinite;
 }
 
 .registration-form {
@@ -139,6 +143,7 @@
 ::ng-deep .mat-input-element {
   color: #000000 !important;
 }
+
 /* rant over */
 
 .new-user-input {

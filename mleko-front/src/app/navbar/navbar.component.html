@@ -14,7 +14,7 @@
   <button mat-button class="header__button"
           [ngClass]="{ 'underlined': currentRoute === '/' }"
           (click)="navigate('')">
-    <mat-icon [svgIcon]="'cloud'"></mat-icon>
+    <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
     <span class="header__button__text">
       HOME
     </span>
@@ -22,7 +22,7 @@
   <button mat-button class="header__button"
           [ngClass]="{ 'underlined': currentRoute === '/new-race' }"
           (click)="navigate('new-race')">
-    <mat-icon [svgIcon]="'cloud'"></mat-icon>
+    <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
     <span class="header__button__text">
       NEW RACE
     </span>
@@ -30,7 +30,7 @@
   <button mat-button class="header__button"
           [ngClass]="{ 'underlined': currentRoute === '/ranking' }"
           (click)="navigate('ranking')">
-    <mat-icon [svgIcon]="'cloud'"></mat-icon>
+    <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
     <span class="header__button__text">
       RANKING
     </span>
@@ -38,7 +38,7 @@
   <button mat-button class="header__button"
           [ngClass]="{ 'underlined': currentRoute === '/last-races' }"
           (click)="navigate('last-races')">
-    <mat-icon [svgIcon]="'cloud'"></mat-icon>
+    <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
     <span class="header__button__text">
       LAST RACES
     </span>

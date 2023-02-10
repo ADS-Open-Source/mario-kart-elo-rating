@@ -1,8 +1,8 @@
-<div class="homepage-container">
+<div class="homepage-container" xmlns="http://www.w3.org/1999/html">
 
   <div class="list-container">
 
-    <div class="header-with-icon">
+    <div class="header-with-icon top-players">
       <mat-icon class="trophy-icon" [svgIcon]="'trophy'"></mat-icon>
       <h1>TOP PLAYERS</h1>
     </div>
@@ -17,11 +17,10 @@
       </mat-list-item>
     </mat-list>
 
-    <div class="list__footer">
+    <a class="see-more" (click)="navigate('ranking')">
       <span>See more</span>
-      <!--    why does this icon make the trophy green?   -->
       <mat-icon class="list__footer__icon" [svgIcon]="'arrow'"></mat-icon>
-    </div>
+    </a>
 
   </div>
 

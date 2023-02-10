@@ -31,9 +31,11 @@
 
   margin: 5px 0 10px 0;
   padding: 10px;
+
+  animation: up-down--animation 5s ease-in-out infinite;
 }
 
-.table__caption .mat-icon {
+.table__caption .trophy-icon {
   overflow: visible;
   height: 1.25em;
   width: 1.25em;
@@ -42,6 +44,15 @@
 .table__icon {
   height: 1em;
   width: 1em;
+}
+
+.mat-row:hover .table__icon {
+  animation-duration: 500ms;
+  animation-name: coin--animation;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
 }
 
 .text-right {

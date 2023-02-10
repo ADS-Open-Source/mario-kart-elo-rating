@@ -4,6 +4,8 @@ import {MlekoService} from "../services/mleko.service";
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {NavigationExtras, Router} from "@angular/router";
+import {SecretService} from "../services/secret.service";
 
 @Component({
   selector: 'app-homepage',
@@ -18,8 +20,10 @@ export class HomepageComponent implements OnInit {
 
   constructor(
     private mlekoService: MlekoService,
+    private secretService: SecretService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
+    private router: Router,
     private fb: FormBuilder,
   ) {
     // icons
@@ -63,5 +67,12 @@ export class HomepageComponent implements OnInit {
         this.isRegistering = false;
       }
     });
+  }
+
+  navigate(url: string) {
+    const navExtras: NavigationExtras = {
+      queryParams: {secret: this.secretService.secret},
+    };
+    this.router.navigate([url], navExtras)
   }
 }
