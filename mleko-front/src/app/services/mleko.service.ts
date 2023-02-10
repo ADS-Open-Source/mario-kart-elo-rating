@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Player, PlayerSecret, Result} from "../models/Player";
+import {Player, PlayerSecret, PlayerShort, Result} from "../models/Player";
 import {Game} from "../models/Game";
 import {environment} from "../../environments/environment";
 
@@ -52,6 +52,7 @@ export class MlekoService {
       result,
       {headers: headers, responseType: 'text'}
     );
+  }
 
   // players
   createPlayer(playerShort: PlayerShort): Observable<any> {
