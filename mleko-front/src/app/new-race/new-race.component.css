@@ -1,0 +1,11 @@
+.race-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.race-form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}

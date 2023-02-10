@@ -1,1 +1,52 @@
-<p>new-race works!</p>
+<div class="race-container">
+
+  <h1>Add new race</h1>
+  <!--  TODO change that to native dropdowns and clickable buttons that will appear below them  -->
+  <form class="race-form" [formGroup]="raceForm">
+    <mat-form-field>
+      <mat-label>First place</mat-label>
+      <mat-select formControlName="firstPlace" multiple
+                  (selectionChange)="onSelectionChange($event, 'firstPlace')">
+        <mat-option *ngFor="let player of allPlayers" [value]="player">
+          {{player.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Second place</mat-label>
+      <mat-select formControlName="secondPlace" multiple
+                  (selectionChange)="onSelectionChange($event, 'secondPlace')">
+        <mat-option *ngFor="let player of allPlayers" [value]="player">
+          {{player.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Third place</mat-label>
+      <mat-select formControlName="thirdPlace" multiple
+                  (selectionChange)="onSelectionChange($event, 'thirdPlace')">
+        <mat-option *ngFor="let player of allPlayers" [value]="player">
+          {{player.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Fourth place</mat-label>
+      <mat-select formControlName="fourthPlace" multiple
+                  (selectionChange)="onSelectionChange($event, 'fourthPlace')">
+        <mat-option *ngFor="let player of allPlayers" [value]="player">
+          {{player.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button
+            [disabled]="secretService.secret == ''" (click)="submitRace()">
+      {{secretService.secret != '' ? 'Submit' : 'No secret provided'}}
+    </button>
+  </form>
+
+</div>

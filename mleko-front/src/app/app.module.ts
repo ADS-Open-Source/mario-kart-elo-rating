@@ -17,6 +17,10 @@ import {DatePipe} from "@angular/common";
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {ReactiveFormsModule} from "@angular/forms";
+import {FilterAddedPlayersPipe} from "./new-race/FilterAddedPlayersPipe";
 import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -33,12 +37,15 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
+    //  components
     AppComponent,
     NavbarComponent,
     HomepageComponent,
     NewRaceComponent,
     RankingComponent,
-    LastResultsComponent
+    LastResultsComponent,
+    //  others
+    FilterAddedPlayersPipe
   ],
   imports: [
     BrowserModule,
@@ -53,6 +60,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
     ),
+    MatFormFieldModule,
+    MatSelectModule,
     MatInputModule,
     ReactiveFormsModule,
   ],
