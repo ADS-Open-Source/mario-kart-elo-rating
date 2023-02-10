@@ -1,1 +1,68 @@
-<p>homepage works!</p>
+<div class="homepage-container">
+
+  <div class="list-container">
+
+    <div class="header-with-icon">
+      <mat-icon class="trophy-icon" [svgIcon]="'trophy'"></mat-icon>
+      <h1>TOP PLAYERS</h1>
+    </div>
+
+    <mat-list class="list">
+      <mat-list-item *ngFor="let i = index; let player of players">
+        <div class="player-position">{{ i + 1 }}. {{ player.name }}</div>
+        <div class="player-elo">
+          <img class="player-elo__icon" src="assets/coin.png" alt="coin-icon">
+          {{ player.elo }}
+        </div>
+      </mat-list-item>
+    </mat-list>
+
+    <div class="list__footer">
+      <span>See more</span>
+      <!--    why does this icon make the trophy green?   -->
+      <mat-icon class="list__footer__icon" [svgIcon]="'arrow'"></mat-icon>
+    </div>
+
+  </div>
+
+  <hr>
+
+  <div class="useradd-container">
+
+    <div class="header-with-icon logo">
+      MLEKO
+      <img class="mleko-logo" src="assets/milk_bucket.webp" alt="mleko_logo">
+    </div>
+
+
+    <div class="new-user-inputs">
+      <div class="header-with-icon">
+        <mat-icon class="finger-icon" [svgIcon]="'finger'"></mat-icon>
+        ADD NEW USER
+      </div>
+
+      <div class="form-container">
+        <!-- TODO mat-form-field seems to be borderline impossible to style, replace it with native inputs -->
+        <form class="registration-form" [formGroup]="registrationForm">
+          <mat-form-field floatLabel="never">
+            <input matNativeControl class="new-user-input" type="text" placeholder="username"
+                   formControlName="username">
+          </mat-form-field>
+          <mat-form-field floatLabel="never">
+            <input matNativeControl class="new-user-input" type="email" placeholder="email"
+                   formControlName="email">
+          </mat-form-field>
+        </form>
+        <div class="registration-button-container">
+          <button mat-button class="registration-button" color="primary"
+                  [disabled]="isRegistering" (click)="submitForm()">
+            {{isRegistering ? 'Adding...' : 'Add'}}
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

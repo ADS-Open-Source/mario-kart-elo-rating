@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Player} from "../models/Player";
+import {Player, PlayerShort} from "../models/Player";
 import {Game} from "../models/Game";
 import {environment} from "../../environments/environment";
 
@@ -27,5 +27,10 @@ export class MlekoService {
 
   getAllGames(): Observable<Array<Game>> {
     return this.httpClient.get<Array<Game>>(`${MlekoService.BACKEND_DOMAIN}/games/all`)
+  }
+
+  // players
+  createPlayer(playerShort: PlayerShort): Observable<any> {
+    return this.httpClient.post<Observable<any>>(`${MlekoService.BACKEND_DOMAIN}/players`, playerShort);
   }
 }
