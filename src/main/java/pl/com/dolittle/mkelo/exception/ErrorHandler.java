@@ -28,4 +28,9 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> handleInvalidPlayerCreationDataProvidedException(InvalidPlayerCreationDataProvidedException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
+    @ExceptionHandler(PlayerAlreadyExistsException.class)
+    public ResponseEntity<String> handlePlayerAlreadyExistsException(PlayerAlreadyExistsException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+    }
 }
