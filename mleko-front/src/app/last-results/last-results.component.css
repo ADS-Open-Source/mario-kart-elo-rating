@@ -1,6 +1,8 @@
 .table-container {
   width: 50%;
   margin: auto;
+
+  background-color: rgba(96, 150, 255, 0.15);
 }
 
 .table {
@@ -28,6 +30,8 @@
 .mat-paginator {
   background: inherit;
   color: inherit;
+
+  background-color: rgba(96, 150, 255, 0.15);
 }
 
 .table__caption {
