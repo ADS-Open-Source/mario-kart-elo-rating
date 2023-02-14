@@ -3,7 +3,7 @@
   <!--    ranking table    -->
   <table mat-table [dataSource]="dataSource" class="table">
     <caption class="table__caption">
-      <mat-icon svgIcon="trophy"></mat-icon>
+      <mat-icon class="trophy-icon" svgIcon="trophy"></mat-icon>
       Ranking
       <mat-slide-toggle [(ngModel)]="showOnlyChads" (change)="filterOutNewPlayers()"></mat-slide-toggle>
     </caption>

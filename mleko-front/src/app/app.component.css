@@ -1,0 +1,47 @@
+/*ANIMATIONS*/
+@keyframes up-down--animation {
+  0% {
+    transform: translateY(5px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes left-right--animation {
+  0% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes cloud--animation {
+  0% {
+    transform: scale(1.5) translateY(3px);
+  }
+  50% {
+    transform: scale(1.5) translateY(-3px);
+  }
+  100% {
+    transform: scale(1.5) translateY(3px);
+  }
+}
+
+@keyframes coin--animation {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-15px) rotateY(1080deg);
+    opacity: 0;
+  }
+
+}
