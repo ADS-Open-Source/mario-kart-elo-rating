@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.com.dolittle.mkelo.entity.Player;
+import pl.com.dolittle.mkelo.exception.InvalidPlayerCreationDataProvidedException;
 import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
 import pl.com.dolittle.mkelo.mapstruct.mapper.PlayerMapper;
 import pl.com.dolittle.mkelo.repository.PlayerRepository;
@@ -33,6 +34,9 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public String createPlayer(PlayerDto playerDto) {
 
+        if (playerDto.getName().isBlank() || playerDto.getEmail().isBlank()) {
+            throw new InvalidPlayerCreationDataProvidedException();
+        }
         var secret = UUID.randomUUID().toString();
         playerRepository.addPlayer(new Player(secret, UUID.randomUUID().toString(), playerDto.getName(), playerDto.getEmail()));
 

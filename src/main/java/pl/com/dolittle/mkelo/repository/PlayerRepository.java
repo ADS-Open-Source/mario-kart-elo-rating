@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.com.dolittle.mkelo.entity.Player;
+import pl.com.dolittle.mkelo.exception.PlayerAlreadyExistsException;
 import pl.com.dolittle.mkelo.exception.PlayerSecretNotFoundException;
 import pl.com.dolittle.mkelo.services.DataService;
 
@@ -26,10 +27,12 @@ public class PlayerRepository {
     public void addPlayer(Player player) {
         players = dataService.getPlayersData();
         Validate.notNull(player.getName());
-        Validate.isTrue(players.stream().noneMatch(i -> Objects.equals(i.getName(), player.getName())),
-                "Player with the given name already exists");
-        Validate.isTrue(players.stream().noneMatch(i -> Objects.equals(i.getEmail(), player.getEmail())),
-                "Player with the given email already exists");
+        if (players.stream()
+                .anyMatch(p -> Objects.equals(p.getName(), player.getName())
+                        ||
+                        Objects.equals(p.getEmail(), player.getEmail()))) {
+            throw new PlayerAlreadyExistsException(player.getName(), player.getEmail());
+        }
         players.add(player);
         log.info("Player {} has been given secret {}", player.getName(), player.getSecret());
         dataService.putPlayersData(players);
