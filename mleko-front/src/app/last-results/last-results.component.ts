@@ -50,7 +50,7 @@ export class LastResultsComponent implements OnInit {
     let processedPlayers: ProcessedPlayer [] = [];
     ranking.flatMap(r => r).forEach(resultPlayer => {
       let delta: number = resultPlayer.elo - resultPlayer.preElo;
-      let arrow = delta < 0 ? '\u{25b2}' : '\u{25bc}';
+      let arrow = delta < 0 ? '\u{25bc}' : '\u{25b2}';
       let text = `${resultPlayer.place}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo}) ${arrow}${delta}`;
       processedPlayers.push({text: text, eloChange: delta});
     })
