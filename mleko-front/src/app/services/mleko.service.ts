@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, ReplaySubject} from "rxjs";
 import {Player, PlayerSecret, PlayerShort, Result} from "../models/Player";
 import {Game} from "../models/Game";
 import {environment} from "../../environments/environment";
@@ -11,12 +11,23 @@ import {environment} from "../../environments/environment";
 export class MlekoService {
 
   private static BACKEND_DOMAIN = environment.apiURL;
+  private _playersStore: ReplaySubject<Player[]> = new ReplaySubject<Player[]>(1);
 
   constructor(
     private httpClient: HttpClient
   ) {
+    this.loadPlayers();
   }
 
+  get $playersStore(): Observable<Player[]> {
+    return this._playersStore.asObservable();
+  }
+
+  loadPlayers(): void {
+    this.httpClient.get<Array<Player>>(`${MlekoService.BACKEND_DOMAIN}/players/all`).subscribe(data => {
+      this._playersStore.next(data);
+    });
+  }
   // GET
   getPlayers(): Observable<Array<Player>> {
     return this.httpClient.get<Array<Player>>(`${MlekoService.BACKEND_DOMAIN}/players/all`);
@@ -57,6 +68,5 @@ export class MlekoService {
   // players
   createPlayer(playerShort: PlayerShort): Observable<any> {
     return this.httpClient.post<Observable<any>>(`${MlekoService.BACKEND_DOMAIN}/players`, playerShort);
-
   }
 }

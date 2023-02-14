@@ -1,18 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Player, Result} from "../models/Player";
 import {MlekoService} from "../services/mleko.service";
 import {MatSelectChange} from "@angular/material/select";
 import {SecretService} from "../services/secret.service";
 import {NavigationExtras, Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-new-race',
   templateUrl: './new-race.component.html',
   styleUrls: ['./new-race.component.css'],
 })
-export class NewRaceComponent implements OnInit {
+export class NewRaceComponent implements OnInit, OnDestroy {
 
+  playersSub!: Subscription;
   raceForm: FormGroup;
   allPlayers: Player[] = [];
 
@@ -32,7 +34,7 @@ export class NewRaceComponent implements OnInit {
   }
 
   updateAllPlayers(): void {
-    this.mlekoService.getPlayers()
+    this.playersSub = this.mlekoService.$playersStore
       .subscribe((players: Player[]) => {
         this.allPlayers = players;
       });
@@ -53,12 +55,19 @@ export class NewRaceComponent implements OnInit {
                   next: (response) => {
                     console.log(response);
                     this.updateAllPlayers();
+                  },
+                  complete: () => {
+                    this.mlekoService.loadPlayers();
                   }
                 });
             }
           }
         });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.playersSub.unsubscribe();
   }
 
 

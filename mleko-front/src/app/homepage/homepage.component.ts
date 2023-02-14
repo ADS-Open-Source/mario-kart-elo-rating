@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Player} from "../models/Player";
 import {MlekoService} from "../services/mleko.service";
 import {MatIconRegistry} from "@angular/material/icon";
@@ -6,14 +6,16 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {NavigationExtras, Router} from "@angular/router";
 import {SecretService} from "../services/secret.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css']
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements OnInit, OnDestroy {
 
+  playersSub!: Subscription;
   players: Array<Player> = [];
   registrationForm: FormGroup;
   isRegistering: boolean = false;
@@ -47,8 +49,12 @@ export class HomepageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mlekoService.getPlayers()
+    this.playersSub = this.mlekoService.$playersStore
       .subscribe((players: Player[]) => this.players = players.slice(0, 3));
+  }
+
+  ngOnDestroy(): void {
+    this.playersSub.unsubscribe();
   }
 
   submitForm() {
