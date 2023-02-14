@@ -44,3 +44,11 @@
 .text-center {
   text-align: center;
 }
+
+.negative-delta {
+  color: #ffc7cc;
+}
+
+.positive-delta {
+  color: #afff9b;
+}

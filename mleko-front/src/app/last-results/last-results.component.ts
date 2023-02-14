@@ -5,9 +5,15 @@ import {Game} from "../models/Game";
 import {ResultPlayer} from "../models/ResultPlayer";
 import {MatTableDataSource} from "@angular/material/table";
 
+
+export interface ProcessedPlayer {
+  text: string;
+  eloChange: number;
+}
+
 export interface ProcessedGame {
   date: string;
-  resultTable: string[];
+  resultTable: ProcessedPlayer[];
   reportedBy: string;
 }
 
@@ -32,7 +38,7 @@ export class LastResultsComponent implements OnInit {
     this.mlekoService.getGames(2147483647).subscribe((games: Game[]) => {
       let processedGames = games.map(game => ({
         date: game.reportedTime,
-        resultTable: this.generateText(game.ranking),
+        resultTable: this.processPlayers(game.ranking),
         reportedBy: game.reportedBy.name,
       }))
       this.dataSource = new MatTableDataSource<ProcessedGame>(processedGames);
@@ -40,15 +46,15 @@ export class LastResultsComponent implements OnInit {
     });
   }
 
-  generateText(ranking: ResultPlayer[][]): string[] {
-    let resultTexts: string [];
-    resultTexts = [];
+  processPlayers(ranking: ResultPlayer[][]): ProcessedPlayer[] {
+    let processedPlayers: ProcessedPlayer [] = [];
     ranking.flatMap(r => r).forEach(resultPlayer => {
       let delta: number = resultPlayer.elo - resultPlayer.preElo;
       let arrow = delta < 0 ? '\u{25b2}' : '\u{25bc}';
-      resultTexts.push(`${resultPlayer.place}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo}) ${arrow}${delta}`);
+      let text = `${resultPlayer.place}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo}) ${arrow}${delta}`;
+      processedPlayers.push({text: text, eloChange: delta});
     })
-    return resultTexts;
+    return processedPlayers;
   }
 
 }

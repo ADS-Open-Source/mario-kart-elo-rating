@@ -5,21 +5,21 @@
 
     <!-- date column -->
     <ng-container matColumnDef="date">
-      <th mat-header-cell class="text-center" *matHeaderCellDef> Date </th>
-      <td mat-cell *matCellDef="let element">
-        {{element.date | date : 'dd.MM.yyyy': 'pl-PL'}}
+      <th mat-header-cell class="text-center" *matHeaderCellDef> Date</th>
+      <td mat-cell *matCellDef="let processedGame">
+        {{processedGame.date | date : 'dd.MM.yyyy': 'pl-PL'}}
         <br>
-        {{element.date | date : 'HH:mm:ss': 'pl-PL'}}
+        {{processedGame.date | date : 'HH:mm:ss': 'pl-PL'}}
       </td>
     </ng-container>
 
     <!-- result column -->
     <ng-container matColumnDef="result">
-      <th mat-header-cell class="text-center" *matHeaderCellDef> Result </th>
-      <td mat-cell *matCellDef="let element">
-        <ng-container *ngFor="let text of element.resultTable">
-          <div>
-            <span>{{text}}</span>
+      <th mat-header-cell class="text-center" *matHeaderCellDef> Result</th>
+      <td mat-cell *matCellDef="let processedGame">
+        <ng-container *ngFor="let processedPlayer of processedGame.resultTable">
+          <div [ngClass]="processedPlayer.eloChange < 0 ? 'negative-delta' : 'positive-delta'">
+            {{processedPlayer.text}}
           </div>
         </ng-container>
       </td>
@@ -27,8 +27,8 @@
 
     <!-- reportedBy column -->
     <ng-container matColumnDef="reportedBy">
-      <th mat-header-cell class="text-center" *matHeaderCellDef> Reported by </th>
-      <td mat-cell *matCellDef="let element"> {{element.reportedBy}} </td>
+      <th mat-header-cell class="text-center" *matHeaderCellDef> Reported by</th>
+      <td mat-cell *matCellDef="let processedGame"> {{processedGame.reportedBy}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
