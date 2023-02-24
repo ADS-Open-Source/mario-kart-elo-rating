@@ -17,6 +17,7 @@ export class NewRaceComponent implements OnInit, OnDestroy {
   playersSub!: Subscription;
   raceForm: FormGroup;
   allPlayers: Player[] = [];
+  isActivated: boolean = false;
 
 
   constructor(
@@ -49,6 +50,7 @@ export class NewRaceComponent implements OnInit, OnDestroy {
       this.mlekoService.isActivated(playerSecret)
         .subscribe({
           next: (response) => {
+            this.isActivated = response;
             if (!response) {
               this.mlekoService.activatePlayer({secret: playerSecret})
                 .subscribe({

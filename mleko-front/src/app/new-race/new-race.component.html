@@ -44,8 +44,8 @@
     </mat-form-field>
 
     <button mat-raised-button
-            [disabled]="secretService.secret == ''" (click)="submitRace()">
-      {{secretService.secret != '' ? 'Submit' : 'No secret provided'}}
+            [disabled]="!isActivated" (click)="submitRace()">
+      {{isActivated ? 'Submit' : 'No valid secret provided'}}
     </button>
   </form>
 
