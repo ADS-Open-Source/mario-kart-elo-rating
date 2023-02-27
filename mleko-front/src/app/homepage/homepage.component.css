@@ -125,6 +125,10 @@
   align-items: center;
 }
 
+.error-prompt {
+  color: red;
+}
+
 .registration-button-container {
   display: flex;
   justify-content: center;

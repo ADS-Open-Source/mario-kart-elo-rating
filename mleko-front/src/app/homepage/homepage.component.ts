@@ -19,6 +19,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
   players: Array<Player> = [];
   registrationForm: FormGroup;
   isRegistering: boolean = false;
+  errorText: string = "";
 
   constructor(
     private mlekoService: MlekoService,
@@ -64,14 +65,15 @@ export class HomepageComponent implements OnInit, OnDestroy {
       {name: formData.username, email: formData.email}
     ).subscribe({
       next: (response) => {
-        console.log("user added")
+        this.errorText = "";
+        console.log("user added");
+        this.isRegistering = false;
       },
       error: (error) => {
-        console.error(error)
-      },
-      complete: () => {
+        console.error(error);
+        this.errorText = error.error.replace(/_/g, ' ');
         this.isRegistering = false;
-      }
+      },
     });
   }
 
