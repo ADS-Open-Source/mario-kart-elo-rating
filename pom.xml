@@ -10,7 +10,7 @@
     </parent>
     <groupId>pl.com.dolittle</groupId>
     <artifactId>mkelo</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <name>MarioKartElo</name>
     <description>Mario Kart Elo Ranking System</description>
     <packaging>jar</packaging>
