@@ -64,4 +64,14 @@ Accept: application/json
 
 <> 2022-03-01T145036.200.json
 
+###
+
+POST http://localhost:8080/api/players/resend/55ca8d21-10de-4dc8-a7aa-4488a3b739b5
+Content-Type: application/json
+
+{
+  "email": "test@test.test"
+}
+
+###
 

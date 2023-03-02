@@ -7,7 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
-import pl.com.dolittle.mkelo.mapstruct.validation.AddGameValidation;
+import pl.com.dolittle.mkelo.mapstruct.validation.EmailValidation;
+import pl.com.dolittle.mkelo.mapstruct.validation.SecretValidation;
 import pl.com.dolittle.mkelo.mapstruct.validation.CreatePlayerValidation;
 import pl.com.dolittle.mkelo.mapstruct.views.GenericViews;
 import pl.com.dolittle.mkelo.services.PlayerService;
@@ -42,7 +43,13 @@ public class PlayerController {
     }
 
     @PostMapping("/activate")
-    public String activatePlayer(@RequestBody @Validated(AddGameValidation.class) PlayerDto playerDto) {
+    public String activatePlayer(@RequestBody @Validated(SecretValidation.class) PlayerDto playerDto) {
         return playerService.activatePlayer(playerDto);
+    }
+
+    @PostMapping("/resend/{requesterSecret}")
+    public ResponseEntity<Boolean> resendSecret(@RequestBody @Validated(EmailValidation.class) PlayerDto playerDto,
+                                                @PathVariable String requesterSecret) {
+        return new ResponseEntity<>(playerService.resendSecret(requesterSecret, playerDto.getEmail()), HttpStatus.OK);
     }
 }

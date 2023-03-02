@@ -1,4 +1,4 @@
 package pl.com.dolittle.mkelo.mapstruct.validation;
 
-public interface AddGameValidation {
+public interface SecretValidation {
 }

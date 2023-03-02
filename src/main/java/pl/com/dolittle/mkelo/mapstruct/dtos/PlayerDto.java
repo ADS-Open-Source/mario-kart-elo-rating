@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.com.dolittle.mkelo.mapstruct.validation.AddGameValidation;
+import pl.com.dolittle.mkelo.mapstruct.validation.EmailValidation;
+import pl.com.dolittle.mkelo.mapstruct.validation.SecretValidation;
 import pl.com.dolittle.mkelo.mapstruct.validation.CreatePlayerValidation;
 import pl.com.dolittle.mkelo.mapstruct.views.GameViews;
 import pl.com.dolittle.mkelo.mapstruct.views.GenericViews;
@@ -17,7 +18,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class PlayerDto {
 
-    @NotBlank(groups = AddGameValidation.class)
+    @NotBlank(groups = SecretValidation.class)
     @JsonView(GenericViews.Private.class)
     private String secret;
 
@@ -28,7 +29,7 @@ public class PlayerDto {
     @JsonView(GenericViews.Public.class)
     private String name;
 
-    @NotBlank(groups = CreatePlayerValidation.class)
+    @NotBlank(groups = {CreatePlayerValidation.class, EmailValidation.class})
     @JsonView(GenericViews.Private.class)
     private String email;
 

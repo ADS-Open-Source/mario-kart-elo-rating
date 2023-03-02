@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.exception.InvalidPlayerCreationDataProvidedException;
+import pl.com.dolittle.mkelo.exception.PlayerEmailNotFoundException;
+import pl.com.dolittle.mkelo.exception.PlayerSecretNotFoundException;
 import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
 import pl.com.dolittle.mkelo.mapstruct.mapper.PlayerMapper;
 import pl.com.dolittle.mkelo.repository.PlayerRepository;
@@ -62,5 +64,17 @@ public class PlayerServiceImpl implements PlayerService {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
+    }
+
+    @Override
+    public Boolean resendSecret(String secret, String email) {
+
+        playerRepository.getBySecret(secret).orElseThrow(() -> new PlayerSecretNotFoundException(secret));
+
+        Player player = playerRepository.getByEmail(email).orElseThrow(() -> new PlayerEmailNotFoundException(email));
+
+        String messageContent = "http://mleko.dolittle.com.pl/new-result?secret=" + player.getSecret();
+        emailService.send(player.getEmail(), "Your re-sent link to mleko", messageContent);
+        return true;
     }
 }

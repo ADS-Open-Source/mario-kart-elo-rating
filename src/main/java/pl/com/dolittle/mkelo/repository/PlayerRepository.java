@@ -55,6 +55,12 @@ public class PlayerRepository {
         return players.stream().filter(p -> Objects.equals(secret, p.getSecret())).findAny();
     }
 
+    public Optional<Player> getByEmail(String email) {
+        log.info("Looking for a player with email {}", email);
+        players = dataService.getPlayersData();
+        return players.stream().filter(p -> Objects.equals(email, p.getEmail())).findAny();
+    }
+
     public Optional<Player> getById(String uuid) {
         log.info("Looking for a player with uuid {}", uuid);
         players = dataService.getPlayersData();
