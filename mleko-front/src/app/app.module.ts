@@ -24,7 +24,7 @@ import {FilterAddedPlayersPipe} from "./new-race/FilterAddedPlayersPipe";
 import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import { PlayersComponent } from './players/players.component';
+import {PlayersComponent} from './players/players.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
