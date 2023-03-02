@@ -24,6 +24,7 @@ import {FilterAddedPlayersPipe} from "./new-race/FilterAddedPlayersPipe";
 import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { PlayersComponent } from './players/players.component';
 
 
 const appRoutes: Routes = [
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
   {path: 'new-race', component: NewRaceComponent},
   {path: 'ranking', component: RankingComponent},
   {path: 'last-races', component: LastResultsComponent},
+  {path: 'players', component: PlayersComponent},
   {path: '', component: HomepageComponent},
   {path: '**', redirectTo: ''}
 ]
@@ -45,7 +47,8 @@ const appRoutes: Routes = [
     RankingComponent,
     LastResultsComponent,
     //  others
-    FilterAddedPlayersPipe
+    FilterAddedPlayersPipe,
+    PlayersComponent
   ],
   imports: [
     BrowserModule,

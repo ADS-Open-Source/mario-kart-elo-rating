@@ -43,4 +43,12 @@
       LAST RACES
     </span>
   </button>
+  <button mat-button class="header__button" *ngIf="isActivated"
+          [ngClass]="{ 'underlined': currentRoute === '/players' }"
+          (click)="navigate('players')">
+    <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
+    <span class="header__button__text">
+      PLAYERS
+    </span>
+  </button>
 </mat-toolbar>
