@@ -29,6 +29,11 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(PlayerNameNotFoundException.class)
+    public ResponseEntity<String> handlePlayerNameNotFoundException(PlayerNameNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(InvalidPlayerCreationDataProvidedException.class)
     public ResponseEntity<String> handleInvalidPlayerCreationDataProvidedException(InvalidPlayerCreationDataProvidedException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);

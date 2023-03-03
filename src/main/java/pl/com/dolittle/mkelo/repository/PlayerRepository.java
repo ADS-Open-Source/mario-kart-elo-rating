@@ -61,6 +61,12 @@ public class PlayerRepository {
         return players.stream().filter(p -> Objects.equals(email, p.getEmail())).findAny();
     }
 
+    public Optional<Player> getByName(String name) {
+        log.info("Looking for a player with name {}", name);
+        players = dataService.getPlayersData();
+        return players.stream().filter(p -> Objects.equals(name, p.getName())).findAny();
+    }
+
     public Optional<Player> getById(String uuid) {
         log.info("Looking for a player with uuid {}", uuid);
         players = dataService.getPlayersData();

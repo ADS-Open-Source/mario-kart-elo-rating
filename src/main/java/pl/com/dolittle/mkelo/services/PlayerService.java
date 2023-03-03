@@ -14,5 +14,5 @@ public interface PlayerService {
 
     Boolean checkIfActivated(String secret);
 
-    Boolean resendSecret(String secret, String email);
+    Boolean resendSecret(String secret, PlayerDto playerDto);
 }

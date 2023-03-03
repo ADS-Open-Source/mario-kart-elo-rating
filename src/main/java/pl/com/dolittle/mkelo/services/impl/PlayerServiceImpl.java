@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pl.com.dolittle.mkelo.entity.Player;
 import pl.com.dolittle.mkelo.exception.InvalidPlayerCreationDataProvidedException;
 import pl.com.dolittle.mkelo.exception.PlayerEmailNotFoundException;
+import pl.com.dolittle.mkelo.exception.PlayerNameNotFoundException;
 import pl.com.dolittle.mkelo.exception.PlayerSecretNotFoundException;
 import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
 import pl.com.dolittle.mkelo.mapstruct.mapper.PlayerMapper;
@@ -67,11 +68,19 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Boolean resendSecret(String secret, String email) {
+    public Boolean resendSecret(String secret, PlayerDto playerDto) {
 
-        playerRepository.getBySecret(secret).orElseThrow(() -> new PlayerSecretNotFoundException(secret));
+        //  check if requester exists TODO add JavaDocs rather than comments
+        Player requester = playerRepository.getBySecret(secret).orElseThrow(() -> new PlayerSecretNotFoundException(secret));
+        log.info("player {} requested to resend secret: {} {}", requester.getUuid(), playerDto.getEmail(), playerDto.getName());
 
-        Player player = playerRepository.getByEmail(email).orElseThrow(() -> new PlayerEmailNotFoundException(email));
+        //  find a player
+        Player player;
+        if (!playerDto.getEmail().isBlank()) {
+            player = playerRepository.getByEmail(playerDto.getEmail()).orElseThrow(() -> new PlayerEmailNotFoundException(playerDto.getEmail()));
+        } else {
+            player = playerRepository.getByName(playerDto.getName()).orElseThrow(() -> new PlayerNameNotFoundException(playerDto.getName()));
+        }
 
         String messageContent = "http://mleko.dolittle.com.pl/new-result?secret=" + player.getSecret();
         emailService.send(player.getEmail(), "Your re-sent link to mleko", messageContent);
