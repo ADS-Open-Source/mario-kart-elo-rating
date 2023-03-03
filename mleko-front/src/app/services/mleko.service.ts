@@ -69,4 +69,9 @@ export class MlekoService {
   createPlayer(playerShort: PlayerShort): Observable<any> {
     return this.httpClient.post<Observable<any>>(`${MlekoService.BACKEND_DOMAIN}/players`, playerShort);
   }
+
+  resendMail(requesterSecret: string, playerShort: PlayerShort): Observable<any> {
+
+    return this.httpClient.post<Observable<any>>(`${MlekoService.BACKEND_DOMAIN}/players/resend/${requesterSecret}`, playerShort);
+  }
 }

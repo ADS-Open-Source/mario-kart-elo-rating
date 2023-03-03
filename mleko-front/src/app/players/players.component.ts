@@ -3,6 +3,7 @@ import {Subscription} from "rxjs";
 import {Player} from "../models/Player";
 import {MlekoService} from "../services/mleko.service";
 import {MatTableDataSource} from "@angular/material/table";
+import {SecretService} from "../services/secret.service";
 
 @Component({
   selector: 'app-players',
@@ -19,13 +20,15 @@ export class PlayersComponent implements OnInit {
 
   constructor(
     private mlekoService: MlekoService,
+    private secretService: SecretService,
   ) {
   }
 
   updateAllPlayers(): void {
     this.playersSub = this.mlekoService.$playersStore
       .subscribe((players: Player[]) => {
-        this.allPlayers = players.sort((a, b) => a.name.localeCompare(b.name));
+        this.allPlayers = players;
+        this.allPlayers.sort((a, b) => a.name.localeCompare(b.name));
         this.dataSource.data = this.allPlayers;
       });
   }
@@ -36,6 +39,18 @@ export class PlayersComponent implements OnInit {
 
   resendEmail(username: string) {
     this.isProcessing = true;
-    console.log(username)// TODO finish resend Email
+    this.mlekoService.resendMail(
+      this.secretService.secret,
+      {name: username, email: ""}
+    ).subscribe({
+      next: (response) => {
+        console.log("email resent")
+        this.isProcessing = false;
+      },
+      error: (error) => {
+        console.error(error)
+        this.isProcessing = false;
+      }
+    })
   }
 }
