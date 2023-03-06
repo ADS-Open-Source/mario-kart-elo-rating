@@ -1,22 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {ScreenSizeService} from "./services/screen-size-service.service";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
-
-  deviceScreenSize: number = 2048;
+export class AppComponent {
 
   constructor(
-    private screenSizeService: ScreenSizeService
   ) {
   }
 
-  ngOnInit(): void {
-    this.deviceScreenSize = window.screen.width;
-    this.screenSizeService.setIfDesktop(this.deviceScreenSize);
-  }
 }

@@ -4,6 +4,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {ActivatedRoute, NavigationEnd, NavigationExtras, Router} from "@angular/router";
 import {SecretService} from "../services/secret.service";
 import {MlekoService} from "../services/mleko.service";
+import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,7 @@ export class NavbarComponent implements OnInit {
 
   currentRoute: string = '';
   isActivated: boolean = false;
+  isDesktop: boolean = true;
 
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -22,6 +24,7 @@ export class NavbarComponent implements OnInit {
     private route: ActivatedRoute,
     private secretService: SecretService,
     private mlekoService: MlekoService,
+    private responsive: BreakpointObserver,
   ) {
     this.matIconRegistry.addSvgIcon(
       'cloud',
@@ -34,7 +37,7 @@ export class NavbarComponent implements OnInit {
       let secret = params.get('secret')
       this.secretService.secret = secret || '';
       // console.log('initial', this.secretService.secret); // TODO why is it being run twice
-      if (secret != null) {
+      if (secret) {
         this.mlekoService.isActivated(secret).subscribe(isActive => {
           this.isActivated = isActive;
         });
@@ -45,6 +48,11 @@ export class NavbarComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         this.currentRoute = window.location.pathname;
       }
+    })
+
+    this.responsive.observe([Breakpoints.Handset]).subscribe(result => {
+      console.log(result) // TODO remove this line
+      this.isDesktop = !result.matches;
     })
   }
 

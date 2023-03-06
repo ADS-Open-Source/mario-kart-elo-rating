@@ -25,6 +25,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { PlayersComponent } from './players/players.component';
+import {MatMenuModule} from "@angular/material/menu";
 
 
 const appRoutes: Routes = [
@@ -50,26 +51,27 @@ const appRoutes: Routes = [
     FilterAddedPlayersPipe,
     PlayersComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatTableModule,
-    MatListModule,
-    MatPaginatorModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    RouterModule.forRoot(
-      appRoutes,
-    ),
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatSlideToggleModule,
-    FormsModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatTableModule,
+        MatListModule,
+        MatPaginatorModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        RouterModule.forRoot(
+            appRoutes,
+        ),
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatSlideToggleModule,
+        FormsModule,
+        MatMenuModule,
+    ],
   providers: [
     DatePipe,
     {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}

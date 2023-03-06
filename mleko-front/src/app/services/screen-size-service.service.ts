@@ -1,16 +1,27 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
+import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ScreenSizeService {
+export class ScreenSizeService implements OnInit{
+  // TODO Currently it's absolutely useless, I'd like to fix that
 
-  public isDesktopDevice: boolean = true;
+  private _isDesktopDevice: boolean = true;
 
-  constructor() {
+  constructor(
+    private responsive: BreakpointObserver,
+  ) {
   }
 
-  public setIfDesktop(deviceScreenSize: number): void {
-    this.isDesktopDevice = deviceScreenSize >= 1024;
+  public get isDesktop(): boolean {
+    return this._isDesktopDevice;
+  }
+
+  ngOnInit(): void {
+
+    this.responsive.observe([Breakpoints.Handset, Breakpoints.Tablet]).subscribe(result => {
+      this._isDesktopDevice = !result.matches;
+    })
   }
 }
