@@ -5,6 +5,7 @@ import {ActivatedRoute, NavigationEnd, NavigationExtras, Router} from "@angular/
 import {SecretService} from "../services/secret.service";
 import {MlekoService} from "../services/mleko.service";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
+import {ScreenSizeService} from "../services/screen-size-service.service";
 
 @Component({
   selector: 'app-navbar',
@@ -24,6 +25,7 @@ export class NavbarComponent implements OnInit {
     private route: ActivatedRoute,
     private secretService: SecretService,
     private mlekoService: MlekoService,
+    private screenService: ScreenSizeService,
     private responsive: BreakpointObserver,
   ) {
     this.matIconRegistry.addSvgIcon(
@@ -50,9 +52,10 @@ export class NavbarComponent implements OnInit {
       }
     })
 
-    this.responsive.observe([Breakpoints.Handset]).subscribe(result => {
+    this.responsive.observe([Breakpoints.HandsetPortrait]).subscribe(result => {
       console.log(result) // TODO remove this line
       this.isDesktop = !result.matches;
+      this.screenService.isDesktop = !result.matches;
     })
   }
 

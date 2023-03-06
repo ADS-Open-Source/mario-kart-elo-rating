@@ -1,4 +1,4 @@
-<div class="table-container">
+<div class="table-container" [ngClass]="{ 'table-conteiner--desktop': screenService.isDesktop }">
 
   <!--    ranking table    -->
   <table mat-table [dataSource]="dataSource" class="table">

@@ -5,7 +5,6 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
   providedIn: 'root'
 })
 export class ScreenSizeService implements OnInit{
-  // TODO Currently it's absolutely useless, I'd like to fix that
 
   private _isDesktopDevice: boolean = true;
 
@@ -18,8 +17,13 @@ export class ScreenSizeService implements OnInit{
     return this._isDesktopDevice;
   }
 
+  public set isDesktop(isDesktop: boolean) {
+    this._isDesktopDevice = isDesktop;
+  }
+
   ngOnInit(): void {
 
+    // TODO why is this not working
     this.responsive.observe([Breakpoints.Handset, Breakpoints.Tablet]).subscribe(result => {
       this._isDesktopDevice = !result.matches;
     })
