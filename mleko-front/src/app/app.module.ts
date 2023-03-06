@@ -26,6 +26,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {PlayersComponent} from './players/players.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatMenuModule} from "@angular/material/menu";
 
 
 const appRoutes: Routes = [
@@ -68,6 +69,7 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatSnackBarModule,
     MatInputModule,
+    MatMenuModule,
     ReactiveFormsModule,
     MatSlideToggleModule,
     FormsModule,

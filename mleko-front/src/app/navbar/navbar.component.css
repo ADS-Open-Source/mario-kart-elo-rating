@@ -70,3 +70,23 @@
 .cloud-icon {
   animation: cloud--animation 10s ease-in-out infinite;
 }
+
+/*  mobile CSSes  */
+.menu {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.menu-button {
+  display: flex;
+  align-items: center;
+  color: #6096fe;
+
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5em;
+}
+
+.underlined-mobile {
+  text-decoration: underline;
+}
+
