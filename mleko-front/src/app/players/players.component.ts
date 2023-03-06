@@ -4,6 +4,7 @@ import {Player} from "../models/Player";
 import {MlekoService} from "../services/mleko.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {SecretService} from "../services/secret.service";
+import {ScreenSizeService} from "../services/screen-size-service.service";
 
 @Component({
   selector: 'app-players',
@@ -21,6 +22,7 @@ export class PlayersComponent implements OnInit {
   constructor(
     private mlekoService: MlekoService,
     private secretService: SecretService,
+    protected screenService: ScreenSizeService,
   ) {
   }
 
