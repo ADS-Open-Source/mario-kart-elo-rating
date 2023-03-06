@@ -4,6 +4,7 @@ import {MlekoService} from "../services/mleko.service";
 import {Game} from "../models/Game";
 import {ResultPlayer} from "../models/ResultPlayer";
 import {MatTableDataSource} from "@angular/material/table";
+import {ScreenSizeService} from "../services/screen-size-service.service";
 
 
 export interface ProcessedPlayer {
@@ -31,6 +32,7 @@ export class LastResultsComponent implements OnInit {
 
   constructor(
     private mlekoService: MlekoService,
+    protected screenService: ScreenSizeService,
   ) {
   }
 
