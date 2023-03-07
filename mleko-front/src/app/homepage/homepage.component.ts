@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {NavigationExtras, Router} from "@angular/router";
 import {SecretService} from "../services/secret.service";
 import {Subscription} from "rxjs";
+import {ScreenSizeService} from "../services/screen-size-service.service";
 
 @Component({
   selector: 'app-homepage',
@@ -28,6 +29,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
     private domSanitizer: DomSanitizer,
     private router: Router,
     private fb: FormBuilder,
+    protected screenService: ScreenSizeService
   ) {
     // icons
     this.matIconRegistry.addSvgIcon(
