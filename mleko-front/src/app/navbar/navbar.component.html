@@ -6,7 +6,6 @@
 
 <!--Mobile View-->
 <ng-template #mobileBlock>
-  <!--  TODO Add an icon to the middle of the screen in the mobile view  -->
   <div class="app-header">
     <div class="menu">
       <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -46,6 +45,13 @@
         </button>
       </mat-menu>
     </div>
+    <a class="header__logo"
+       (click)="navigate('')">
+      <div class="header__logo__container">
+        <div class="header__logo__container__text">MLEKO</div>
+        <img src="assets/milk_bucket.webp" alt="mleko_logo" class="mobile-mleko-icon">
+      </div>
+    </a>
   </div>
 </ng-template>
 
@@ -54,11 +60,11 @@
 <ng-template #desktopBlock>
   <mat-toolbar class="app-header" color="primary">
 
-    <a class="header__logo"
+    <a class="header__logo header__logo--desktop"
        (click)="navigate('')">
       <div class="header__logo__container">
         <div class="header__logo__container__text">MLEKO</div>
-        <img src="assets/milk_bucket.webp" alt="mleko_logo">
+        <img src="assets/milk_bucket.webp" alt="mleko_logo" class="desktop-mleko-icon">
       </div>
     </a>
 
@@ -70,40 +76,40 @@
             (click)="navigate('')">
       <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
       <span class="header__button__text">
-      HOME
-    </span>
+        HOME
+      </span>
     </button>
     <button mat-button class="header__button"
             [ngClass]="{ 'underlined': currentRoute === '/new-race' }"
             (click)="navigate('new-race')">
       <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
       <span class="header__button__text">
-      NEW RACE
-    </span>
+        NEW RACE
+      </span>
     </button>
     <button mat-button class="header__button"
             [ngClass]="{ 'underlined': currentRoute === '/ranking' }"
             (click)="navigate('ranking')">
       <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
       <span class="header__button__text">
-      RANKING
-    </span>
+        RANKING
+      </span>
     </button>
     <button mat-button class="header__button"
             [ngClass]="{ 'underlined': currentRoute === '/last-races' }"
             (click)="navigate('last-races')">
       <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
       <span class="header__button__text">
-      LAST RACES
-    </span>
+        LAST RACES
+      </span>
     </button>
     <button mat-button class="header__button" *ngIf="isActivated"
             [ngClass]="{ 'underlined': currentRoute === '/players' }"
             (click)="navigate('players')">
       <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
       <span class="header__button__text">
-      PLAYERS
-    </span>
+        PLAYERS
+      </span>
     </button>
   </mat-toolbar>
 </ng-template>

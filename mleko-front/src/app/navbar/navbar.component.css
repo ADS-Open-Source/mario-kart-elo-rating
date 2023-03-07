@@ -19,12 +19,14 @@
   align-items: center;
   justify-content: center;
 
-  margin-top: 15px;
-
   color: inherit;
   text-decoration: none;
 
   animation: up-down--animation 10s ease-in-out infinite;
+}
+
+.header__logo--desktop {
+  margin-top: 15px;
 }
 
 .header__logo__container {
@@ -37,10 +39,16 @@
   cursor: pointer;
 }
 
-.header__logo__container img {
+.desktop-mleko-icon {
   margin-bottom: 10px;
   height: 2em;
   width: 2em;
+}
+
+.mobile-mleko-icon {
+  margin-top: 10px;
+  height: 3em;
+  width: 3em;
 }
 
 .header__logo__container__text {
