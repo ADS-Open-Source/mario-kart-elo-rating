@@ -59,3 +59,8 @@
 .positive-delta {
   color: #afff9b;
 }
+
+.additional-result-text {
+  font-weight: bold;
+  letter-spacing: 2px;
+}

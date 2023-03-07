@@ -25,7 +25,8 @@ export interface ProcessedGame {
 })
 export class LastResultsComponent implements OnInit {
 
-  displayedColumns: string[] = ['date', 'result', 'reportedBy'];
+  // TODO dynamically adjust that
+  displayedColumns: string[] = this.screenService.isDesktop ? ['date', 'result', 'reportedBy'] : ['date', 'result'];
   dataSource!: MatTableDataSource<ProcessedGame>;
 
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
