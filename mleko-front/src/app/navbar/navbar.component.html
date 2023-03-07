@@ -6,45 +6,46 @@
 
 <!--Mobile View-->
 <ng-template #mobileBlock>
+  <!--  TODO Add an icon to the middle of the screen in the mobile view  -->
   <div class="app-header">
-  <div class="menu">
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>reorder</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
+    <div class="menu">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>reorder</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
 
-      <button mat-menu-item class="menu-button"
-              [ngClass]="{ 'underlined-mobile': currentRoute === '/' }"
-              (click)="navigate('')">
-        <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
-        <span>HOME</span>
-      </button>
-      <button mat-menu-item class="menu-button"
-              [ngClass]="{ 'underlined-mobile': currentRoute === '/new-race' }"
-              (click)="navigate('new-race')">
-        <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
-        <span>NEW RACE</span>
-      </button>
-      <button mat-menu-item class="menu-button"
-              [ngClass]="{ 'underlined-mobile': currentRoute === '/ranking' }"
-              (click)="navigate('ranking')">
-        <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
-        <span>RANKING</span>
-      </button>
-      <button mat-menu-item class="menu-button"
-              [ngClass]="{ 'underlined-mobile': currentRoute === '/last-races' }"
-              (click)="navigate('last-races')">
-        <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
-        <span>LAST RACES</span>
-      </button>
-      <button mat-menu-item class="menu-button" *ngIf="isActivated"
-              [ngClass]="{ 'underlined': currentRoute === '/players' }"
-              (click)="navigate('players')">
-        <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
-        <span>PLAYERS</span>
-      </button>
-    </mat-menu>
-  </div>
+        <button mat-menu-item class="menu-button"
+                [ngClass]="{ 'underlined-mobile': currentRoute === '/' }"
+                (click)="navigate('')">
+          <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
+          <span>HOME</span>
+        </button>
+        <button mat-menu-item class="menu-button"
+                [ngClass]="{ 'underlined-mobile': currentRoute === '/new-race' }"
+                (click)="navigate('new-race')">
+          <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
+          <span>NEW RACE</span>
+        </button>
+        <button mat-menu-item class="menu-button"
+                [ngClass]="{ 'underlined-mobile': currentRoute === '/ranking' }"
+                (click)="navigate('ranking')">
+          <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
+          <span>RANKING</span>
+        </button>
+        <button mat-menu-item class="menu-button"
+                [ngClass]="{ 'underlined-mobile': currentRoute === '/last-races' }"
+                (click)="navigate('last-races')">
+          <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
+          <span>LAST RACES</span>
+        </button>
+        <button mat-menu-item class="menu-button" *ngIf="isActivated"
+                [ngClass]="{ 'underlined': currentRoute === '/players' }"
+                (click)="navigate('players')">
+          <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
+          <span>PLAYERS</span>
+        </button>
+      </mat-menu>
+    </div>
   </div>
 </ng-template>
 
