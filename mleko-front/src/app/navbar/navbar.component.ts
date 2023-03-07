@@ -53,7 +53,6 @@ export class NavbarComponent implements OnInit {
     })
 
     this.responsive.observe([Breakpoints.HandsetPortrait]).subscribe(result => {
-      console.log(result) // TODO remove this line
       this.isDesktop = !result.matches;
       this.screenService.isDesktop = !result.matches;
     })
