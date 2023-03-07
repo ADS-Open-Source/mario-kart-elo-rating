@@ -12,6 +12,11 @@
   align-items: center;
 }
 
+.header-with-icon--mobile {
+  font-size: 1em;
+  justify-content: center;
+}
+
 .top-players {
   animation: up-down--animation 5s ease-in-out infinite;
 }
@@ -24,6 +29,10 @@
 
 .list {
   padding: 10px 0 2em 0;
+}
+
+.list--mobile {
+  padding: 10px 0;
 }
 
 .mat-list-item {
@@ -54,9 +63,19 @@
   text-align: left;
 }
 
+.player-position--mobile {
+  font-size: 1em;
+
+  width: 60%;
+}
+
 .player-elo {
   width: 20%;
   text-align: right;
+}
+
+.player-elo--mobile {
+  width: 40%;
 }
 
 .see-more {
@@ -146,6 +165,10 @@
 
 ::ng-deep .mat-input-element {
   color: #000000 !important;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding: 5px !important;
 }
 
 /* rant over */
