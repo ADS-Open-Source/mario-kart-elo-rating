@@ -1,11 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
 
 html {
-  background: url('assets/mario-background.webp') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: url("assets/mario-kart.png") no-repeat center bottom 15% fixed,
+  url('assets/mario-background.webp') repeat-x center center fixed;
+
+  -webkit-background-size: auto, cover;
+  -moz-background-size: auto, cover;
+  -o-background-size: auto, cover;
+  background-size: 50%, cover;
+
+  animation: scroll-x 5s linear infinite;
+}
+
+@keyframes scroll-x {
+  0% {
+    background-position: bottom 15% center, 0 0;
+  }
+  20% {
+    background-position: bottom 14% center, 80% 0;
+  }
+  40% {
+    background-position: bottom 16% center, 160% 0;
+  }
+  60% {
+    background-position: bottom 14% center, 240% 0;
+  }
+  80% {
+    background-position: bottom 16% center, 320% 0;
+  }
+  100% {
+    background-position: bottom 15% center, 400% 0;
+  }
 }
 
 body {
