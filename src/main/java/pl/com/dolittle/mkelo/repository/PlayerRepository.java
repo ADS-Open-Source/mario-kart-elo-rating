@@ -79,5 +79,9 @@ public class PlayerRepository {
         player.activate();
         dataService.putPlayersData(players);
     }
+
+    public void updatePlayers() {
+        dataService.putPlayersData(this.players);
+    }
 }
 
