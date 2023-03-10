@@ -3,6 +3,7 @@ import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
 import {ActivatedRoute, NavigationEnd, NavigationExtras, Router} from "@angular/router";
 import {SecretService} from "../services/secret.service";
+import {MlekoService} from "../services/mleko.service";
 
 @Component({
   selector: 'app-navbar',
@@ -12,6 +13,7 @@ import {SecretService} from "../services/secret.service";
 export class NavbarComponent implements OnInit {
 
   currentRoute: string = '';
+  isActivated: boolean = false;
 
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -19,6 +21,7 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private secretService: SecretService,
+    private mlekoService: MlekoService,
   ) {
     this.matIconRegistry.addSvgIcon(
       'cloud',
@@ -28,8 +31,14 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(params => {
-      this.secretService.secret = params.get('secret') || '';
+      let secret = params.get('secret')
+      this.secretService.secret = secret || '';
       // console.log('initial', this.secretService.secret); // TODO why is it being run twice
+      if (secret != null) {
+        this.mlekoService.isActivated(secret).subscribe(isActive => {
+          this.isActivated = isActive;
+        });
+      }
     });
 
     this.router.events.subscribe((event) => {
