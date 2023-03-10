@@ -1,4 +1,4 @@
-<div class="table-container">
+<div class="table-container" [ngClass]="{ 'table-container--desktop': screenService.isDesktop }">
 
   <table mat-table [dataSource]="dataSource" class="table text-center">
     <caption class="table__caption">Last races results</caption>
@@ -22,6 +22,9 @@
             {{processedPlayer.text}}
           </div>
         </ng-container>
+        <div class="additional-result-text" *ngIf="!screenService.isDesktop">
+          Reported by: {{processedGame.reportedBy}}
+        </div>
       </td>
     </ng-container>
 

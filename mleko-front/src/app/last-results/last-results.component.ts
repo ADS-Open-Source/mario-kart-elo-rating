@@ -4,6 +4,7 @@ import {MlekoService} from "../services/mleko.service";
 import {Game} from "../models/Game";
 import {ResultPlayer} from "../models/ResultPlayer";
 import {MatTableDataSource} from "@angular/material/table";
+import {ScreenSizeService} from "../services/screen-size-service.service";
 
 
 export interface ProcessedPlayer {
@@ -24,13 +25,15 @@ export interface ProcessedGame {
 })
 export class LastResultsComponent implements OnInit {
 
-  displayedColumns: string[] = ['date', 'result', 'reportedBy'];
+  // TODO dynamically adjust that
+  displayedColumns: string[] = this.screenService.isDesktop ? ['date', 'result', 'reportedBy'] : ['date', 'result'];
   dataSource!: MatTableDataSource<ProcessedGame>;
 
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
 
   constructor(
     private mlekoService: MlekoService,
+    protected screenService: ScreenSizeService,
   ) {
   }
 

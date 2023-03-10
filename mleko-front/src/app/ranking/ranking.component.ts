@@ -6,6 +6,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {ActivatedRoute} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
 import {Subscription} from "rxjs";
+import {ScreenSizeService} from "../services/screen-size-service.service";
 
 @Component({
   selector: 'app-ranking',
@@ -25,6 +26,7 @@ export class RankingComponent implements OnInit, OnDestroy {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private route: ActivatedRoute,
+    protected screenService: ScreenSizeService,
   ) {
     this.matIconRegistry.addSvgIcon(
       'trophy',
