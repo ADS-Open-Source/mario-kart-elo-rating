@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 
 @NoArgsConstructor
@@ -19,6 +20,7 @@ public class Player implements Serializable {
     private transient int preElo;
     private transient int place;
     private int gamesPlayed;
+    private LocalDateTime lastEmailRequest;
 
 
     public Player(String secret, String uuid, String name, String email) {
@@ -29,6 +31,7 @@ public class Player implements Serializable {
         this.activated = false;
         this.elo = 2000;
         this.gamesPlayed = 0;
+        this.lastEmailRequest = LocalDateTime.now();
     }
 
     public void incrementGamesPlayed() {

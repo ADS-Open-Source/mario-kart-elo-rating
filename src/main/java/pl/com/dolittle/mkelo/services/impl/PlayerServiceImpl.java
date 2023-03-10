@@ -4,16 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.com.dolittle.mkelo.entity.Player;
-import pl.com.dolittle.mkelo.exception.InvalidPlayerCreationDataProvidedException;
-import pl.com.dolittle.mkelo.exception.PlayerEmailNotFoundException;
-import pl.com.dolittle.mkelo.exception.PlayerNameNotFoundException;
-import pl.com.dolittle.mkelo.exception.PlayerSecretNotFoundException;
+import pl.com.dolittle.mkelo.exception.*;
 import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
 import pl.com.dolittle.mkelo.mapstruct.mapper.PlayerMapper;
 import pl.com.dolittle.mkelo.repository.PlayerRepository;
 import pl.com.dolittle.mkelo.services.EmailService;
 import pl.com.dolittle.mkelo.services.PlayerService;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -73,6 +72,19 @@ public class PlayerServiceImpl implements PlayerService {
         //  check if requester exists TODO add JavaDocs rather than comments
         Player requester = playerRepository.getBySecret(secret).orElseThrow(() -> new PlayerSecretNotFoundException(secret));
         log.info("player {} requested to resend secret: {} {}", requester.getUuid(), playerDto.getEmail(), playerDto.getName());
+
+        //  check whether requester can send additional requests
+        LocalDateTime requestTime = LocalDateTime.now();
+        if (requester.getLastEmailRequest() != null) {
+            Duration resendCooldown = Duration.between(requester.getLastEmailRequest(), requestTime);
+            if (resendCooldown.toDays() <= 1) {
+                throw new TooManyResendRequestsException(requestTime, requester.getLastEmailRequest().plusDays(1));
+            }
+        }
+
+        // update the last email request time
+        requester.setLastEmailRequest(requestTime);
+        playerRepository.updatePlayers();
 
         //  find a player
         Player player;

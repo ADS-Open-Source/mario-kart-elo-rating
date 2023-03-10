@@ -43,4 +43,9 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> handlePlayerAlreadyExistsException(PlayerAlreadyExistsException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(TooManyResendRequestsException.class)
+    public ResponseEntity<String> handleTooManyResendRequestsException(TooManyResendRequestsException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.TOO_MANY_REQUESTS);
+    }
 }
