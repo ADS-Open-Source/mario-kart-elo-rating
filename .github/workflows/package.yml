@@ -2,7 +2,7 @@ name: Generate Artifacts
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
 
 jobs:
   build:
