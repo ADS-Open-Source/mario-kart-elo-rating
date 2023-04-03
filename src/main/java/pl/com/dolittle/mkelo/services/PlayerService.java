@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface PlayerService {
 
+    List<PlayerDto> getAll();
+
     List<PlayerDto> getActivatedSorted();
 
     String createPlayer(PlayerDto playerDto);

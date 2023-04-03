@@ -18,6 +18,8 @@ out/
 
 ### IntelliJ IDEA ###
 .idea
+.jpb
+/.jpb/
 *.iws
 *.iml
 *.ipr
@@ -38,3 +40,4 @@ build/
 ### Iromem data ###
 persistentData/
 /mkeloData.json
+

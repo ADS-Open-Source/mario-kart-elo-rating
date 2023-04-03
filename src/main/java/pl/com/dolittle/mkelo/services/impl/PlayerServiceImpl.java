@@ -9,6 +9,7 @@ import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
 import pl.com.dolittle.mkelo.mapstruct.mapper.PlayerMapper;
 import pl.com.dolittle.mkelo.repository.PlayerRepository;
 import pl.com.dolittle.mkelo.services.EmailService;
+import pl.com.dolittle.mkelo.services.PersistenceService;
 import pl.com.dolittle.mkelo.services.PlayerService;
 
 import java.time.Duration;
@@ -25,42 +26,56 @@ public class PlayerServiceImpl implements PlayerService {
     private final PlayerRepository playerRepository;
     private final PlayerMapper playerMapper;
     private final EmailService emailService;
+    private final PersistenceService persistenceService;
+
+    @Override
+    public List<PlayerDto> getAll() {
+        return playerMapper.toDtoList(playerRepository.findAll());
+    }
 
     @Override
     public List<PlayerDto> getActivatedSorted() {
 
-        List<Player> players = playerRepository.getAllSorted();
-        return playerMapper.toDtoList(players.stream().filter(Player::isActivated).toList());
+        List<Player> players = playerRepository.findByActivatedTrueOrderByEloDesc();
+        return playerMapper.toDtoList(players);
     }
 
     @Override
     public String createPlayer(PlayerDto playerDto) {
 
-        if (playerDto.getName().isBlank() || playerDto.getEmail().isBlank()) {
-            throw new InvalidPlayerCreationDataProvidedException();
+        if (playerRepository.findByNameOrEmail(playerDto.getName(), playerDto.getEmail()).isPresent()) {
+            throw new PlayerAlreadyExistsException(playerDto.getName(), playerDto.getEmail());
         }
-        var secret = UUID.randomUUID().toString();
-        playerRepository.addPlayer(new Player(secret, UUID.randomUUID().toString(), playerDto.getName(), playerDto.getEmail()));
 
-        String messageContent = "http://mleko.dolittle.com.pl/new-result?secret=" + secret;
-        emailService.send(playerDto.getEmail(), "Your link to mleko", messageContent);
-        return "email sent to " + playerDto.getEmail();
+
+        Player player = Player.fromPlayerDTO(playerDto);
+        Player savedPlayer = playerRepository.save(player);
+
+
+        String messageContent = "http://mleko.dolittle.com.pl/new-result?secret=" + savedPlayer.getSecret();
+        emailService.send(savedPlayer.getEmail(), "Your link to mleko", messageContent);
+
+        persistenceService.uploadInsertsDataToS3();
+
+        return "email sent to " + savedPlayer.getEmail();
     }
 
     @Override
     public String activatePlayer(PlayerDto playerDto) {
 
-        String secret = playerDto.getSecret();
+        UUID secret = UUID.fromString(playerDto.getSecret());
+        Player player = playerRepository.getBySecret(secret).orElseThrow(() -> new PlayerSecretNotFoundException(playerDto.getSecret()));
 
-        playerRepository.activatePlayer(secret);
+        player.setActivated(true);
+        playerRepository.save(player);
         return "player activated";
     }
 
     @Override
     public Boolean checkIfActivated(String secret) {
 
-        Optional<Player> player = playerRepository.getBySecret(secret);
-        if (player.isPresent() && player.get().isActivated()) {
+        Optional<Player> player = playerRepository.getBySecret(UUID.fromString(secret));
+        if (player.isPresent() && Boolean.TRUE.equals(player.get().getActivated())) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
@@ -69,9 +84,9 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public Boolean resendSecret(String secret, PlayerDto playerDto) {
 
-        //  check if requester exists TODO add JavaDocs rather than comments
-        Player requester = playerRepository.getBySecret(secret).orElseThrow(() -> new PlayerSecretNotFoundException(secret));
-        log.info("player {} requested to resend secret: {} {}", requester.getUuid(), playerDto.getEmail(), playerDto.getName());
+        Player requester = playerRepository.getBySecret(UUID.fromString(secret))
+                .orElseThrow(() -> new PlayerSecretNotFoundException(secret));
+        log.info("player {} requested to resend secret: {} {}", requester.getId(), playerDto.getEmail(), playerDto.getName());
 
         //  check whether requester can send additional requests
         LocalDateTime requestTime = LocalDateTime.now();
@@ -84,7 +99,7 @@ public class PlayerServiceImpl implements PlayerService {
 
         // update the last email request time
         requester.setLastEmailRequest(requestTime);
-        playerRepository.updatePlayers();
+        playerRepository.save(requester);
 
         //  find a player
         Player player;

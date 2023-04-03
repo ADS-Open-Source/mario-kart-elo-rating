@@ -8,7 +8,7 @@ import pl.com.dolittle.mkelo.mapstruct.views.GameViews;
 import pl.com.dolittle.mkelo.mapstruct.views.GenericViews;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,5 +22,5 @@ public class GameDto {
     private PlayerDto reportedBy;
 
     @JsonView(GameViews.GameHistory.class)
-    private List<List<PlayerDto>> ranking;
+    private Set<GamesPlayerDto> gamesPlayers;
 }
