@@ -4,33 +4,18 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 public class ELOMatch {
 
     private final List<Player> players = new ArrayList<>();
 
+    public List<Player> getPlayers() {
+        return this.players;
+    }
+
     public void addPlayer(Player player) {
         players.add(player);
-    }
-
-    public int getELO(String uuid) {
-        for (Player p : players) {
-            if (Objects.equals(p.getUuid(), uuid))
-                return p.getElo();
-        }
-        log.warn("no player {} found", uuid);
-        return 1500;
-    }
-
-    public boolean checkIfIsPlayer(String uuid) {
-
-        for (Player p : players) {
-            if (Objects.equals(p.getUuid(), uuid))
-                return true;
-        }
-        return false;
     }
 
     public void calculateELOs() {

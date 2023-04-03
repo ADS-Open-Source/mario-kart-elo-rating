@@ -2,22 +2,27 @@ package pl.com.dolittle.mkelo.services.impl;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pl.com.dolittle.mkelo.entity.MKEloData;
 import pl.com.dolittle.mkelo.services.PersistenceService;
 
+import javax.sql.DataSource;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-
-import static pl.com.dolittle.mkelo.services.DataService.LOCAL_DATE_PATTERN;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Service
 @Slf4j
@@ -25,8 +30,15 @@ public class S3PersistenceServiceImpl implements PersistenceService {
 
     @Autowired
     AmazonS3 amazonS3;
+
+    @Autowired
+    private DataSource dataSource;
+
     @Value("${application.bucket.name}")
     private String s3BucketName;
+
+    @Value("${bucket-data-filename}")
+    private String filename;
 
     @Override
     public byte[] downloadFile(String filename) {
@@ -40,26 +52,73 @@ public class S3PersistenceServiceImpl implements PersistenceService {
     }
 
     @Override
-    public MKEloData downloadData(String filename) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.setDateFormat(new SimpleDateFormat(LOCAL_DATE_PATTERN));
-        S3Object s3Object = amazonS3.getObject(new GetObjectRequest(s3BucketName, filename));
+    public void uploadData(String key, InputStream data) {
+        ObjectMetadata metadata = new ObjectMetadata();
         try {
-            return objectMapper.readValue(s3Object.getObjectContent(), MKEloData.class);
+            metadata.setContentLength(data.available());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
+            return;
         }
-    }
 
-    @Override
-    public void uploadData(String filename, JSONObject jsonObject) {
         try {
-            PutObjectResult por = amazonS3.putObject(s3BucketName, filename, jsonObject.toString());
-            ObjectMetadata om = por.getMetadata();
-            log.info("Uploaded {} ({}) with a size of {} bytes", filename, om.getETag(), om.getContentLength());
+            PutObjectResult por = amazonS3.putObject(s3BucketName, key, data, metadata);
+            ObjectMetadata resultMetadata = por.getMetadata();
+            log.info("Uploaded {} ({}) with a size of {} bytes", key, resultMetadata.getETag(), resultMetadata.getContentLength());
         } catch (AmazonServiceException e) {
             throw new AmazonServiceException(e.getErrorMessage());
         }
     }
+
+    @Override
+    public void uploadInsertsDataToS3() {
+        uploadData(filename, getInsertStatements());
+    }
+
+    @Override
+    public InputStream getInsertStatements() {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement("SCRIPT SIMPLE NOSETTINGS");
+             ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+
+            preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.getResultSet();
+
+            while (resultSet.next()) {
+                String line = resultSet.getString(1);
+                if (line.startsWith("INSERT")) {
+                    output.write(line.getBytes());
+                    output.write('\n');
+                }
+            }
+
+            log.info("inserts dumped to input stream");
+            return new ByteArrayInputStream(output.toByteArray());
+
+        } catch (SQLException | IOException e) {
+            log.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public void executeInsertStatementsFromS3(String filename) {
+        if (filename == null) {
+            filename = this.filename;
+        }
+        String fileContent = new String(downloadFile(filename), StandardCharsets.UTF_8);
+        String[] lines = fileContent.split("\n");
+        for (String line : lines) {
+            if (line.startsWith("INSERT")) {
+                try (Connection conn = dataSource.getConnection()) {
+                    PreparedStatement statement = conn.prepareStatement(line);
+                    statement.execute();
+                    log.info("executed: {}", line);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
 }
