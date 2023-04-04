@@ -38,7 +38,7 @@ public class S3PersistenceServiceImpl implements PersistenceService {
     private String s3BucketName;
 
     @Value("${bucket-data-filename}")
-    private String filename;
+    private String defaultFilename;
 
     @Override
     public byte[] downloadFile(String filename) {
@@ -72,7 +72,7 @@ public class S3PersistenceServiceImpl implements PersistenceService {
 
     @Override
     public void uploadInsertsDataToS3() {
-        uploadData(filename, getInsertStatements());
+        uploadData(defaultFilename, getInsertStatements());
     }
 
     @Override
@@ -104,7 +104,7 @@ public class S3PersistenceServiceImpl implements PersistenceService {
     @Override
     public void executeInsertStatementsFromS3(String filename) {
         if (filename == null) {
-            filename = this.filename;
+            filename = this.defaultFilename;
         }
         String fileContent = new String(downloadFile(filename), StandardCharsets.UTF_8);
         String[] lines = fileContent.split("\n");
@@ -118,6 +118,13 @@ public class S3PersistenceServiceImpl implements PersistenceService {
                     throw new RuntimeException(e);
                 }
             }
+        }
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("ALTER TABLE GAMES ALTER COLUMN ID RESTART WITH (SELECT MAX(ID) + 1 FROM GAMES)");
+            statement.execute();
+            log.info("updated the games identity");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
