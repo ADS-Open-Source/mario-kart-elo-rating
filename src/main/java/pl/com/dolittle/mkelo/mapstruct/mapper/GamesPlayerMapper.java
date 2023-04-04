@@ -11,6 +11,7 @@ public interface GamesPlayerMapper {
     @Mapping(target = "playerDto", source = "player")
     @Mapping(target = "playerDto.place", source = "place")
     @Mapping(target = "playerDto.preElo", source = "preElo")
+    @Mapping(target = "playerDto.elo", source = "elo")
     GamesPlayerDto toDto(GamesPlayer gamesPlayer);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
