@@ -1,6 +1,7 @@
 package pl.com.dolittle.mkelo.mapstruct.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 import pl.com.dolittle.mkelo.entity.Player;
@@ -15,6 +16,7 @@ public interface PlayerMapper {
     Player toEntity(PlayerDto playerDto);
 
     // Entity to DTO
+    @Mapping(target = "uuid", source = "id")
     PlayerDto toDto(Player player);
 
     List<PlayerDto> toDtoList(List<Player> players);

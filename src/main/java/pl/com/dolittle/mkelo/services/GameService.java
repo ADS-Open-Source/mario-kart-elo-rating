@@ -1,12 +1,12 @@
 package pl.com.dolittle.mkelo.services;
 
-import pl.com.dolittle.mkelo.mapstruct.dtos.GameDto;
+import pl.com.dolittle.mkelo.mapstruct.dtos.RankingGameDto;
 
 import java.util.List;
 
 public interface GameService {
 
-    List<GameDto> getGames(Integer count);
+    List<RankingGameDto> getTopNGames(Integer n);
 
-    void addGame(GameDto gameDto);
+    void addGame(RankingGameDto gameDto);
 }

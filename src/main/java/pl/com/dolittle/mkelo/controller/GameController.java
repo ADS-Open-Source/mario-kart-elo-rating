@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pl.com.dolittle.mkelo.mapstruct.dtos.GameDto;
+import pl.com.dolittle.mkelo.mapstruct.dtos.RankingGameDto;
 import pl.com.dolittle.mkelo.mapstruct.validation.SecretValidation;
 import pl.com.dolittle.mkelo.mapstruct.views.GameViews;
 import pl.com.dolittle.mkelo.services.GameService;
@@ -23,12 +23,12 @@ public class GameController {
 
     @JsonView(GameViews.GameHistory.class)
     @GetMapping
-    public List<GameDto> get(@RequestParam(required = false) Integer count) {
-        return gameService.getGames(count);
+    public List<RankingGameDto> get(@RequestParam(required = false) Integer count) {
+        return gameService.getTopNGames(count);
     }
 
     @PostMapping
-    public ResponseEntity<String> addGame(@RequestBody @Validated(SecretValidation.class) GameDto gameDto) {
+    public ResponseEntity<String> addGame(@RequestBody @Validated(SecretValidation.class) RankingGameDto gameDto) {
         gameService.addGame(gameDto);
         return new ResponseEntity<>("game added", HttpStatus.OK);
     }

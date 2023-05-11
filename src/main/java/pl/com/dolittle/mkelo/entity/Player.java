@@ -1,48 +1,75 @@
 package pl.com.dolittle.mkelo.entity;
 
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import pl.com.dolittle.mkelo.exception.InvalidPlayerCreationDataProvidedException;
+import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
+import java.util.regex.Pattern;
 
-
+@Getter
+@Setter
 @NoArgsConstructor
-@Data
-public class Player implements Serializable {
+@Entity
+@Table(name = "players")
+public class Player {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "uuid", nullable = false)
+    private UUID id;
 
-    private String secret;
-    private String uuid;
+    @Column(name = "secret", nullable = false)
+    private UUID secret;
+
+    @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
+
+    @Column(name = "email", nullable = false, length = Integer.MAX_VALUE)
     private String email;
-    private boolean activated;
-    private int elo;
-    private transient int preElo;
-    private transient int place;
-    private int gamesPlayed;
-    private LocalDateTime lastEmailRequest;
 
+    @Column(name = "activated")
+    private Boolean activated = false;
 
-    public Player(String secret, String uuid, String name, String email) {
-        this.secret = secret;
-        this.uuid = uuid;
+    @Column(name = "elo")
+    private Integer elo = 2000;
+
+    @Column(name = "gamesplayed")
+    private Integer gamesPlayed = 0;
+
+    @Column(name = "lastemailrequest")
+    private LocalDateTime lastEmailRequest = LocalDateTime.now();
+
+    @Transient
+    private int preElo;
+
+    @Transient
+    private int place;
+
+    public Player(String name, String email) {
+        this.id = UUID.randomUUID();
+        this.secret = UUID.randomUUID();
         this.name = name;
         this.email = email;
-        this.activated = false;
-        this.elo = 2000;
-        this.gamesPlayed = 0;
-        this.lastEmailRequest = LocalDateTime.now();
+    }
+
+    public void addToElo(int addend) {
+        this.elo += addend;
     }
 
     public void incrementGamesPlayed() {
         this.gamesPlayed++;
     }
 
-    public void addToElo(float number) {
-        this.elo += number;
-    }
-
-    public void activate() {
-        this.activated = true;
+    public static Player fromPlayerDTO(PlayerDto playerDto) {
+        // RFC 5322 email standard regex validator
+        if (playerDto.getName().isBlank() || !Pattern.compile("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+                .matcher(playerDto.getEmail()).matches()) {
+            throw new InvalidPlayerCreationDataProvidedException();
+        }
+        return new Player(playerDto.getName(), playerDto.getEmail());
     }
 }

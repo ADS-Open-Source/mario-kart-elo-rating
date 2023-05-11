@@ -1,15 +1,16 @@
 package pl.com.dolittle.mkelo.services;
 
-import org.json.JSONObject;
-import pl.com.dolittle.mkelo.entity.MKEloData;
-
-import java.io.IOException;
+import java.io.InputStream;
 
 public interface PersistenceService {
 
     byte[] downloadFile(String filename);
 
-    void uploadData(String filename, JSONObject jsonObject);
+    void uploadData(String key, InputStream inputStream);
 
-    MKEloData downloadData(String filename) throws IOException;
+    InputStream getInsertStatements();
+
+    void uploadInsertsDataToS3();
+
+    void executeInsertStatementsFromS3(String filename);
 }
