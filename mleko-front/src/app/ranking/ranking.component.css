@@ -6,6 +6,10 @@
 
 .table-container--desktop {
   width: 50%;
+  min-width: 700px;
+
+  overflow: auto;
+  max-height: 70vh;
 }
 
 .table {
@@ -26,6 +30,7 @@
 .mat-header-cell {
   font-size: 1.25em;
   color: inherit;
+  background: #6096fe;
 
   border-bottom: 2px solid white;
   border-radius: 0;

@@ -10,7 +10,7 @@ html {
   -o-background-size: auto, auto;
   background-size: 25vh, 200vh;
 
-  animation: scroll-x 5s linear infinite;
+  animation: scroll-x 30s linear infinite;
 }
 
 @keyframes scroll-x {

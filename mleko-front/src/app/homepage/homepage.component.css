@@ -3,6 +3,8 @@
   grid-column-gap: 2px;
   grid-template-columns: 60% 2% 38%;
 
+  margin: 0 auto;
+  max-width: 1600px;
 }
 
 /*  --------  LEFT  --------  */
