@@ -12,18 +12,18 @@
   width: 100%;
 }
 
-.mat-table {
+.mat-mdc-table {
   font-family: 'Orbitron', sans-serif;
 
   background: inherit;
 }
 
-.mat-cell {
+.mat-mdc-cell {
   font-size: 1.5em;
   color: inherit;
 }
 
-.mat-header-cell {
+.mat-mdc-header-cell {
   font-size: 1.25em;
   color: inherit;
 

@@ -13,6 +13,57 @@ html {
   animation: scroll-x 30s linear infinite;
 }
 
+body {
+  margin: 0 5px;
+  color: #FFFFFF;
+  font-family: 'Orbitron', sans-serif !important;
+
+}
+
+@font-face {
+  font-family: mario;
+  src: url("assets/fonts/mario-kart.ttf") format("truetype");
+}
+
+/* Material overwrite */
+.mat-form-field-underline {
+  display: none;
+}
+
+.mat-form-field-label-wrapper {
+  font-family: 'Orbitron', sans-serif;
+  left: 10px;
+}
+
+.mat-mdc-input-element {
+  color: #000000;
+}
+
+.mdc-text-field {
+  background: transparent !important;
+}
+
+.mdc-line-ripple {
+  display: none !important;
+}
+
+.mat-form-field-wrapper {
+  padding: 5px;
+}
+
+.mat-select-value {
+  color: #FFFFFF;
+}
+
+.mat-select-arrow {
+  color: white;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  margin-bottom: -1.25em;
+}
+
+/*ANIMATIONS*/
 @keyframes scroll-x {
   0% {
     background-position: bottom 15% center, 0 bottom;
@@ -34,22 +85,49 @@ html {
   }
 }
 
-body {
-  margin: 0 5px;
-  color: #FFFFFF;
-  font-family: 'Orbitron', sans-serif !important;
-
+@keyframes up-down--animation {
+  0% {
+    transform: translateY(5px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(5px);
+  }
 }
 
-.mat-select-value {
-  color: #FFFFFF;
+@keyframes left-right--animation {
+  0% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(5px);
+  }
 }
 
-.mat-select-arrow {
-  color: white;
+@keyframes cloud--animation {
+  0% {
+    transform: scale(1.5) translateY(3px);
+  }
+  50% {
+    transform: scale(1.5) translateY(-3px);
+  }
+  100% {
+    transform: scale(1.5) translateY(3px);
+  }
 }
 
-@font-face {
-  font-family: mario;
-  src: url("assets/fonts/mario-kart.ttf") format("truetype");
+@keyframes coin--animation {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-15px) rotateY(1080deg);
+    opacity: 0;
+  }
+
 }
