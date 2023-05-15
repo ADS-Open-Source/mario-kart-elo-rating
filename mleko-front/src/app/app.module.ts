@@ -26,6 +26,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {PlayersComponent} from './players/players.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatMenuModule} from "@angular/material/menu";
+import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 
 
 const appRoutes: Routes = [
@@ -71,6 +72,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     MatSlideToggleModule,
     FormsModule,
+    NgxMatSelectSearchModule,
   ],
   providers: [
     DatePipe,
