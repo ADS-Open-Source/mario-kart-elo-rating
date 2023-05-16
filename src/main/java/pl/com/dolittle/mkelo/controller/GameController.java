@@ -12,6 +12,7 @@ import pl.com.dolittle.mkelo.mapstruct.views.GameViews;
 import pl.com.dolittle.mkelo.services.GameService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin({"http://mleko.dolittle.com.pl", "http://mleko.deloitte.cyou"})
@@ -25,6 +26,14 @@ public class GameController {
     @GetMapping
     public List<RankingGameDto> get(@RequestParam(required = false) Integer count) {
         return gameService.getTopNGames(count);
+    }
+
+    @JsonView(GameViews.GameHistory.class)
+    @GetMapping("/{requesterSecret}")
+    public ResponseEntity<List<RankingGameDto>> getGames(@PathVariable String requesterSecret,
+                                                         @RequestParam(name = "opponent") Optional<String> opponentName) {
+        // TODO create two separate service functions whether opponentName is present or not
+        return new ResponseEntity<>(gameService.getGames(requesterSecret, opponentName), HttpStatus.OK);
     }
 
     @PostMapping
