@@ -1,6 +1,7 @@
 <div class="race-container">
 
   <h1>Add new race</h1>
+  <!-- RACE FORM -->
   <p class="race-form">
     <!-- first place -->
     <mat-form-field>
@@ -30,7 +31,36 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <!-- third place -->
+    <mat-form-field>
+      <mat-label>Third Place</mat-label>
+      <mat-select [formControl]="playerThirdMultiCtrl" placeholder="Third Place" [multiple]="true" #multiSelect>
+        <mat-option>
+          <ngx-mat-select-search [formControl]="playerMultiFilterCtrl"
+                                 placeholderLabel="Find a player..."
+                                 noEntriesFoundLabel="'no matching player found'"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let player of filteredPlayersMulti | async" [value]="player">
+          {{player.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- fourth place -->
+    <mat-form-field>
+      <mat-label>Fourth Place</mat-label>
+      <mat-select [formControl]="playerFourthMultiCtrl" placeholder="Fourth Place" [multiple]="true" #multiSelect>
+        <mat-option>
+          <ngx-mat-select-search [formControl]="playerMultiFilterCtrl"
+                                 placeholderLabel="Find a player..."
+                                 noEntriesFoundLabel="'no matching player found'"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let player of filteredPlayersMulti | async" [value]="player">
+          {{player.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </p>
+  <!-- FORM END -->
 
   <ul *ngFor="let player of playerFirstMultiCtrl?.value">
     <li>{{player.name}}</li>
