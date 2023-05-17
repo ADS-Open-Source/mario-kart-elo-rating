@@ -26,6 +26,17 @@ export class SecretService {
     return this._isActivated;
   }
 
+  public checkIfActivated(): void {
+    if (this.secret != '') {
+      this.mlekoService.isActivated(this.secret)
+        .subscribe({
+          next: (res) => {
+            this._isActivated = res
+          }
+        })
+    }
+  }
+
   public activatePlayer(): void {
     if (this.secret != '') {
       this.mlekoService.isActivated(this.secret)
