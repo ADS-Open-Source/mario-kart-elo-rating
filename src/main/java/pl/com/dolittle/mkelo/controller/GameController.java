@@ -32,8 +32,13 @@ public class GameController {
     @GetMapping("/{requesterSecret}")
     public ResponseEntity<List<RankingGameDto>> getGames(@PathVariable String requesterSecret,
                                                          @RequestParam(name = "opponent") Optional<String> opponentName) {
-        // TODO create two separate service functions whether opponentName is present or not
-        return new ResponseEntity<>(gameService.getGames(requesterSecret, opponentName), HttpStatus.OK);
+        List<RankingGameDto> games;
+        if (opponentName.isPresent()) {
+            games = gameService.getGamesWithOpponent(requesterSecret, opponentName.get());
+        } else {
+            games = gameService.getGamesBySecret(requesterSecret);
+        }
+        return new ResponseEntity<>(games, HttpStatus.OK);
     }
 
     @PostMapping

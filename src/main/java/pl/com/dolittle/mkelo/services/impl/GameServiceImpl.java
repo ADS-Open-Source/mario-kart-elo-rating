@@ -19,7 +19,10 @@ import pl.com.dolittle.mkelo.services.GameService;
 import pl.com.dolittle.mkelo.services.PersistenceService;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -39,23 +42,29 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<RankingGameDto> getGames(String requesterSecret, Optional<String> opponentName) {
+    public List<RankingGameDto> getGamesBySecret(String secret) {
+
+        //  find a player
+        Player player = playerRepository.getBySecret(UUID.fromString(secret))
+                .orElseThrow(() -> new PlayerSecretNotFoundException(secret));
+
+        //  find games
+        List<Game> games = gameRepository.findByGamesPlayersPlayer(player);
+        return RankingGameDto.fromGameDtoList(gameMapper.toDtoList(games));
+    }
+
+    @Override
+    public List<RankingGameDto> getGamesWithOpponent(String requesterSecret, String opponentName) {
 
         //  find a requester
         Player requester = playerRepository.getBySecret(UUID.fromString(requesterSecret))
                 .orElseThrow(() -> new PlayerSecretNotFoundException(requesterSecret));
 
-        List<Game> games;
-        if (opponentName.isPresent()) {
-            //  find the opponent
-            Player opponent = playerRepository.getByName(opponentName.get())
-                    .orElseThrow(() -> new PlayerNameNotFoundException(opponentName.get()));
-            //  find games between requester and opponent
-            games = gameRepository.findGamesByBothPlayers(requester, opponent);
-        } else {
-            //  find games for only requester
-            games = gameRepository.findByGamesPlayersPlayer(requester);
-        }
+        //  find the opponent
+        Player opponent = playerRepository.getByName(opponentName)
+                .orElseThrow(() -> new PlayerNameNotFoundException(opponentName));
+        //  find games between requester and opponent
+        List<Game> games = gameRepository.findGamesByBothPlayers(requester, opponent);
 
         return RankingGameDto.fromGameDtoList(gameMapper.toDtoList(games));
     }

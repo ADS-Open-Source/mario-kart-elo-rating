@@ -16,7 +16,7 @@ public interface GameRepository extends JpaRepository<Game, Long>, JpaSpecificat
 
     Page<Game> findAll(Pageable pageable);
 
-    List<Game> findByGamesPlayersPlayer(@NotNull Player requester);
+    List<Game> findByGamesPlayersPlayer(@NotNull Player player);
 
     @Query("SELECT g FROM Game g JOIN g.gamesPlayers gp1 JOIN g.gamesPlayers gp2 WHERE gp1.player = :requester AND gp2.player = :opponent")
     List<Game> findGamesByBothPlayers(@Param("requester") Player requester, @Param("opponent") Player opponent);
