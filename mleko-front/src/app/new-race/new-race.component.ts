@@ -40,6 +40,16 @@ export class NewRaceComponent implements OnInit, OnDestroy {
     this.playersSub = this.mlekoService.$playersStore
       .subscribe((players: Player[]) => {
         this.players = players;
+
+        // skip initial selection
+        // load initial bank list
+        this.filteredPlayersMulti.next(this.players.slice());
+        // listen for the search field value change
+        this.playerMultiFilterCtrl.valueChanges
+          .pipe(takeUntil(this._onDestroy))
+          .subscribe(() => {
+            this.filterPlayersMulti();
+          });
       });
   }
 
@@ -63,19 +73,10 @@ export class NewRaceComponent implements OnInit, OnDestroy {
                   }
                 });
             }
+            this.updateAllPlayers()
           }
         });
     }
-    this.updateAllPlayers();  // TODO this part is not working properly for some reason
-    // skip initial selection
-    // load initial bank list
-    this.filteredPlayersMulti.next(this.players.slice());
-    // listen for the search field value change
-    this.playerMultiFilterCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterPlayersMulti();
-      });
   }
 
   ngOnDestroy() {
