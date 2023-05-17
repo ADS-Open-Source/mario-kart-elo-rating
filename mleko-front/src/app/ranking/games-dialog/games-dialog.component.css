@@ -1,3 +1,11 @@
+.dialog-container {
+  background: #6096fe;
+}
+
+.mdc-dialog__title {
+  color: #FFFFFF;
+}
+
 .dialog-content {
   overflow: auto;
 
@@ -9,7 +17,8 @@
   padding: 1em 1em 0.5em 1em;
   border-radius: 10px;
 
-  background: #6096fe;
+  background: #5687e7;
+  color: #FFFFFF;
 }
 
 .negative-delta {
