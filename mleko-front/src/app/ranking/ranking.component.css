@@ -16,24 +16,27 @@
   width: 100%;
 }
 
-.mat-table {
+.mat-mdc-table {
   font-family: 'Orbitron', sans-serif;
 
   background: inherit;
 }
 
-.mat-cell {
+.mat-mdc-cell {
   font-size: 1.5em;
   color: inherit;
 }
 
-.mat-header-cell {
+.mat-mdc-header-cell {
   font-size: 1.25em;
   color: inherit;
-  background: #6096fe;
 
   border-bottom: 2px solid white;
   border-radius: 0;
+}
+
+.non-transparent {
+  background: #6096fe !important;
 }
 
 .table__caption {
@@ -56,7 +59,7 @@
   width: 1em;
 }
 
-.mat-row:hover .table__icon {
+.mat-mdc-row:hover .table__icon {
   animation-duration: 500ms;
   animation-name: coin--animation;
   animation-direction: normal;

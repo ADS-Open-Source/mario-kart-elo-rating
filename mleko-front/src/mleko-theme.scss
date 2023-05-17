@@ -1,0 +1,15 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$mleko-typography: mat.define-typography-config(
+  $font-family: 'Orbitron',
+);
+
+$mleko-theme: mat.define-light-theme((
+  typography: $mleko-typography
+));
+
+@include mat.core-theme($mleko-theme);
+@include mat.all-component-themes($mleko-theme);
+
