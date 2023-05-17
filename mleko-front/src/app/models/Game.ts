@@ -5,6 +5,12 @@ export interface ProcessedPlayer {
   eloChange: number;
 }
 
+export interface ProcessedGame {
+  date: string;
+  resultTable: ProcessedPlayer[];
+  reportedBy: string;
+}
+
 export class Game {
   private readonly _reportedTime: string;
   private readonly _reportedBy: ResultPlayer;
@@ -37,5 +43,13 @@ export class Game {
       processedPlayers.push({text: text, eloChange: delta});
     })
     return processedPlayers;
+  }
+
+  public static processGames(games: Game[]): ProcessedGame[] {
+    return games.map(game => ({
+      date: game.reportedTime,
+      resultTable: Game.processPlayers(game.ranking),
+      reportedBy: game.reportedBy.name,
+    }))
   }
 }
