@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MlekoService} from "../services/mleko.service";
-import {Game, ProcessedGame, ProcessedPlayer} from "../models/Game";
+import {Game, ProcessedGame} from "../models/Game";
 import {MatTableDataSource} from "@angular/material/table";
 import {ScreenSizeService} from "../services/screen-size-service.service";
 

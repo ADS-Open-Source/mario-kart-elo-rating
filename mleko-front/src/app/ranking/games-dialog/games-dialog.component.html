@@ -1,0 +1,10 @@
+<h1 matDialogTitle>Games against {{data.player.name}}</h1>
+<div class="dialog-content" matDialogContent>
+  <div class="game-container" *ngFor="let game of data.games">
+    {{game.date | date : 'dd.MM.yyyy': 'pl-PL'}}
+    <p *ngFor="let player of game.resultTable"
+       [ngClass]="player.eloChange < 0 ? 'negative-delta' : 'positive-delta'">
+      {{player.text}}
+    </p>
+  </div>
+</div>

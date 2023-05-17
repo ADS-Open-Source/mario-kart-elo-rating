@@ -1,0 +1,21 @@
+.dialog-content {
+  overflow: auto;
+
+  max-height: 70vh;
+}
+
+.game-container {
+  margin-bottom: 1em;
+  padding: 1em 1em 0.5em 1em;
+  border-radius: 10px;
+
+  background: #6096fe;
+}
+
+.negative-delta {
+  color: #ffc7cc;
+}
+
+.positive-delta {
+  color: #afff9b;
+}
