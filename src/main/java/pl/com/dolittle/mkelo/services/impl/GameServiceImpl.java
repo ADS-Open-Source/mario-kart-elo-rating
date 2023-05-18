@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.com.dolittle.mkelo.entity.*;
+import pl.com.dolittle.mkelo.exception.PlayerNameNotFoundException;
 import pl.com.dolittle.mkelo.exception.PlayerSecretNotFoundException;
 import pl.com.dolittle.mkelo.exception.PlayerUUIDNotFoundException;
 import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
@@ -35,12 +36,43 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<RankingGameDto> getTopNGames(Integer n) {
+
         Page<Game> page = gameRepository.findAll(PageRequest.of(0, n, Sort.by(Sort.Order.desc("reportedTime"))));
         return RankingGameDto.fromGameDtoList(gameMapper.toDtoList(page.getContent()));
     }
 
     @Override
+    public List<RankingGameDto> getGamesBySecret(String secret) {
+
+        //  find a player
+        Player player = playerRepository.getBySecret(UUID.fromString(secret))
+                .orElseThrow(() -> new PlayerSecretNotFoundException(secret));
+
+        //  find games
+        List<Game> games = gameRepository.findByGamesPlayersPlayer(player);
+        return RankingGameDto.fromGameDtoList(gameMapper.toDtoList(games));
+    }
+
+    @Override
+    public List<RankingGameDto> getGamesWithOpponent(String requesterSecret, String opponentName) {
+
+        //  find a requester
+        Player requester = playerRepository.getBySecret(UUID.fromString(requesterSecret))
+                .orElseThrow(() -> new PlayerSecretNotFoundException(requesterSecret));
+
+        //  find the opponent
+        Player opponent = playerRepository.getByName(opponentName)
+                .orElseThrow(() -> new PlayerNameNotFoundException(opponentName));
+        //  find games between requester and opponent
+        List<Game> games = gameRepository.findGamesByBothPlayers(requester, opponent);
+
+        return RankingGameDto.fromGameDtoList(gameMapper.toDtoList(games));
+    }
+
+
+    @Override
     public void addGame(RankingGameDto gameDto) {
+
         // added as a way to circumvent stupid mapstruct behaviour
         Game game = new Game();
         game.setReportedTime(LocalDateTime.now());  // set time
