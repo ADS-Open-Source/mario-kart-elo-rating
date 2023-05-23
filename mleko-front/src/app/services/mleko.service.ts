@@ -37,6 +37,13 @@ export class MlekoService {
     return this.httpClient.get<Array<Game>>(`${MlekoService.BACKEND_DOMAIN}/games?count=${number}`);
   }
 
+  getGamesByPlayer(playerSecret: string, opponentName: string | null): Observable<Array<Game>> {
+    if (opponentName) {
+      return this.httpClient.get<Array<Game>>(`${MlekoService.BACKEND_DOMAIN}/games/${playerSecret}?opponent=${opponentName}`);
+    }
+    return this.httpClient.get<Array<Game>>(`${MlekoService.BACKEND_DOMAIN}/games/${playerSecret}`);
+  }
+
   getAllGames(): Observable<Array<Game>> {
     return this.httpClient.get<Array<Game>>(`${MlekoService.BACKEND_DOMAIN}/games/all`)
   }

@@ -7,6 +7,10 @@ import {ActivatedRoute} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
 import {Subscription} from "rxjs";
 import {ScreenSizeService} from "../services/screen-size-service.service";
+import {MatDialog} from "@angular/material/dialog";
+import {GamesDialogComponent} from "./games-dialog/games-dialog.component";
+import {SecretService} from "../services/secret.service";
+import {Game} from "../models/Game";
 
 @Component({
   selector: 'app-ranking',
@@ -22,7 +26,9 @@ export class RankingComponent implements OnInit, OnDestroy {
   showOnlyChads: boolean = true;
 
   constructor(
+    public gamesDialog: MatDialog,
     private mlekoService: MlekoService,
+    private secretService: SecretService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private route: ActivatedRoute,
@@ -41,6 +47,7 @@ export class RankingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.secretService.checkIfActivated();
     this.playersSub = this.mlekoService.$playersStore
       .subscribe((players: Player[]) => {
         this.players = players;
@@ -54,5 +61,21 @@ export class RankingComponent implements OnInit, OnDestroy {
 
   filterOutNewPlayers(): void {
     this.dataSource.data = this.showOnlyChads ? this.players.filter(p => p.gamesPlayed >= 10) : this.players;
+  }
+
+  openGameDetailsDialog(player: Player): void {
+    if (this.secretService.isActivated) {
+      this.mlekoService.getGamesByPlayer(this.secretService.secret, player.name)
+        .subscribe({
+          next: (res: Game[]) => {
+            this.gamesDialog.open(GamesDialogComponent, {
+              data: {
+                player: player,
+                games: Game.processGames(res)
+              }
+            })
+          }
+        });
+    }
   }
 }

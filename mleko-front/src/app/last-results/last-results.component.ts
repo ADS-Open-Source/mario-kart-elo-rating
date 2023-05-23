@@ -1,22 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MlekoService} from "../services/mleko.service";
-import {Game} from "../models/Game";
-import {ResultPlayer} from "../models/ResultPlayer";
+import {Game, ProcessedGame} from "../models/Game";
 import {MatTableDataSource} from "@angular/material/table";
 import {ScreenSizeService} from "../services/screen-size-service.service";
-
-
-export interface ProcessedPlayer {
-  text: string;
-  eloChange: number;
-}
-
-export interface ProcessedGame {
-  date: string;
-  resultTable: ProcessedPlayer[];
-  reportedBy: string;
-}
 
 @Component({
   selector: 'app-last-results',
@@ -39,25 +26,10 @@ export class LastResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.mlekoService.getGames(2147483647).subscribe((games: Game[]) => {
-      let processedGames = games.map(game => ({
-        date: game.reportedTime,
-        resultTable: this.processPlayers(game.ranking),
-        reportedBy: game.reportedBy.name,
-      }))
+      let processedGames = Game.processGames(games)
       this.dataSource = new MatTableDataSource<ProcessedGame>(processedGames);
       this.dataSource.paginator = this.paginator;
     });
-  }
-
-  processPlayers(ranking: ResultPlayer[][]): ProcessedPlayer[] {
-    let processedPlayers: ProcessedPlayer [] = [];
-    ranking.flatMap(r => r).sort((a, b) => a.place - b.place).forEach(resultPlayer => {
-      let delta: number = resultPlayer.elo - resultPlayer.preElo;
-      let arrow = delta < 0 ? '\u{25bc}' : '\u{25b2}';
-      let text = `${resultPlayer.place}. ${resultPlayer.name} (${resultPlayer.preElo} -> ${resultPlayer.elo}) ${arrow}${delta}`;
-      processedPlayers.push({text: text, eloChange: delta});
-    })
-    return processedPlayers;
   }
 
 }
