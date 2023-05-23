@@ -56,6 +56,12 @@ export class NewRaceComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // handle activation
     this.secretService.activatePlayer();
+    this.updateAllPlayers();
+    this.secretService.checkIfActivated();
+    this.secretService.$isActivatedStore
+      .subscribe((isActivated: boolean) => {
+        this.isActivated = isActivated;
+      })
   }
 
   ngOnDestroy() {

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {MlekoService} from "./mleko.service";
+import {Observable, ReplaySubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ export class SecretService {
 
   private _secret: string = '';
   private _isActivated: boolean = false;
+  private _isActivatedStore: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
 
   constructor(
     private mlekoService: MlekoService,
@@ -26,14 +28,18 @@ export class SecretService {
     return this._isActivated;
   }
 
+  get $isActivatedStore(): Observable<boolean> {
+    return this._isActivatedStore.asObservable();
+  }
+
   public checkIfActivated(): void {
     if (this.secret != '') {
       this.mlekoService.isActivated(this.secret)
-        .subscribe({
-          next: (res) => {
-            this._isActivated = res
+        .subscribe(
+          data => {
+            this._isActivatedStore.next(data);
           }
-        })
+        )
     }
   }
 
@@ -54,6 +60,7 @@ export class SecretService {
                   }
                 });
             }
+            this.mlekoService.loadPlayers();
           }
         });
     }

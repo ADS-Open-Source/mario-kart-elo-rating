@@ -51,8 +51,7 @@ const appRoutes: Routes = [
     RankingComponent,
     LastResultsComponent,
     //  others
-    PlayersComponent
-    FilterAddedPlayersPipe,
+    PlayersComponent,
     PlayersComponent,
     GamesDialogComponent
   ],
