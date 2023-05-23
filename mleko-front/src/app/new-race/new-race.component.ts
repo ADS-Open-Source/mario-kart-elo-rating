@@ -115,9 +115,13 @@ export class NewRaceComponent implements OnInit, OnDestroy {
       ]
     }
 
-    console.log(result)
-    // if (this.chosenPlayers.filter(p => p != null).length >= 2) {
-    if (true) {  // TODO obviously change that
+    let chosenPlayers = [
+      this.playerFirstMultiCtrl.value,
+      this.playerSecondMultiCtrl.value,
+      this.playerThirdMultiCtrl.value,
+      this.playerFourthMultiCtrl.value]
+
+    if (chosenPlayers.flatMap(p => p).filter(p => p != null).length >= 2) {
       this.mlekoService.saveResult(result)
         .subscribe((res: { text: string; }) => {
           console.log(res)

@@ -62,10 +62,6 @@
   </p>
   <!-- FORM END -->
 
-  <ul *ngFor="let player of playerFirstMultiCtrl?.value">
-    <li>{{player.name}}</li>
-  </ul>
-
   <button mat-raised-button [disabled]="!isActivated" (click)="submitRace()">
     {{isActivated ? 'Submit' : 'No valid secret provided'}}
   </button>
