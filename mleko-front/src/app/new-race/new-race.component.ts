@@ -55,28 +55,7 @@ export class NewRaceComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // handle activation
-    const playerSecret = this.secretService.secret;
-    if (playerSecret != '') {
-      this.mlekoService.isActivated(playerSecret)
-        .subscribe({
-          next: (response) => {
-            this.isActivated = response;
-            if (!response) {
-              this.mlekoService.activatePlayer({secret: playerSecret})
-                .subscribe({
-                  next: (response) => {
-                    console.log(response);
-                    this.updateAllPlayers();
-                  },
-                  complete: () => {
-                    this.mlekoService.loadPlayers();
-                  }
-                });
-            }
-            this.updateAllPlayers()
-          }
-        });
-    }
+    this.secretService.activatePlayer();
   }
 
   ngOnDestroy() {

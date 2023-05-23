@@ -27,6 +27,8 @@ import {PlayersComponent} from './players/players.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatMenuModule} from "@angular/material/menu";
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+import {GamesDialogComponent} from './ranking/games-dialog/games-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 const appRoutes: Routes = [
@@ -50,6 +52,9 @@ const appRoutes: Routes = [
     LastResultsComponent,
     //  others
     PlayersComponent
+    FilterAddedPlayersPipe,
+    PlayersComponent,
+    GamesDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +78,7 @@ const appRoutes: Routes = [
     MatSlideToggleModule,
     FormsModule,
     NgxMatSelectSearchModule,
+    MatDialogModule,
   ],
   providers: [
     DatePipe,

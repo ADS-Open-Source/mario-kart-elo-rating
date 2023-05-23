@@ -63,6 +63,28 @@ body {
   margin-bottom: -1.25em;
 }
 
+/* Scrollbar*/
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #fcc636 #6096fe;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #6096fe;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #fcc636;
+  border-radius: 10px;
+  border: 3px solid #6096fe;
+}
+
 /*ANIMATIONS*/
 @keyframes scroll-x {
   0% {
