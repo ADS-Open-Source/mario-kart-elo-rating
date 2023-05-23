@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Player, Result} from "../models/Player";
-import {MlekoService} from "../services/mleko.service";
-import {MatSelectChange} from "@angular/material/select";
+import {FormControl} from "@angular/forms";
+import {ReplaySubject, Subject, Subscription, takeUntil} from "rxjs";
+import {MatSelect} from "@angular/material/select";
 import {SecretService} from "../services/secret.service";
+import {MlekoService} from "../services/mleko.service";
 import {NavigationExtras, Router} from "@angular/router";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-new-race',
@@ -15,92 +15,98 @@ import {Subscription} from "rxjs";
 export class NewRaceComponent implements OnInit, OnDestroy {
 
   playersSub!: Subscription;
-  raceForm: FormGroup;
-  allPlayers: Player[] = [];
   isActivated: boolean = false;
+  protected players!: Player[];
+  public playerFirstMultiCtrl: FormControl<Player[] | null> = new FormControl<Player[]>([]);
+  public playerSecondMultiCtrl: FormControl<Player[] | null> = new FormControl<Player[]>([]);
+  public playerThirdMultiCtrl: FormControl<Player[] | null> = new FormControl<Player[]>([]);
+  public playerFourthMultiCtrl: FormControl<Player[] | null> = new FormControl<Player[]>([]);
+  //@ts-ignore
+  public playerMultiFilterCtrl: FormControl<string> = new FormControl<string>('');
+  public filteredPlayersMulti: ReplaySubject<Player[]> = new ReplaySubject<Player[]>(1);
 
+  @ViewChild('multiSelect', {static: true}) multiSelect!: MatSelect;
+
+  protected _onDestroy = new Subject<void>();
 
   constructor(
-    private fb: FormBuilder,
     private mlekoService: MlekoService,
     protected secretService: SecretService,
     private router: Router,
   ) {
-    this.raceForm = this.fb.group({
-      firstPlace: new Array<Player>(),
-      secondPlace: new Array<Player>(),
-      thirdPlace: new Array<Player>(),
-      fourthPlace: new Array<Player>(),
-    })
   }
 
   updateAllPlayers(): void {
     this.playersSub = this.mlekoService.$playersStore
       .subscribe((players: Player[]) => {
-        this.allPlayers = players;
+        this.players = players;
+
+        // skip initial selection
+        // load initial bank list
+        this.filteredPlayersMulti.next(this.players.slice());
+        // listen for the search field value change
+        this.playerMultiFilterCtrl.valueChanges
+          .pipe(takeUntil(this._onDestroy))
+          .subscribe(() => {
+            this.filterPlayersMulti();
+          });
       });
   }
 
-  ngOnInit(): void {
-    this.updateAllPlayers();
-
+  ngOnInit() {
     // handle activation
-    const playerSecret = this.secretService.secret;
-    if (playerSecret != '') {
-      this.mlekoService.isActivated(playerSecret)
-        .subscribe({
-          next: (response) => {
-            this.isActivated = response;
-            if (!response) {
-              this.mlekoService.activatePlayer({secret: playerSecret})
-                .subscribe({
-                  next: (response) => {
-                    console.log(response);
-                    this.updateAllPlayers();
-                  },
-                  complete: () => {
-                    this.mlekoService.loadPlayers();
-                  }
-                });
-            }
-          }
-        });
+    this.secretService.activatePlayer();
+    this.updateAllPlayers();
+    this.secretService.checkIfActivated();
+    this.secretService.$isActivatedStore
+      .subscribe((isActivated: boolean) => {
+        this.isActivated = isActivated;
+      })
+  }
+
+  ngOnDestroy() {
+    this._onDestroy.next();
+    this._onDestroy.complete();
+  }
+
+  protected filterPlayersMulti() {
+    if (!this.players) {
+      return;
     }
-  }
-
-  ngOnDestroy(): void {
-    this.playersSub.unsubscribe();
-  }
-
-
-  onSelectionChange(event: MatSelectChange, formControlName: string) {
-    this.raceForm.controls[formControlName].setValue(
-      event.value.filter((player: Player) =>
-        this.chosenPlayers.filter(chosenPlayer =>
-          chosenPlayer == player).length <= 1)
-    )
-  }
-
-  get chosenPlayers(): Player[] {
-    return Object.values(this.raceForm.controls).map(control => control.value).flat();
+    // get the search
+    let search = this.playerMultiFilterCtrl.value;
+    if (!search) {
+      this.filteredPlayersMulti.next(this.players.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the players
+    this.filteredPlayersMulti.next(
+      this.players.filter(player => player.name.toLowerCase().indexOf(search) > -1)
+    );
   }
 
   submitRace(): void {
-    const formValue = this.raceForm.value
     const result: Result = {
       reportedBy: {
         secret: this.secretService.secret
       },
       ranking: [
-        formValue.firstPlace || [],
-        formValue.secondPlace || [],
-        formValue.thirdPlace || [],
-        formValue.fourthPlace || [],
+        this.playerFirstMultiCtrl.value || [],
+        this.playerSecondMultiCtrl.value || [],
+        this.playerThirdMultiCtrl.value || [],
+        this.playerFourthMultiCtrl.value || [],
       ]
     }
 
-    console.log(result)
-    if (this.chosenPlayers.filter(p => p != null).length >= 2) {
+    let chosenPlayers = [
+      this.playerFirstMultiCtrl.value,
+      this.playerSecondMultiCtrl.value,
+      this.playerThirdMultiCtrl.value,
+      this.playerFourthMultiCtrl.value]
+
+    if (chosenPlayers.flatMap(p => p).filter(p => p != null).length >= 2) {
       this.mlekoService.saveResult(result)
         .subscribe((res: { text: string; }) => {
           console.log(res)
@@ -111,4 +117,5 @@ export class NewRaceComponent implements OnInit, OnDestroy {
         })
     }
   }
+
 }

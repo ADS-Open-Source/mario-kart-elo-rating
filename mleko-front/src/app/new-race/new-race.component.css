@@ -2,10 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  font-size: 1.75vh;
 }
 
 .race-form {
   display: flex;
   flex-direction: column;
   margin: auto;
+
+  width: 50vw;
+  max-width: 1024px;
 }

@@ -8,9 +8,10 @@
 }
 
 .app-header {
-  margin: 0.5em 0 1em 0;
+  margin: 1em auto;
   padding: 0 2em 0 2em;
 
+  max-width: 1700px;
   background: inherit;
 }
 
@@ -72,7 +73,7 @@
 }
 
 .header__button mat-icon {
-  margin-right: 5px;
+  height: 48px;
 }
 
 .cloud-icon {
@@ -90,7 +91,6 @@
   align-items: center;
   color: #6096fe;
 
-  font-family: 'Orbitron', sans-serif;
   font-size: 1.5em;
 }
 

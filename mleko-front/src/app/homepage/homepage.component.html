@@ -14,17 +14,17 @@
       <h1>TOP PLAYERS</h1>
     </div>
 
-    <mat-list class="list list--mobile">
-      <mat-list-item *ngFor="let i = index; let player of players">
-        <div class="player-position player-position--mobile">
+    <div class="list list--mobile">
+      <div class="small-ranking" *ngFor="let i = index; let player of players">
+        <p class="player-position player-position--mobile">
           {{ i + 1 }}. {{ player.name }}
-        </div>
-        <div class="player-elo player-elo--mobile">
+        </p>
+        <p class="player-elo player-elo--mobile">
           <img class="player-elo__icon" src="assets/coin.png" alt="coin-icon">
           {{ player.elo }}
-        </div>
-      </mat-list-item>
-    </mat-list>
+        </p>
+      </div>
+    </div>
 
     <a class="see-more" (click)="navigate('ranking')">
       <span>See more</span>
@@ -42,12 +42,12 @@
     <div class="form-container">
       <!-- TODO mat-form-field seems to be borderline impossible to style, replace it with native inputs -->
       <form class="registration-form" [formGroup]="registrationForm">
-        <mat-form-field floatLabel="never">
+        <mat-form-field>
           <input matNativeControl class="new-user-input" type="text" placeholder="username"
                  formControlName="username">
         </mat-form-field>
         <span class="error-prompt">{{errorText}}</span>
-        <mat-form-field floatLabel="never">
+        <mat-form-field>
           <input matNativeControl class="new-user-input" type="email" placeholder="email"
                  formControlName="email">
         </mat-form-field>
@@ -75,15 +75,15 @@
         <h1>TOP PLAYERS</h1>
       </div>
 
-      <mat-list class="list">
-        <mat-list-item *ngFor="let i = index; let player of players">
+      <div class="list">
+        <div class="small-ranking" *ngFor="let i = index; let player of players">
           <div class="player-position">{{ i + 1 }}. {{ player.name }}</div>
           <div class="player-elo">
             <img class="player-elo__icon" src="assets/coin.png" alt="coin-icon">
             {{ player.elo }}
           </div>
-        </mat-list-item>
-      </mat-list>
+        </div>
+      </div>
 
       <a class="see-more" (click)="navigate('ranking')">
         <span>See more</span>
@@ -111,12 +111,12 @@
         <div class="form-container">
           <!-- TODO mat-form-field seems to be borderline impossible to style, replace it with native inputs -->
           <form class="registration-form" [formGroup]="registrationForm">
-            <mat-form-field floatLabel="never">
+            <mat-form-field>
               <input matNativeControl class="new-user-input" type="text" placeholder="username"
                      formControlName="username">
             </mat-form-field>
             <span class="error-prompt">{{errorText}}</span>
-            <mat-form-field floatLabel="never">
+            <mat-form-field>
               <input matNativeControl class="new-user-input" type="email" placeholder="email"
                      formControlName="email">
             </mat-form-field>

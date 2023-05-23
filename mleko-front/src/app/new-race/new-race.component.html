@@ -1,52 +1,68 @@
 <div class="race-container">
 
   <h1>Add new race</h1>
-  <!--  TODO change that to native dropdowns and clickable buttons that will appear below them  -->
-  <form class="race-form" [formGroup]="raceForm">
+  <!-- RACE FORM -->
+  <p class="race-form">
+    <!-- first place -->
     <mat-form-field>
-      <mat-label>First place</mat-label>
-      <mat-select formControlName="firstPlace" multiple
-                  (selectionChange)="onSelectionChange($event, 'firstPlace')">
-        <mat-option *ngFor="let player of allPlayers" [value]="player">
+      <mat-label>First Place</mat-label>
+      <mat-select [formControl]="playerFirstMultiCtrl" placeholder="First Place" [multiple]="true" #multiSelect>
+        <mat-option>
+          <ngx-mat-select-search [formControl]="playerMultiFilterCtrl"
+                                 placeholderLabel="Find a player..."
+                                 noEntriesFoundLabel="'no matching player found'"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let player of filteredPlayersMulti | async" [value]="player">
           {{player.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-
+    <!-- second place -->
     <mat-form-field>
-      <mat-label>Second place</mat-label>
-      <mat-select formControlName="secondPlace" multiple
-                  (selectionChange)="onSelectionChange($event, 'secondPlace')">
-        <mat-option *ngFor="let player of allPlayers" [value]="player">
+      <mat-label>Second Place</mat-label>
+      <mat-select [formControl]="playerSecondMultiCtrl" placeholder="Second Place" [multiple]="true" #multiSelect>
+        <mat-option>
+          <ngx-mat-select-search [formControl]="playerMultiFilterCtrl"
+                                 placeholderLabel="Find a player..."
+                                 noEntriesFoundLabel="'no matching player found'"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let player of filteredPlayersMulti | async" [value]="player">
           {{player.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-
+    <!-- third place -->
     <mat-form-field>
-      <mat-label>Third place</mat-label>
-      <mat-select formControlName="thirdPlace" multiple
-                  (selectionChange)="onSelectionChange($event, 'thirdPlace')">
-        <mat-option *ngFor="let player of allPlayers" [value]="player">
+      <mat-label>Third Place</mat-label>
+      <mat-select [formControl]="playerThirdMultiCtrl" placeholder="Third Place" [multiple]="true" #multiSelect>
+        <mat-option>
+          <ngx-mat-select-search [formControl]="playerMultiFilterCtrl"
+                                 placeholderLabel="Find a player..."
+                                 noEntriesFoundLabel="'no matching player found'"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let player of filteredPlayersMulti | async" [value]="player">
           {{player.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-
+    <!-- fourth place -->
     <mat-form-field>
-      <mat-label>Fourth place</mat-label>
-      <mat-select formControlName="fourthPlace" multiple
-                  (selectionChange)="onSelectionChange($event, 'fourthPlace')">
-        <mat-option *ngFor="let player of allPlayers" [value]="player">
+      <mat-label>Fourth Place</mat-label>
+      <mat-select [formControl]="playerFourthMultiCtrl" placeholder="Fourth Place" [multiple]="true" #multiSelect>
+        <mat-option>
+          <ngx-mat-select-search [formControl]="playerMultiFilterCtrl"
+                                 placeholderLabel="Find a player..."
+                                 noEntriesFoundLabel="'no matching player found'"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let player of filteredPlayersMulti | async" [value]="player">
           {{player.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
+  </p>
+  <!-- FORM END -->
 
-    <button mat-raised-button
-            [disabled]="!isActivated" (click)="submitRace()">
-      {{isActivated ? 'Submit' : 'No valid secret provided'}}
-    </button>
-  </form>
-
+  <button mat-raised-button [disabled]="!isActivated" (click)="submitRace()">
+    {{isActivated ? 'Submit' : 'No valid secret provided'}}
+  </button>
 </div>

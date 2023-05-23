@@ -20,13 +20,15 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {FilterAddedPlayersPipe} from "./new-race/FilterAddedPlayersPipe";
 import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {PlayersComponent} from './players/players.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatMenuModule} from "@angular/material/menu";
+import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+import {GamesDialogComponent} from './ranking/games-dialog/games-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 const appRoutes: Routes = [
@@ -49,8 +51,9 @@ const appRoutes: Routes = [
     RankingComponent,
     LastResultsComponent,
     //  others
-    FilterAddedPlayersPipe,
-    PlayersComponent
+    PlayersComponent,
+    PlayersComponent,
+    GamesDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +76,8 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     MatSlideToggleModule,
     FormsModule,
+    NgxMatSelectSearchModule,
+    MatDialogModule,
   ],
   providers: [
     DatePipe,
