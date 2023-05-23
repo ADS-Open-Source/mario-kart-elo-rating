@@ -72,7 +72,6 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void addGame(RankingGameDto gameDto) {
-
         // added as a way to circumvent stupid mapstruct behaviour
         Game game = new Game();
         game.setReportedTime(LocalDateTime.now());  // set time

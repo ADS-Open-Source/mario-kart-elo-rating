@@ -12,7 +12,7 @@
     <artifactId>mkelo</artifactId>
     
     <version>1.4.0</version>
-    
+  
     <name>MarioKartElo</name>
     <description>Mario Kart Elo Ranking System</description>
     <packaging>jar</packaging>

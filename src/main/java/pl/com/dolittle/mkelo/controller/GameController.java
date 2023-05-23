@@ -39,6 +39,7 @@ public class GameController {
             games = gameService.getGamesBySecret(requesterSecret);
         }
         return new ResponseEntity<>(games, HttpStatus.OK);
+
     }
 
     @PostMapping
