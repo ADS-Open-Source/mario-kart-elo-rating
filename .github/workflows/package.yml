@@ -15,7 +15,7 @@ jobs:
       - name: Install and build frontend
         working-directory: ./mleko-front
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run build
         
       - name: Set up JDK 17
