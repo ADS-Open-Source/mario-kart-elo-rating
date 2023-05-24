@@ -13,6 +13,7 @@ import pl.com.dolittle.mkelo.services.GameService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin({"http://mleko.dolittle.com.pl", "http://mleko.deloitte.cyou"})
@@ -46,5 +47,11 @@ public class GameController {
     public ResponseEntity<String> addGame(@RequestBody @Validated(SecretValidation.class) RankingGameDto gameDto) {
         gameService.addGame(gameDto);
         return new ResponseEntity<>("game added", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{requesterSecret}")
+    public ResponseEntity<String> deleteLast(@PathVariable UUID requesterSecret) {
+        gameService.deleteLast(requesterSecret);
+        return new ResponseEntity<>("game deleted", HttpStatus.OK);
     }
 }

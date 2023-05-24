@@ -14,6 +14,11 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(UnauthorisedAction.class)
+    public ResponseEntity<String> handleUnauthorisedActionException(UnauthorisedAction e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(PlayerUUIDNotFoundException.class)
     public ResponseEntity<String> handlePlayerUUIDNotFoundException(PlayerUUIDNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
