@@ -1,0 +1,26 @@
+.dialog-container {
+  background: #6096fe;
+
+  overflow: auto;
+  max-height: 50vh;
+}
+
+.dialog-container > h1 {
+  color: #FFFFFF;
+}
+
+.game-result-container {
+  padding: 1em;
+}
+
+.negative-delta {
+  color: #ffc7cc;
+}
+
+.positive-delta {
+  color: #afff9b;
+}
+
+.buttons-container {
+  text-align: center;
+}
