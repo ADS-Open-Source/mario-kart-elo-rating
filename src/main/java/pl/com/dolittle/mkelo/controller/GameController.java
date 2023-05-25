@@ -13,6 +13,7 @@ import pl.com.dolittle.mkelo.services.GameService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin({"http://mleko.dolittle.com.pl", "http://mleko.deloitte.cyou"})
@@ -30,7 +31,7 @@ public class GameController {
 
     @JsonView(GameViews.GameHistory.class)
     @GetMapping("/{requesterSecret}")
-    public ResponseEntity<List<RankingGameDto>> getGames(@PathVariable String requesterSecret,
+    public ResponseEntity<List<RankingGameDto>> getGames(@PathVariable UUID requesterSecret,
                                                          @RequestParam(name = "opponent") Optional<String> opponentName) {
         List<RankingGameDto> games;
         if (opponentName.isPresent()) {
