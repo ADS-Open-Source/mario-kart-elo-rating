@@ -19,6 +19,8 @@ export class LastResultsComponent implements OnInit {
   displayedColumns: string[] = this.screenService.isDesktop ? ['date', 'result', 'reportedBy'] : ['date', 'result'];
   dataSource!: MatTableDataSource<ProcessedGame>;
 
+  private isActivated: boolean = false;
+
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
 
   constructor(
@@ -34,11 +36,16 @@ export class LastResultsComponent implements OnInit {
       let processedGames = Game.processGames(games)
       this.dataSource = new MatTableDataSource<ProcessedGame>(processedGames);
       this.dataSource.paginator = this.paginator;
+      this.secretService.checkIfActivated();
+      this.secretService.$isActivatedStore
+        .subscribe((isActivated: boolean) => {
+          this.isActivated = isActivated;
+        })
     });
   }
 
   openDeleteGameDialog(index: number, game: ProcessedGame): void {
-    if (this.secretService.isActivated) {
+    if (this.isActivated) {
       this.deleteGameDialog.open(DeleteGameDialogComponent, {
         data: {
           index: index,
