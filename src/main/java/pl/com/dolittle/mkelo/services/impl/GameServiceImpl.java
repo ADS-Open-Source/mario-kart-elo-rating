@@ -118,8 +118,20 @@ public class GameServiceImpl implements GameService {
     public void deleteLast(UUID requesterSecret) {
         // get latest game
         Game game = gameRepository.findMostRecentGame();
+        // check if requester matches the sender
         if (!game.getReportedBy().getSecret().equals(requesterSecret)) {
             throw new UnauthorisedAction();
         }
+
+        for (GamesPlayer gp : game.getGamesPlayers()) {
+            Player player = gp.getPlayer();
+            player.decrementGamesPlayed();
+            player.setElo(gp.getPreElo());
+            playerRepository.save(player);
+        }
+
+        gameRepository.delete(game);
+
+        persistenceService.uploadInsertsDataToS3();
     }
 }

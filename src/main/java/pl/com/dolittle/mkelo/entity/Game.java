@@ -18,7 +18,7 @@ public class Game {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.DETACH)
     @JoinColumn(name = "reported_by", nullable = false)
     private Player reportedBy;
 
