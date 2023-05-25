@@ -1,1 +1,19 @@
-<p>delete-game-dialog works!</p>
+<div class="dialog-container">
+
+  <h1 matDialogTitle>Game {{data.game.date | date : 'HH:mm:ss dd.MM.yyyy': 'pl-PL'}}</h1>
+  <p matDialogContent>Reported by {{data.game.reportedBy}}</p>
+
+  <div matDialogContent class="game-result-container">
+    <p *ngFor="let player of data.game.resultTable"
+       [ngClass]="player.eloChange < 0 ? 'negative-delta' : 'positive-delta'">
+      {{player.text}}
+    </p>
+  </div>
+
+  <div matDialogContent class="buttons-container">
+    <button mat-flat-button color="warn" [disabled]="!isLatestGame"
+    (click)="deleteLastGame()">
+      Delete
+    </button>
+  </div>
+</div>
