@@ -14,6 +14,7 @@ import pl.com.dolittle.mkelo.mapstruct.views.GenericViews;
 import pl.com.dolittle.mkelo.services.PlayerService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin({"http://mleko.dolittle.com.pl", "http://mleko.deloitte.cyou"})
@@ -38,7 +39,7 @@ public class PlayerController {
     }
 
     @GetMapping("/activated/{secret}")
-    public ResponseEntity<Boolean> checkIfActivated(@PathVariable String secret) {
+    public ResponseEntity<Boolean> checkIfActivated(@PathVariable UUID secret) {
         return new ResponseEntity<>(playerService.checkIfActivated(secret), HttpStatus.OK);
     }
 
@@ -49,7 +50,7 @@ public class PlayerController {
 
     @PostMapping("/resend/{requesterSecret}")
     public ResponseEntity<Boolean> resendSecret(@RequestBody @Validated(ResendEmailValidation.class) PlayerDto playerDto,
-                                                @PathVariable String requesterSecret) {
+                                                @PathVariable UUID requesterSecret) {
         return new ResponseEntity<>(playerService.resendSecret(requesterSecret, playerDto), HttpStatus.OK);
     }
 }

@@ -72,9 +72,9 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Boolean checkIfActivated(String secret) {
+    public Boolean checkIfActivated(UUID secret) {
 
-        Optional<Player> player = playerRepository.getBySecret(UUID.fromString(secret));
+        Optional<Player> player = playerRepository.getBySecret(UUID.fromString(secret.toString()));
         if (player.isPresent() && Boolean.TRUE.equals(player.get().getActivated())) {
             return Boolean.TRUE;
         }
@@ -82,10 +82,10 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Boolean resendSecret(String secret, PlayerDto playerDto) {
+    public Boolean resendSecret(UUID secret, PlayerDto playerDto) {
 
-        Player requester = playerRepository.getBySecret(UUID.fromString(secret))
-                .orElseThrow(() -> new PlayerSecretNotFoundException(secret));
+        Player requester = playerRepository.getBySecret(secret)
+                .orElseThrow(() -> new PlayerSecretNotFoundException(secret.toString()));
         log.info("player {} requested to resend secret: {} {}", requester.getId(), playerDto.getEmail(), playerDto.getName());
 
         //  check whether requester can send additional requests
