@@ -1,8 +1,6 @@
 {
   "name": "mleko-front",
-
   "version": "1.4.1",
-
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
