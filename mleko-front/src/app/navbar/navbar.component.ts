@@ -6,6 +6,7 @@ import {SecretService} from "../services/secret.service";
 import {MlekoService} from "../services/mleko.service";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {ScreenSizeService} from "../services/screen-size-service.service";
+import seedrandom from "seedrandom";
 
 @Component({
   selector: 'app-navbar',
@@ -17,6 +18,7 @@ export class NavbarComponent implements OnInit {
   currentRoute: string = '';
   isActivated: boolean = false;
   isDesktop: boolean = true;
+  playerIconPath: string = 'assets/player-icons/0.png';
 
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -42,6 +44,9 @@ export class NavbarComponent implements OnInit {
       if (secret) {
         this.mlekoService.isActivated(secret).subscribe(isActive => {
           this.isActivated = isActive;
+          if (isActive) {
+            this.playerIconPath = this.getSeededImagePath('assets/player-icons',  72);
+          }
         });
       }
     });
@@ -63,5 +68,12 @@ export class NavbarComponent implements OnInit {
       queryParams: {secret: this.secretService.secret},
     };
     this.router.navigate([url], navExtras)
+  }
+
+  getSeededImagePath(folderPath: string, maxPath: number): string {
+    const seededNumber = Math.abs(seedrandom(this.secretService.secret).int32()) % maxPath + 1;
+    console.log(this.secretService.secret);
+    console.log(seededNumber);
+    return `${folderPath}/${seededNumber}.png`;
   }
 }
