@@ -111,5 +111,11 @@
         PLAYERS
       </span>
     </button>
+
+    <!-- player icon -->
+    <div class="player-icon-container">
+      <img class="player-icon" [src]="playerIconPath" alt="Player Icon"/>
+      <div class="player-icon__text">{{isActivated}}</div>
+    </div>
   </mat-toolbar>
 </ng-template>
