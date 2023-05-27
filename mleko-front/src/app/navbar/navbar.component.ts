@@ -72,8 +72,6 @@ export class NavbarComponent implements OnInit {
 
   getSeededImagePath(folderPath: string, maxPath: number): string {
     const seededNumber = Math.abs(seedrandom(this.secretService.secret).int32()) % maxPath + 1;
-    console.log(this.secretService.secret);
-    console.log(seededNumber);
     return `${folderPath}/${seededNumber}.png`;
   }
 }
