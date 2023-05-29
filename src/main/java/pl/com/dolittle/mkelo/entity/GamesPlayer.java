@@ -22,7 +22,7 @@ public class GamesPlayer {
     private Game game;
 
     @MapsId("playerUuid")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "player_uuid", nullable = false)
     private Player player;
 

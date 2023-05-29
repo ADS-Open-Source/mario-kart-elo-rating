@@ -10,6 +10,7 @@ import pl.com.dolittle.mkelo.entity.*;
 import pl.com.dolittle.mkelo.exception.PlayerNameNotFoundException;
 import pl.com.dolittle.mkelo.exception.PlayerSecretNotFoundException;
 import pl.com.dolittle.mkelo.exception.PlayerUUIDNotFoundException;
+import pl.com.dolittle.mkelo.exception.UnauthorisedAction;
 import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
 import pl.com.dolittle.mkelo.mapstruct.dtos.RankingGameDto;
 import pl.com.dolittle.mkelo.mapstruct.mapper.GameMapper;
@@ -108,6 +109,28 @@ public class GameServiceImpl implements GameService {
         }
         game.setGamesPlayers(gamesPlayers);
         gameRepository.save(game);
+
+        persistenceService.uploadInsertsDataToS3();
+    }
+
+
+    @Override
+    public void deleteLast(UUID requesterSecret) {
+        // get latest game
+        Game game = gameRepository.findMostRecentGame();
+        // check if requester matches the sender
+        if (!game.getReportedBy().getSecret().equals(requesterSecret)) {
+            throw new UnauthorisedAction();
+        }
+
+        for (GamesPlayer gp : game.getGamesPlayers()) {
+            Player player = gp.getPlayer();
+            player.decrementGamesPlayed();
+            player.setElo(gp.getPreElo());
+            playerRepository.save(player);
+        }
+
+        gameRepository.delete(game);
 
         persistenceService.uploadInsertsDataToS3();
     }
