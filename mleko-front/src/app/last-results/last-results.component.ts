@@ -4,6 +4,9 @@ import {MlekoService} from "../services/mleko.service";
 import {Game, ProcessedGame} from "../models/Game";
 import {MatTableDataSource} from "@angular/material/table";
 import {ScreenSizeService} from "../services/screen-size-service.service";
+import {MatDialog} from "@angular/material/dialog";
+import {SecretService} from "../services/secret.service";
+import {DeleteGameDialogComponent} from "./delete-game-dialog/delete-game-dialog.component";
 
 @Component({
   selector: 'app-last-results',
@@ -16,10 +19,14 @@ export class LastResultsComponent implements OnInit {
   displayedColumns: string[] = this.screenService.isDesktop ? ['date', 'result', 'reportedBy'] : ['date', 'result'];
   dataSource!: MatTableDataSource<ProcessedGame>;
 
+  private isActivated: boolean = false;
+
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
 
   constructor(
+    public deleteGameDialog: MatDialog,
     private mlekoService: MlekoService,
+    private secretService: SecretService,
     protected screenService: ScreenSizeService,
   ) {
   }
@@ -29,7 +36,22 @@ export class LastResultsComponent implements OnInit {
       let processedGames = Game.processGames(games)
       this.dataSource = new MatTableDataSource<ProcessedGame>(processedGames);
       this.dataSource.paginator = this.paginator;
+      this.secretService.checkIfActivated();
+      this.secretService.$isActivatedStore
+        .subscribe((isActivated: boolean) => {
+          this.isActivated = isActivated;
+        })
     });
   }
 
+  openDeleteGameDialog(index: number, game: ProcessedGame): void {
+    if (this.isActivated) {
+      this.deleteGameDialog.open(DeleteGameDialogComponent, {
+        data: {
+          index: index,
+          game: game
+        }
+      })
+    }
+  }
 }
