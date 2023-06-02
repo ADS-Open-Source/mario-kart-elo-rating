@@ -31,7 +31,7 @@ public class GameController {
 
     @JsonView(GameViews.GameHistory.class)
     @GetMapping("/{requesterSecret}")
-    public ResponseEntity<List<RankingGameDto>> getGames(@PathVariable String requesterSecret,
+    public ResponseEntity<List<RankingGameDto>> getGames(@PathVariable UUID requesterSecret,
                                                          @RequestParam(name = "opponent") Optional<String> opponentName) {
         List<RankingGameDto> games;
         if (opponentName.isPresent()) {

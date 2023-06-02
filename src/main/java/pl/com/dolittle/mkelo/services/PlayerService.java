@@ -15,7 +15,7 @@ public interface PlayerService {
 
     String activatePlayer(PlayerDto playerDto);
 
-    Boolean checkIfActivated(String secret);
+    Boolean checkIfActivated(UUID secret);
 
     PlayerDto getPlayer(UUID secret);
 

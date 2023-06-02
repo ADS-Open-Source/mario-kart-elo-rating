@@ -72,9 +72,9 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Boolean checkIfActivated(String secret) {
+    public Boolean checkIfActivated(UUID secret) {
 
-        Optional<Player> player = playerRepository.getBySecret(UUID.fromString(secret));
+        Optional<Player> player = playerRepository.getBySecret(UUID.fromString(secret.toString()));
         if (player.isPresent() && Boolean.TRUE.equals(player.get().getActivated())) {
             return Boolean.TRUE;
         }

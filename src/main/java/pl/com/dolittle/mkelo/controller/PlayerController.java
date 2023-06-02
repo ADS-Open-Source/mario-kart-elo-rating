@@ -39,7 +39,7 @@ public class PlayerController {
     }
 
     @GetMapping("/activated/{secret}")
-    public ResponseEntity<Boolean> checkIfActivated(@PathVariable String secret) {
+    public ResponseEntity<Boolean> checkIfActivated(@PathVariable UUID secret) {
         return new ResponseEntity<>(playerService.checkIfActivated(secret), HttpStatus.OK);
     }
 

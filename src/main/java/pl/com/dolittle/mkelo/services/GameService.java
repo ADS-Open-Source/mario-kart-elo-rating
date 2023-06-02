@@ -8,8 +8,8 @@ import java.util.UUID;
 public interface GameService {
 
     List<RankingGameDto> getTopNGames(Integer n);
-    List<RankingGameDto> getGamesBySecret(String secret);
-    List<RankingGameDto> getGamesWithOpponent(String secret, String opponentName);
+    List<RankingGameDto> getGamesBySecret(UUID secret);
+    List<RankingGameDto> getGamesWithOpponent(UUID secret, String opponentName);
 
     void addGame(RankingGameDto gameDto);
 

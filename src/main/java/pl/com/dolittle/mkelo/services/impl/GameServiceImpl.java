@@ -43,11 +43,11 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<RankingGameDto> getGamesBySecret(String secret) {
+    public List<RankingGameDto> getGamesBySecret(UUID secret) {
 
         //  find a player
-        Player player = playerRepository.getBySecret(UUID.fromString(secret))
-                .orElseThrow(() -> new PlayerSecretNotFoundException(secret));
+        Player player = playerRepository.getBySecret(secret)
+                .orElseThrow(() -> new PlayerSecretNotFoundException(secret.toString()));
 
         //  find games
         List<Game> games = gameRepository.findByGamesPlayersPlayer(player);
@@ -55,11 +55,11 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<RankingGameDto> getGamesWithOpponent(String requesterSecret, String opponentName) {
+    public List<RankingGameDto> getGamesWithOpponent(UUID requesterSecret, String opponentName) {
 
         //  find a requester
-        Player requester = playerRepository.getBySecret(UUID.fromString(requesterSecret))
-                .orElseThrow(() -> new PlayerSecretNotFoundException(requesterSecret));
+        Player requester = playerRepository.getBySecret(requesterSecret)
+                .orElseThrow(() -> new PlayerSecretNotFoundException(requesterSecret.toString()));
 
         //  find the opponent
         Player opponent = playerRepository.getByName(opponentName)
