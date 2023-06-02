@@ -17,5 +17,7 @@ public interface PlayerService {
 
     Boolean checkIfActivated(UUID secret);
 
+    PlayerDto getPlayer(UUID secret);
+
     Boolean resendSecret(UUID secret, PlayerDto playerDto);
 }

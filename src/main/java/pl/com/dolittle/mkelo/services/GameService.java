@@ -12,4 +12,6 @@ public interface GameService {
     List<RankingGameDto> getGamesWithOpponent(UUID secret, String opponentName);
 
     void addGame(RankingGameDto gameDto);
+
+    void deleteLast(UUID requesterSecret);
 }

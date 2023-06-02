@@ -48,4 +48,10 @@ public class GameController {
         gameService.addGame(gameDto);
         return new ResponseEntity<>("game added", HttpStatus.OK);
     }
+
+    @DeleteMapping("/last/{requesterSecret}")
+    public ResponseEntity<String> deleteLast(@PathVariable UUID requesterSecret) {
+        gameService.deleteLast(requesterSecret);
+        return new ResponseEntity<>("game deleted", HttpStatus.OK);
+    }
 }

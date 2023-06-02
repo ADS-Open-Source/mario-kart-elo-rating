@@ -81,4 +81,13 @@ export class MlekoService {
 
     return this.httpClient.post<Observable<any>>(`${MlekoService.BACKEND_DOMAIN}/players/resend/${requesterSecret}`, playerShort);
   }
+
+  //DELETE
+  deleteLastGame(requesterSecret: string): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders().set('Accept', 'text/plain')
+    return this.httpClient.delete(
+      `${MlekoService.BACKEND_DOMAIN}/games/last/${requesterSecret}`,
+      {headers: headers, responseType: 'text'}
+    )
+  }
 }

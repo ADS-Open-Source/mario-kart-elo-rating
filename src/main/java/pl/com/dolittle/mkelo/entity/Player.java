@@ -64,6 +64,10 @@ public class Player {
         this.gamesPlayed++;
     }
 
+    public void decrementGamesPlayed() {
+        this.gamesPlayed--;
+    }
+
     public static Player fromPlayerDTO(PlayerDto playerDto) {
         // RFC 5322 email standard regex validator
         if (playerDto.getName().isBlank() || !Pattern.compile("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")

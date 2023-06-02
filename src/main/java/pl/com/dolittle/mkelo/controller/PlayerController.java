@@ -43,6 +43,12 @@ public class PlayerController {
         return new ResponseEntity<>(playerService.checkIfActivated(secret), HttpStatus.OK);
     }
 
+    @JsonView(GenericViews.Private.class)
+    @GetMapping("/whoami/{secret}")
+    public ResponseEntity<PlayerDto> getPlayer(@PathVariable UUID secret) {
+        return new ResponseEntity<>(playerService.getPlayer(secret), HttpStatus.OK);
+    }
+
     @PostMapping("/activate")
     public String activatePlayer(@RequestBody @Validated(SecretValidation.class) PlayerDto playerDto) {
         return playerService.activatePlayer(playerDto);

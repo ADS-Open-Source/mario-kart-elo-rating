@@ -11,7 +11,7 @@
     <groupId>pl.com.dolittle</groupId>
     <artifactId>mkelo</artifactId>
     
-    <version>1.4.0</version>
+    <version>1.4.1</version>
   
     <name>MarioKartElo</name>
     <description>Mario Kart Elo Ranking System</description>
