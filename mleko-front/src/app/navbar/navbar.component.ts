@@ -6,6 +6,7 @@ import {SecretService} from "../services/secret.service";
 import {MlekoService} from "../services/mleko.service";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {ScreenSizeService} from "../services/screen-size-service.service";
+import {Player} from "../models/Player";
 import seedrandom from "seedrandom";
 
 @Component({
@@ -16,6 +17,7 @@ import seedrandom from "seedrandom";
 export class NavbarComponent implements OnInit {
 
   currentRoute: string = '';
+  currentUser: Player | null = null;
   isActivated: boolean = false;
   isDesktop: boolean = true;
   playerIconPath: string = 'assets/player-icons/0.png';
@@ -38,17 +40,14 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(params => {
-      let secret = params.get('secret')
-      this.secretService.secret = secret || '';
+      this.secretService.secret = params.get('secret') || '';
       // console.log('initial', this.secretService.secret); // TODO why is it being run twice
-      if (secret) {
-        this.mlekoService.isActivated(secret).subscribe(isActive => {
-          this.isActivated = isActive;
-          if (isActive) {
-            this.playerIconPath = this.getSeededImagePath('assets/player-icons',  72);
-          }
-        });
-      }
+      this.secretService.updateCurrentUser();
+      this.secretService.$currentUserStore
+        .subscribe((user: Player) => {
+          this.currentUser = user;
+          this.playerIconPath = this.getSeededImagePath('assets/player-icons', 72);
+        })
     });
 
     this.router.events.subscribe((event) => {

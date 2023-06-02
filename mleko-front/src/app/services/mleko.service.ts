@@ -53,6 +53,10 @@ export class MlekoService {
     return this.httpClient.get<Observable<boolean>>(`${MlekoService.BACKEND_DOMAIN}/players/activated/${secret}`)
   }
 
+  checkUser(secret: string): Observable<any> {
+    return this.httpClient.get<Observable<Player>>(`${MlekoService.BACKEND_DOMAIN}/players/whoami/${secret}`)
+  }
+
   //POST
   activatePlayer(playerSecret: PlayerSecret): Observable<any> {
     const headers = new HttpHeaders().set('Accept', 'text/plain');
