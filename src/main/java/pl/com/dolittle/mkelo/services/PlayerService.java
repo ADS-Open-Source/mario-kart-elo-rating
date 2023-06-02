@@ -19,5 +19,5 @@ public interface PlayerService {
 
     PlayerDto getPlayer(UUID secret);
 
-    Boolean resendSecret(String secret, PlayerDto playerDto);
+    Boolean resendSecret(UUID secret, PlayerDto playerDto);
 }

@@ -56,7 +56,7 @@ public class PlayerController {
 
     @PostMapping("/resend/{requesterSecret}")
     public ResponseEntity<Boolean> resendSecret(@RequestBody @Validated(ResendEmailValidation.class) PlayerDto playerDto,
-                                                @PathVariable String requesterSecret) {
+                                                @PathVariable UUID requesterSecret) {
         return new ResponseEntity<>(playerService.resendSecret(requesterSecret, playerDto), HttpStatus.OK);
     }
 }
