@@ -82,6 +82,14 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    public PlayerDto getPlayer(UUID secret) {
+
+        Player player = playerRepository.getBySecret(secret)
+                .orElseThrow(() -> new PlayerSecretNotFoundException(secret.toString()));
+        return playerMapper.toDto(player);
+    }
+
+    @Override
     public Boolean resendSecret(String secret, PlayerDto playerDto) {
 
         Player requester = playerRepository.getBySecret(UUID.fromString(secret))

@@ -14,6 +14,7 @@ import pl.com.dolittle.mkelo.mapstruct.views.GenericViews;
 import pl.com.dolittle.mkelo.services.PlayerService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin({"http://mleko.dolittle.com.pl", "http://mleko.deloitte.cyou"})
@@ -40,6 +41,12 @@ public class PlayerController {
     @GetMapping("/activated/{secret}")
     public ResponseEntity<Boolean> checkIfActivated(@PathVariable String secret) {
         return new ResponseEntity<>(playerService.checkIfActivated(secret), HttpStatus.OK);
+    }
+
+    @JsonView(GenericViews.Private.class)
+    @GetMapping("/whoami/{secret}")
+    public ResponseEntity<PlayerDto> getPlayer(@PathVariable UUID secret) {
+        return new ResponseEntity<>(playerService.getPlayer(secret), HttpStatus.OK);
     }
 
     @PostMapping("/activate")
