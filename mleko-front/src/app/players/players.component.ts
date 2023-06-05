@@ -19,6 +19,7 @@ export class PlayersComponent implements OnInit {
   dataSource: MatTableDataSource<Player> = new MatTableDataSource<Player>();
   displayedColumns: string[] = ['username', 'resend'];
   isProcessing: boolean = false;
+  currentUser: Player | null = null;
 
   constructor(
     private mlekoService: MlekoService,
@@ -31,6 +32,10 @@ export class PlayersComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateAllPlayers();
+    this.secretService.$currentUserStore
+      .subscribe((user: Player) => {
+        this.currentUser = user;
+      })
   }
 
   updateAllPlayers(): void {
