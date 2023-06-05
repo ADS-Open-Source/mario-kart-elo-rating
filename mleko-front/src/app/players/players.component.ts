@@ -6,6 +6,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {SecretService} from "../services/secret.service";
 import {ScreenSizeService} from "../services/screen-size-service.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
+import {ChangeIconDialogComponent} from "./change-icon-dialog/change-icon-dialog.component";
 
 @Component({
   selector: 'app-players',
@@ -24,9 +26,10 @@ export class PlayersComponent implements OnInit {
 
   constructor(
     private mlekoService: MlekoService,
+    private _snackBar: MatSnackBar,
     protected secretService: SecretService,
     protected screenService: ScreenSizeService,
-    private _snackBar: MatSnackBar,
+    public changeIconDialog: MatDialog,
   ) {
   }
 
@@ -69,6 +72,10 @@ export class PlayersComponent implements OnInit {
   }
 
   openIconPickerDialog(player: Player) {
-    console.log(player.icon)
+    this.changeIconDialog.open(ChangeIconDialogComponent, {
+      data: {
+        user: player,
+      }
+    })
   }
 }

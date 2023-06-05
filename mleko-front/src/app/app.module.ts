@@ -30,6 +30,7 @@ import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import {GamesDialogComponent} from './ranking/games-dialog/games-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { DeleteGameDialogComponent } from './last-results/delete-game-dialog/delete-game-dialog.component';
+import { ChangeIconDialogComponent } from './players/change-icon-dialog/change-icon-dialog.component';
 
 
 const appRoutes: Routes = [
@@ -55,7 +56,8 @@ const appRoutes: Routes = [
     PlayersComponent,
     PlayersComponent,
     GamesDialogComponent,
-    DeleteGameDialogComponent
+    DeleteGameDialogComponent,
+    ChangeIconDialogComponent
   ],
   imports: [
     BrowserModule,
