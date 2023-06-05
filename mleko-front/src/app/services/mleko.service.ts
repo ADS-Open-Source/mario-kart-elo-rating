@@ -86,6 +86,13 @@ export class MlekoService {
     return this.httpClient.post<Observable<any>>(`${MlekoService.BACKEND_DOMAIN}/players/resend/${requesterSecret}`, playerShort);
   }
 
+  // PATCH
+  changeUserIcon(userSecret: string, iconPath: string): Observable<any> {
+    return this.httpClient.patch<Observable<Player>>(`${MlekoService.BACKEND_DOMAIN}/players/${userSecret}/icon`, {
+        'icon': iconPath
+      })
+  }
+
   //DELETE
   deleteLastGame(requesterSecret: string): Observable<any> {
     const headers: HttpHeaders = new HttpHeaders().set('Accept', 'text/plain')

@@ -2,14 +2,17 @@
   <h1 matDialogTitle>Select new icon</h1>
   <div matDialogContent class="icon-list-container">
 
-    <figure class="icon-container" *ngFor="let path of iconsPaths"
-            [ngClass]="{'selected-container': path === selectedIcon}"> <!-- add padding when border is present -->
-      <img class="user-icon" [ngClass]="{'selected-icon': path === selectedIcon}"
-           (click)="selectIcon(path)"
-           [src]="path" alt="available icon">
+    <figure class="icon-container" *ngFor="let iconPath of iconsPaths"
+            [ngClass]="{'selected-container': iconPath === selectedIcon}"> <!-- add padding when border is present -->
+      <img class="user-icon" [ngClass]="{'selected-icon': iconPath === selectedIcon}"
+           (click)="selectIcon(iconPath)"
+           [src]="iconPath" alt="available icon">
     </figure>
   </div>
   <div matDialogActions class="button-container">
-    <button mat-flat-button color="warn">Confirm</button>
+    <button mat-flat-button color="warn" [disabled]="isProcessing"
+            (click)="changeIcon(selectedIcon)">
+      Confirm
+    </button>
   </div>
 </div>
