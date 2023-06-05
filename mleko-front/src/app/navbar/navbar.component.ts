@@ -17,9 +17,7 @@ export class NavbarComponent implements OnInit {
 
   currentRoute: string = '';
   currentUser: Player | null = null;
-  isActivated: boolean = false;
   isDesktop: boolean = true;
-  playerIconPath: string = 'assets/player-icons/0.png';
 
   constructor(
     private matIconRegistry: MatIconRegistry,

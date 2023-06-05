@@ -106,7 +106,7 @@
 
     <!-- player icon -->
     <div class="player-icon-container" (click)="navigate('players')">
-      <img class="player-icon" [src]="playerIconPath" alt="Player Icon"/>
+      <img class="player-icon" [src]="currentUser?.icon" alt="Player Icon"/>
       <div class="player-icon__text">{{this.currentUser?.name}}</div>
     </div>
   </mat-toolbar>
