@@ -42,6 +42,7 @@ export class ChangeIconDialogComponent {
           console.log(player)
           this.isProcessing = false;
           this._snackBar.open('Icon changed successfully!', 'Close', {duration: 3000})
+          this.secretService.updateCurrentUser();
         },
         error: (error) => {
           console.error(error)
