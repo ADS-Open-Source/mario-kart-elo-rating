@@ -54,5 +54,4 @@ export class LastResultsComponent implements OnInit {
       })
     }
   }
-
 }
