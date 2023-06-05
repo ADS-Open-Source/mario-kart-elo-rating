@@ -1,5 +1,7 @@
 <div class="user-profile-container">
-  <img class="user-icon" [src]="currentUser?.icon" alt="Player Icon" (dblclick)="openIconPickerDialog(currentUser!)"/>
+  <img class="user-icon" [src]="currentUser?.icon" alt="Player Icon"
+       matTooltip="double click to change" matTooltipShowDelay="100" matTooltipHideDelay="500"
+       (dblclick)="openIconPickerDialog(currentUser!)"/>
   <h1>{{currentUser?.name}}</h1>
   <div class="user-details">
     <p>{{currentUser?.elo}} elo @ {{currentUser?.gamesPlayed}} games</p>
