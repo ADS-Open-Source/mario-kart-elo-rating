@@ -7,7 +7,6 @@ import {MlekoService} from "../services/mleko.service";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {ScreenSizeService} from "../services/screen-size-service.service";
 import {Player} from "../models/Player";
-import seedrandom from "seedrandom";
 
 @Component({
   selector: 'app-navbar',
@@ -46,7 +45,6 @@ export class NavbarComponent implements OnInit {
       this.secretService.$currentUserStore
         .subscribe((user: Player) => {
           this.currentUser = user;
-          this.playerIconPath = this.getSeededImagePath('assets/player-icons', 72);
         })
     });
 
@@ -67,10 +65,5 @@ export class NavbarComponent implements OnInit {
       queryParams: {secret: this.secretService.secret},
     };
     this.router.navigate([url], navExtras)
-  }
-
-  getSeededImagePath(folderPath: string, maxPath: number): string {
-    const seededNumber = Math.abs(seedrandom(this.currentUser?.uuid).int32()) % maxPath + 1;
-    return `${folderPath}/${seededNumber}.png`;
   }
 }
