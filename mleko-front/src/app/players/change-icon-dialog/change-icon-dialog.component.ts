@@ -13,6 +13,15 @@ export interface DialogData {
 })
 export class ChangeIconDialogComponent {
 
+  iconsPaths: string[];
+  selectedIcon: string;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    this.iconsPaths = Array(72).fill(1).map((x, i) => `assets/player-icons/${i + 1}.png`)
+    this.selectedIcon = data.user.icon!;
+  }
+
+  selectIcon(path: string): void {
+    this.selectedIcon = path;
   }
 }
