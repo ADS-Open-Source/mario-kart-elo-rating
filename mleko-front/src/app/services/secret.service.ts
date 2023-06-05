@@ -54,7 +54,7 @@ export class SecretService {
 
   public updateCurrentUser(): void {
     if (SecretService.UUIDRegex.test(this.secret)) {
-      this.mlekoService.checkUser(this.secret)
+      this.mlekoService.whoAmI(this.secret)
         .subscribe(
           data => {
             let player: Player = data;
