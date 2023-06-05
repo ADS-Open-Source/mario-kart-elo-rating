@@ -20,6 +20,7 @@ export class PlayersComponent implements OnInit {
   displayedColumns: string[] = ['username', 'resend'];
   isProcessing: boolean = false;
   currentUser: Player | null = null;
+  playerIcon: string = 'assets/player-icons/0.png';
 
   constructor(
     private mlekoService: MlekoService,
@@ -35,6 +36,7 @@ export class PlayersComponent implements OnInit {
     this.secretService.$currentUserStore
       .subscribe((user: Player) => {
         this.currentUser = user;
+        this.playerIcon = !user.icon ? this.playerIcon : user.icon;
       })
   }
 
@@ -64,5 +66,9 @@ export class PlayersComponent implements OnInit {
         this._snackBar.open(error.error, 'Close', {duration: 5000})
       }
     })
+  }
+
+  openIconPickerDialog(player: Player) {
+    console.log(player.icon)
   }
 }

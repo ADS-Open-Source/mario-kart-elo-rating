@@ -105,8 +105,8 @@
     </button>
 
     <!-- player icon -->
-    <div class="player-icon-container" (click)="navigate('players')">
-      <img class="player-icon" [src]="currentUser?.icon" alt="Player Icon"/>
+    <div class="player-icon-container" (click)="secureNavigate('players')">
+      <img class="player-icon" [src]="playerIcon" alt="Player Icon"/>
       <div class="player-icon__text">{{this.currentUser?.name}}</div>
     </div>
   </mat-toolbar>

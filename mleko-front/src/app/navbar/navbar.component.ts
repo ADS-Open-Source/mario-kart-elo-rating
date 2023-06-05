@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
 
   currentRoute: string = '';
   currentUser: Player | null = null;
+  playerIcon: string = 'assets/player-icons/0.png'
   isDesktop: boolean = true;
 
   constructor(
@@ -43,6 +44,7 @@ export class NavbarComponent implements OnInit {
       this.secretService.$currentUserStore
         .subscribe((user: Player) => {
           this.currentUser = user;
+          this.playerIcon = !user.icon ? this.playerIcon : user.icon;
         })
     });
 
@@ -63,5 +65,11 @@ export class NavbarComponent implements OnInit {
       queryParams: {secret: this.secretService.secret},
     };
     this.router.navigate([url], navExtras)
+  }
+
+  secureNavigate(url: string) {
+    if (this.currentUser?.activated) {
+      this.navigate(url)
+    }
   }
 }
