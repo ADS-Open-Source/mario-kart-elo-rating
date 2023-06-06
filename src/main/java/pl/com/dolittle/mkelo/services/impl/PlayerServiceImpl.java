@@ -121,4 +121,15 @@ public class PlayerServiceImpl implements PlayerService {
         emailService.send(player.getEmail(), "Your re-sent link to mleko", messageContent);
         return true;
     }
+
+    @Override
+    public PlayerDto changeIcon(UUID secret, PlayerDto playerDto) {
+        Player user = playerRepository.getBySecret(secret)
+                .orElseThrow(() -> new PlayerSecretNotFoundException(secret.toString()));
+        log.info("user {} requested to change icon to: {}", user.getId(), playerDto.getIcon());
+
+        user.setIcon(playerDto.getIcon());
+        playerRepository.save(user);
+        return playerMapper.toDto(user);
+    }
 }
