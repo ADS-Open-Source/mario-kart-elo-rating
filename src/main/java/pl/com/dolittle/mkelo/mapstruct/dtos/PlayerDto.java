@@ -51,4 +51,7 @@ public class PlayerDto {
 
     @JsonView(GenericViews.Public.class)
     private int gamesPlayed;
+
+    @JsonView(GenericViews.Public.class)
+    private String icon;
 }

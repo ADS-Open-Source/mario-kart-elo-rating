@@ -43,6 +43,9 @@ public class Player {
     @Column(name = "lastemailrequest")
     private LocalDateTime lastEmailRequest = LocalDateTime.now();
 
+    @Column(name = "icon")
+    private String icon;
+
     @Transient
     private int preElo;
 
