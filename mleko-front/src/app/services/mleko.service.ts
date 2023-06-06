@@ -4,6 +4,7 @@ import {Observable, ReplaySubject} from "rxjs";
 import {Player, PlayerSecret, PlayerShort, Result} from "../models/Player";
 import {Game} from "../models/Game";
 import {environment} from "../../environments/environment";
+import seedrandom from "seedrandom";
 
 @Injectable({
   providedIn: 'root'
@@ -100,5 +101,12 @@ export class MlekoService {
       `${MlekoService.BACKEND_DOMAIN}/games/last/${requesterSecret}`,
       {headers: headers, responseType: 'text'}
     )
+  }
+
+
+  // miscellaneous
+  public static getSeededImagePath(player: Player, folderPath: string, maxPath: number): string {
+    const seededNumber = Math.abs(seedrandom(player.uuid).int32()) % maxPath + 1;
+    return `${folderPath}/${seededNumber}.png`;
   }
 }

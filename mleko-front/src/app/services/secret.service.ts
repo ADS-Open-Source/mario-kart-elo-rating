@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {MlekoService} from "./mleko.service";
 import {Observable, ReplaySubject} from "rxjs";
 import {Player} from "../models/Player";
-import seedrandom from "seedrandom";
 
 @Injectable({
   providedIn: 'root'
@@ -59,7 +58,7 @@ export class SecretService {
           data => {
             let player: Player = data;
             if (!player.icon) {
-              player.icon = this.getSeededImagePath(player,'assets/player-icons', 72);
+              player.icon = MlekoService.getSeededImagePath(player,'assets/player-icons', 72);
             }
             this._currentUserStore.next(player);
           }
@@ -89,10 +88,4 @@ export class SecretService {
         });
     }
   }
-
-  getSeededImagePath(player: Player, folderPath: string, maxPath: number): string {
-    const seededNumber = Math.abs(seedrandom(player.uuid).int32()) % maxPath + 1;
-    return `${folderPath}/${seededNumber}.png`;
-  }
-
 }
