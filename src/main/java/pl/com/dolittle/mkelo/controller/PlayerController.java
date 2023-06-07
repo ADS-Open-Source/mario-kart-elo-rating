@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.com.dolittle.mkelo.mapstruct.dtos.PlayerDto;
+import pl.com.dolittle.mkelo.mapstruct.validation.ChangeIconValidation;
 import pl.com.dolittle.mkelo.mapstruct.validation.CreatePlayerValidation;
 import pl.com.dolittle.mkelo.mapstruct.validation.ResendEmailValidation;
 import pl.com.dolittle.mkelo.mapstruct.validation.SecretValidation;
@@ -58,5 +59,11 @@ public class PlayerController {
     public ResponseEntity<Boolean> resendSecret(@RequestBody @Validated(ResendEmailValidation.class) PlayerDto playerDto,
                                                 @PathVariable UUID requesterSecret) {
         return new ResponseEntity<>(playerService.resendSecret(requesterSecret, playerDto), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{userSecret}/icon")
+    public ResponseEntity<PlayerDto> changeIcon(@RequestBody @Validated(ChangeIconValidation.class) PlayerDto playerDto,
+                                                @PathVariable UUID userSecret) {
+        return new ResponseEntity<>(playerService.changeIcon(userSecret, playerDto), HttpStatus.OK);
     }
 }

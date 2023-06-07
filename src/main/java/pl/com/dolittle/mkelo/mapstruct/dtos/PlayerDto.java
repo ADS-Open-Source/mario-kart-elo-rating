@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.com.dolittle.mkelo.mapstruct.validation.ChangeIconValidation;
 import pl.com.dolittle.mkelo.mapstruct.validation.CreatePlayerValidation;
 import pl.com.dolittle.mkelo.mapstruct.validation.ResendEmailValidation;
 import pl.com.dolittle.mkelo.mapstruct.validation.SecretValidation;
@@ -51,4 +52,8 @@ public class PlayerDto {
 
     @JsonView(GenericViews.Public.class)
     private int gamesPlayed;
+
+    @NotBlank(groups = ChangeIconValidation.class)
+    @JsonView(GenericViews.Public.class)
+    private String icon;
 }

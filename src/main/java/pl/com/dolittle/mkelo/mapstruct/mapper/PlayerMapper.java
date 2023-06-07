@@ -17,6 +17,7 @@ public interface PlayerMapper {
 
     // Entity to DTO
     @Mapping(target = "uuid", source = "id")
+    @Mapping(target = "icon", source = "icon")
     PlayerDto toDto(Player player);
 
     List<PlayerDto> toDtoList(List<Player> players);

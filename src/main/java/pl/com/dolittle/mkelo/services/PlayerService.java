@@ -20,4 +20,6 @@ public interface PlayerService {
     PlayerDto getPlayer(UUID secret);
 
     Boolean resendSecret(UUID secret, PlayerDto playerDto);
+
+    PlayerDto changeIcon(UUID secret, PlayerDto playerDto);
 }
