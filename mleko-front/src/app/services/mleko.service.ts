@@ -4,6 +4,7 @@ import {Observable, ReplaySubject} from "rxjs";
 import {Player, PlayerSecret, PlayerShort, Result} from "../models/Player";
 import {Game} from "../models/Game";
 import {environment} from "../../environments/environment";
+import seedrandom from "seedrandom";
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,10 @@ export class MlekoService {
     return this.httpClient.get<Observable<boolean>>(`${MlekoService.BACKEND_DOMAIN}/players/activated/${secret}`)
   }
 
+  whoAmI(secret: string): Observable<any> {
+    return this.httpClient.get<Observable<Player>>(`${MlekoService.BACKEND_DOMAIN}/players/whoami/${secret}`)
+  }
+
   //POST
   activatePlayer(playerSecret: PlayerSecret): Observable<any> {
     const headers = new HttpHeaders().set('Accept', 'text/plain');
@@ -82,6 +87,13 @@ export class MlekoService {
     return this.httpClient.post<Observable<any>>(`${MlekoService.BACKEND_DOMAIN}/players/resend/${requesterSecret}`, playerShort);
   }
 
+  // PATCH
+  changeUserIcon(userSecret: string, iconPath: string): Observable<any> {
+    return this.httpClient.patch<Observable<Player>>(`${MlekoService.BACKEND_DOMAIN}/players/${userSecret}/icon`, {
+        'icon': iconPath
+      })
+  }
+
   //DELETE
   deleteLastGame(requesterSecret: string): Observable<any> {
     const headers: HttpHeaders = new HttpHeaders().set('Accept', 'text/plain')
@@ -89,5 +101,12 @@ export class MlekoService {
       `${MlekoService.BACKEND_DOMAIN}/games/last/${requesterSecret}`,
       {headers: headers, responseType: 'text'}
     )
+  }
+
+
+  // miscellaneous
+  public static getSeededImagePath(player: Player, folderPath: string, maxPath: number): string {
+    const seededNumber = Math.abs(seedrandom(player.uuid).int32()) % maxPath + 1;
+    return `${folderPath}/${seededNumber}.png`;
   }
 }

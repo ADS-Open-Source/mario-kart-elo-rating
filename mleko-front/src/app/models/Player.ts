@@ -4,6 +4,8 @@ export interface Player {
   elo: number;
   gamesPlayed: number;
   email: string;
+  activated: boolean;
+  icon?: string;
 }
 
 export interface PlayerShort {

@@ -59,6 +59,15 @@
   width: 1em;
 }
 
+.user__icon {
+  height: 2em;
+  width: 2em;
+}
+
+.no-padding {
+  padding: 0;
+}
+
 .mat-mdc-row:hover .table__icon {
   animation-duration: 500ms;
   animation-name: coin--animation;

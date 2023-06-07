@@ -21,7 +21,7 @@ export class RankingComponent implements OnInit, OnDestroy {
 
   playersSub!: Subscription;
   players: Array<Player> = [];
-  displayedColumns: string[] = ['position', 'username', 'elo'];
+  displayedColumns: string[] = ['position', 'icon', 'username', 'elo'];
   dataSource: MatTableDataSource<Player> = new MatTableDataSource<Player>();
   showOnlyChads: boolean = true;
 
@@ -41,7 +41,7 @@ export class RankingComponent implements OnInit, OnDestroy {
 
     this.route.queryParamMap.subscribe(params => {
       if (params.get('hasło') === 'masło') {
-        this.displayedColumns = ['position', 'username', 'gamesPlayed', 'elo'];
+        this.displayedColumns = ['position', 'icon', 'username', 'gamesPlayed', 'elo'];
       }
     });
   }
@@ -60,6 +60,10 @@ export class RankingComponent implements OnInit, OnDestroy {
   }
 
   filterOutNewPlayers(): void {
+    this.players = this.players.map(player => ({
+      ...player,
+        icon: player.icon ?? MlekoService.getSeededImagePath(player, 'assets/player-icons', 72)
+    }))
     this.dataSource.data = this.showOnlyChads ? this.players.filter(p => p.gamesPlayed >= 10) : this.players;
   }
 

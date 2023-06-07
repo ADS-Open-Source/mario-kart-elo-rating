@@ -6,6 +6,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {SecretService} from "../services/secret.service";
 import {ScreenSizeService} from "../services/screen-size-service.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
+import {ChangeIconDialogComponent} from "./change-icon-dialog/change-icon-dialog.component";
 
 @Component({
   selector: 'app-players',
@@ -19,18 +21,26 @@ export class PlayersComponent implements OnInit {
   dataSource: MatTableDataSource<Player> = new MatTableDataSource<Player>();
   displayedColumns: string[] = ['username', 'resend'];
   isProcessing: boolean = false;
+  currentUser: Player | null = null;
+  playerIcon: string = 'assets/player-icons/0.png';
 
   constructor(
     private mlekoService: MlekoService,
+    private _snackBar: MatSnackBar,
     protected secretService: SecretService,
     protected screenService: ScreenSizeService,
-    private _snackBar: MatSnackBar,
+    public changeIconDialog: MatDialog,
   ) {
   }
 
 
   ngOnInit(): void {
     this.updateAllPlayers();
+    this.secretService.$currentUserStore
+      .subscribe((user: Player) => {
+        this.currentUser = user;
+        this.playerIcon = !user.icon ? this.playerIcon : user.icon;
+      })
   }
 
   updateAllPlayers(): void {
@@ -57,6 +67,14 @@ export class PlayersComponent implements OnInit {
         console.error(error)
         this.isProcessing = false;
         this._snackBar.open(error.error, 'Close', {duration: 5000})
+      }
+    })
+  }
+
+  openIconPickerDialog(player: Player) {
+    this.changeIconDialog.open(ChangeIconDialogComponent, {
+      data: {
+        user: player,
       }
     })
   }

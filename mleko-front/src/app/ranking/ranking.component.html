@@ -14,6 +14,14 @@
       <td mat-cell class="text-center" *matCellDef="let i = index">{{i + 1}}.</td>
     </ng-container>
 
+    <!--    icon column   -->
+    <ng-container matColumnDef="icon">
+      <th mat-header-cell class="non-transparent" *matHeaderCellDef></th>
+      <td mat-cell class="text-right no-padding" *matCellDef="let player">
+        <img class="user__icon" [src]="player.icon" alt="player-icon">
+      </td>
+    </ng-container>
+
     <!--    name column    -->
     <ng-container matColumnDef="username">
       <th mat-header-cell class="non-transparent" *matHeaderCellDef>Player</th>
