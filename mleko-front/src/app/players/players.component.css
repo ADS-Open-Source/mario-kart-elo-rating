@@ -1,3 +1,24 @@
+.user-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 1em 0;
+}
+
+.user-icon {
+  height: 6em;
+  width: 6em;
+}
+
+.user-details {
+  text-align: center;
+}
+
+.user-details p {
+  margin: 0.5em;
+}
+
 .table-container {
   margin: auto;
 

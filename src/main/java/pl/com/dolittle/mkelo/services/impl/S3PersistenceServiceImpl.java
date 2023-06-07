@@ -120,6 +120,7 @@ public class S3PersistenceServiceImpl implements PersistenceService {
             }
         }
         try (Connection conn = dataSource.getConnection()) {
+            //  primary key of games on load starts with 1 which obviously already exists when loading existing games so we need to update it accordingly
             PreparedStatement statement = conn.prepareStatement("ALTER TABLE GAMES ALTER COLUMN ID RESTART WITH (SELECT MAX(ID) + 1 FROM GAMES)");
             statement.execute();
             log.info("updated the games identity");

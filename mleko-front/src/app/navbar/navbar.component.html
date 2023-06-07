@@ -37,11 +37,11 @@
           <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
           <span>LAST RACES</span>
         </button>
-        <button mat-menu-item class="menu-button" *ngIf="isActivated"
+        <button mat-menu-item class="menu-button" *ngIf="currentUser?.activated"
                 [ngClass]="{ 'underlined': currentRoute === '/players' }"
                 (click)="navigate('players')">
           <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
-          <span>PLAYERS</span>
+          <span>MY PROFILE</span>
         </button>
       </mat-menu>
     </div>
@@ -103,13 +103,11 @@
         LAST RACES
       </span>
     </button>
-    <button mat-button class="header__button" *ngIf="isActivated"
-            [ngClass]="{ 'underlined': currentRoute === '/players' }"
-            (click)="navigate('players')">
-      <mat-icon class="cloud-icon" [svgIcon]="'cloud'"></mat-icon>
-      <span class="header__button__text">
-        PLAYERS
-      </span>
-    </button>
+
+    <!-- player icon -->
+    <div class="player-icon-container" (click)="secureNavigate('players')">
+      <img class="player-icon" [src]="playerIcon" alt="Player Icon"/>
+      <div class="player-icon__text">{{this.currentUser?.name}}</div>
+    </div>
   </mat-toolbar>
 </ng-template>

@@ -80,6 +80,27 @@
   animation: cloud--animation 10s ease-in-out infinite;
 }
 
+.player-icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 0 1em;
+}
+
+.player-icon-container:hover {
+  cursor: pointer;
+}
+
+.player-icon {
+  height: 3em;
+  width: 3em;
+}
+
+.player-icon__text {
+  font-size: 1em;
+}
+
 /*  mobile CSSes  */
 .menu {
   display: flex;
