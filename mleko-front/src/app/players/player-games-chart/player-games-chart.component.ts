@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Game} from "../../models/Game";
+import {ScreenSizeService} from "../../services/screen-size-service.service";
 
 export interface ChartGame {
   name: string,
@@ -30,13 +31,15 @@ export class PlayerGamesChartComponent implements OnInit {
   yAxis: boolean = true;
   minYAxisValue: number = 1900;
   maxYAxisValue: number = 2100;
-  showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
+  showYAxisLabel: boolean = this.screenService.isDesktop;
   xAxisLabel: string = 'Time';
   yAxisLabel: string = 'Elo';
   timeline: boolean = true;
 
-  constructor() {
+  constructor(
+    private screenService: ScreenSizeService,
+  ) {
   }
 
   ngOnInit() {
