@@ -13,7 +13,7 @@ import {HomepageComponent} from './homepage/homepage.component';
 import {NewRaceComponent} from './new-race/new-race.component';
 import {RankingComponent} from './ranking/ranking.component';
 import {LastResultsComponent} from './last-results/last-results.component';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -60,31 +60,32 @@ const appRoutes: Routes = [
     DeleteGameDialogComponent,
     ChangeIconDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatTableModule,
-    MatListModule,
-    MatPaginatorModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    RouterModule.forRoot(
-      appRoutes,
-    ),
-    MatFormFieldModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatInputModule,
-    MatMenuModule,
-    ReactiveFormsModule,
-    MatSlideToggleModule,
-    FormsModule,
-    NgxMatSelectSearchModule,
-    MatDialogModule,
-    MatTooltipModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatTableModule,
+        MatListModule,
+        MatPaginatorModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        RouterModule.forRoot(
+            appRoutes,
+        ),
+        MatFormFieldModule,
+        MatSelectModule,
+        MatSnackBarModule,
+        MatInputModule,
+        MatMenuModule,
+        ReactiveFormsModule,
+        MatSlideToggleModule,
+        FormsModule,
+        NgxMatSelectSearchModule,
+        MatDialogModule,
+        MatTooltipModule,
+        NgOptimizedImage,
+    ],
   providers: [
     DatePipe,
     {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}
