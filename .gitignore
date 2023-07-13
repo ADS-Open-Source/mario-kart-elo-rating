@@ -1,0 +1,94 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+cdk/node_modules
+cdk/cdk.out
+out/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+.jpb
+/.jpb/
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Iromem data ###
+persistentData/
+/mkeloData.json
+
+### Docker Related ###
+mleko-env-vars.env
+/mkeloDataTest.sql
+/mkeloData.sql
+/mleko-front/node_modules/
+
+#mleko front stuff
+# See http:/help.github.com/ignore-files/ for more about ignoring files.
+
+# Compiled output
+/mleko-front/dist
+/mleko-front/tmp
+/mleko-front/out-tsc
+/mleko-front/bazel-out
+
+# Node
+/mleko-front/node_modules
+/mleko-front/npm-debug.log
+/mleko-front/yarn-error.log
+
+# IDEs and editors
+/mleko-front/.idea/
+/mleko-front/.project
+/mleko-front/.classpath
+/mleko-front/.c9/
+/mleko-front/*.launch
+/mleko-front/.settings/
+/mleko-front/*.sublime-workspace
+
+# Visual Studio Code
+/mleko-front/.vscode/*
+/mleko-front/!.vscode/settings.json
+/mleko-front/!.vscode/tasks.json
+/mleko-front/!.vscode/launch.json
+/mleko-front/!.vscode/extensions.json
+/mleko-front/.history/*
+
+# Miscellaneous
+/mleko-front/.angular/cache
+/mleko-front/.sass-cache/
+/mleko-front/connect.lock
+/mleko-front/coverage
+/mleko-front/libpeerconnection.log
+/mleko-front/testem.log
+/mleko-front/typings
+
+# System files
+/mleko-front/.DS_Store
+/mleko-front/Thumbs.db
+mleko-front/node_modules/**
+/mleko-front/.vscode/

@@ -1,0 +1,70 @@
+.table-container {
+  margin: auto;
+
+  background-color: #6096FF26;
+}
+
+.table-container--desktop {
+  width: 50%;
+}
+
+.table {
+  width: 100%;
+}
+
+.mat-mdc-table {
+  font-family: 'Orbitron', sans-serif;
+
+  background: inherit;
+}
+
+.mat-mdc-cell {
+  color: inherit;
+}
+
+.mat-mdc-header-cell {
+  font-size: 1.25em;
+  color: inherit;
+
+  border-bottom: 2px solid white;
+  border-radius: 0;
+}
+
+.mat-mdc-row:hover {
+  background-color: #0000000F !important;
+}
+
+.mat-mdc-paginator {
+  background: inherit;
+  color: inherit;
+
+  background-color: #6096FF26;
+}
+
+.table__caption {
+  font-size: 3em;
+
+  margin: 5px 0 10px 0;
+  padding: 10px;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.negative-delta {
+  color: #ffc7cc;
+}
+
+.positive-delta {
+  color: #afff9b;
+}
+
+.additional-result-text {
+  font-weight: bold;
+  letter-spacing: 2px;
+}

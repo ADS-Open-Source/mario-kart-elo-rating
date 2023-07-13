@@ -1,0 +1,75 @@
+.user-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 1em 0;
+}
+
+.user-icon {
+  height: 6em;
+  width: 6em;
+}
+
+.user-details {
+  text-align: center;
+}
+
+.user-details p {
+  margin: 0.5em;
+}
+
+.table-container {
+  margin: auto;
+
+  background-color: #6096FF26;
+}
+
+.table-container--desktop {
+  width: 50%;
+}
+
+.table {
+  width: 100%;
+}
+
+.mat-mdc-table {
+  font-family: 'Orbitron', sans-serif;
+
+  background: inherit;
+}
+
+.mat-mdc-cell {
+  font-size: 1.5em;
+  color: inherit;
+}
+
+.mat-mdc-header-cell {
+  font-size: 1.25em;
+  color: inherit;
+
+  border-bottom: 2px solid white;
+  border-radius: 0;
+}
+
+.table__caption {
+  font-size: 3em;
+
+  margin: 5px 0 10px 0;
+  padding: 10px;
+
+  animation: up-down--animation 5s ease-in-out infinite;
+}
+
+.table__icon {
+  height: 1em;
+  width: 1em;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.resend-button {
+  background-color: #00ab00;
+}

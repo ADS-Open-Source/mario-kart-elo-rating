@@ -1,0 +1,155 @@
+/* You can add global styles to this file, and also import other style files */
+
+html {
+  background: url("assets/mario-kart.png") no-repeat center bottom 15% fixed,
+  url('assets/mario-background.webp') repeat-x left bottom fixed,
+  #6096fe;
+
+  -webkit-background-size: auto, auto;
+  -moz-background-size: auto, auto;
+  -o-background-size: auto, auto;
+  background-size: 25vh, 200vh;
+
+  animation: scroll-x 30s linear infinite;
+}
+
+body {
+  margin: 0 5px;
+  color: #FFFFFF;
+  font-family: 'Orbitron', sans-serif !important;
+
+}
+
+@font-face {
+  font-family: mario;
+  src: url("assets/fonts/mario-kart.ttf") format("truetype");
+}
+
+/* Material overwrite */
+.mat-form-field-underline {
+  display: none;
+}
+
+.mat-form-field-label-wrapper {
+  font-family: 'Orbitron', sans-serif;
+  left: 10px;
+}
+
+.mat-mdc-input-element {
+  color: #000000;
+}
+
+.mdc-text-field {
+  background: transparent !important;
+}
+
+.mdc-line-ripple {
+  display: none !important;
+}
+
+.mat-form-field-wrapper {
+  padding: 5px;
+}
+
+.mat-select-value {
+  color: #FFFFFF;
+}
+
+.mat-select-arrow {
+  color: white;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  margin-bottom: -1.25em;
+}
+
+/* Scrollbar*/
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #fcc636 #6096fe;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #6096fe;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #fcc636;
+  border-radius: 10px;
+  border: 3px solid #6096fe;
+}
+
+/*ANIMATIONS*/
+@keyframes scroll-x {
+  0% {
+    background-position: bottom 15% center, 0 bottom;
+  }
+  20% {
+    background-position: bottom 14% center, -2438px bottom;
+  }
+  40% {
+    background-position: bottom 16% center, -4876px bottom;
+  }
+  60% {
+    background-position: bottom 14% center, -7314px bottom;
+  }
+  80% {
+    background-position: bottom 16% center, -9752px bottom;
+  }
+  100% {
+    background-position: bottom 15% center, -12190px bottom;
+  }
+}
+
+@keyframes up-down--animation {
+  0% {
+    transform: translateY(5px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes left-right--animation {
+  0% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes cloud--animation {
+  0% {
+    transform: scale(1.5) translateY(3px);
+  }
+  50% {
+    transform: scale(1.5) translateY(-3px);
+  }
+  100% {
+    transform: scale(1.5) translateY(3px);
+  }
+}
+
+@keyframes coin--animation {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-15px) rotateY(1080deg);
+    opacity: 0;
+  }
+
+}
