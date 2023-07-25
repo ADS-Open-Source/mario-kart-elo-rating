@@ -8,6 +8,7 @@ import {ScreenSizeService} from "../services/screen-size-service.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {ChangeIconDialogComponent} from "./change-icon-dialog/change-icon-dialog.component";
+import {Game} from "../models/Game";
 
 @Component({
   selector: 'app-players',
@@ -18,6 +19,7 @@ export class PlayersComponent implements OnInit {
 
   playersSub!: Subscription;
   allPlayers: Player[] = [];
+  allGames: Game[] = [];
   dataSource: MatTableDataSource<Player> = new MatTableDataSource<Player>();
   displayedColumns: string[] = ['username', 'resend'];
   isProcessing: boolean = false;
@@ -40,6 +42,10 @@ export class PlayersComponent implements OnInit {
       .subscribe((user: Player) => {
         this.currentUser = user;
         this.playerIcon = !user.icon ? this.playerIcon : user.icon;
+        this.mlekoService.getGamesByPlayer(this.secretService.secret, null)
+          .subscribe(games => {
+            this.allGames = games;
+          })
       })
   }
 

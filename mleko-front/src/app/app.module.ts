@@ -32,6 +32,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { DeleteGameDialogComponent } from './last-results/delete-game-dialog/delete-game-dialog.component';
 import { ChangeIconDialogComponent } from './players/change-icon-dialog/change-icon-dialog.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { PlayerGamesChartComponent } from './players/player-games-chart/player-games-chart.component';
+import {LineChartModule, NgxChartsModule} from "@swimlane/ngx-charts";
 
 
 const appRoutes: Routes = [
@@ -58,7 +60,8 @@ const appRoutes: Routes = [
     PlayersComponent,
     GamesDialogComponent,
     DeleteGameDialogComponent,
-    ChangeIconDialogComponent
+    ChangeIconDialogComponent,
+    PlayerGamesChartComponent
   ],
     imports: [
         BrowserModule,
@@ -84,6 +87,8 @@ const appRoutes: Routes = [
         NgxMatSelectSearchModule,
         MatDialogModule,
         MatTooltipModule,
+        LineChartModule,
+        NgxChartsModule,
         NgOptimizedImage,
     ],
   providers: [
