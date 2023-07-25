@@ -43,6 +43,7 @@ export class ChangeIconDialogComponent {
           this.isProcessing = false;
           this._snackBar.open('Icon changed successfully!', 'Close', {duration: 3000})
           this.secretService.updateCurrentUser();
+          this.mlekoService.loadPlayers();
         },
         error: (error) => {
           console.error(error)

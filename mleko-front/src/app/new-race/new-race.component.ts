@@ -39,7 +39,10 @@ export class NewRaceComponent implements OnInit, OnDestroy {
   updateAllPlayers(): void {
     this.playersSub = this.mlekoService.$playersStore
       .subscribe((players: Player[]) => {
-        this.players = players;
+        this.players = players.map(player => ({
+          ...player,
+          icon: player.icon ?? MlekoService.getSeededImagePath(player, 'assets/player-icons', 72)
+        }));
 
         // skip initial selection
         // load initial bank list

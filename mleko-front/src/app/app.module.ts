@@ -13,7 +13,7 @@ import {HomepageComponent} from './homepage/homepage.component';
 import {NewRaceComponent} from './new-race/new-race.component';
 import {RankingComponent} from './ranking/ranking.component';
 import {LastResultsComponent} from './last-results/last-results.component';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -89,6 +89,7 @@ const appRoutes: Routes = [
         MatTooltipModule,
         LineChartModule,
         NgxChartsModule,
+        NgOptimizedImage,
     ],
   providers: [
     DatePipe,

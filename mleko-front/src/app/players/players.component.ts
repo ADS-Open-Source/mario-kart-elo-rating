@@ -52,8 +52,7 @@ export class PlayersComponent implements OnInit {
   updateAllPlayers(): void {
     this.playersSub = this.mlekoService.$playersStore
       .subscribe((players: Player[]) => {
-        players.sort((a, b) => a.name.localeCompare(b.name));
-        this.allPlayers = players;
+        this.allPlayers = [...players].sort((a, b) => a.name.localeCompare(b.name));
         this.dataSource.data = this.allPlayers;
       });
   }
