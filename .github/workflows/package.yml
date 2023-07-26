@@ -1,0 +1,47 @@
+name: Generate Artifacts
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+            
+      - name: Install and build frontend
+        working-directory: ./mleko-front
+        run: |
+          npm install --legacy-peer-deps
+          npm run build
+        
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: maven
+          
+      - name: Validate, build and run backend tests
+        run: mvn --batch-mode --update-snapshots verify
+        
+      - name: set up mvn cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}--m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+        
+      - name: Have GitHub Actions package maven project
+        run: |
+          mvn -B package --file pom.xml
+          mkdir staging && cp target/*spring-boot.jar staging
+        
+      - name: persist data as artificats
+        uses: actions/upload-artifact@v2
+        with:
+          name: github-actions-artifact
+          path: staging

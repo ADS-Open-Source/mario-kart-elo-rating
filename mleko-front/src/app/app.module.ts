@@ -13,7 +13,7 @@ import {HomepageComponent} from './homepage/homepage.component';
 import {NewRaceComponent} from './new-race/new-race.component';
 import {RankingComponent} from './ranking/ranking.component';
 import {LastResultsComponent} from './last-results/last-results.component';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -32,6 +32,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { DeleteGameDialogComponent } from './last-results/delete-game-dialog/delete-game-dialog.component';
 import { ChangeIconDialogComponent } from './players/change-icon-dialog/change-icon-dialog.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { PlayerGamesChartComponent } from './players/player-games-chart/player-games-chart.component';
+import {LineChartModule, NgxChartsModule} from "@swimlane/ngx-charts";
 
 
 const appRoutes: Routes = [
@@ -58,33 +60,37 @@ const appRoutes: Routes = [
     PlayersComponent,
     GamesDialogComponent,
     DeleteGameDialogComponent,
-    ChangeIconDialogComponent
+    ChangeIconDialogComponent,
+    PlayerGamesChartComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatTableModule,
-    MatListModule,
-    MatPaginatorModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    RouterModule.forRoot(
-      appRoutes,
-    ),
-    MatFormFieldModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatInputModule,
-    MatMenuModule,
-    ReactiveFormsModule,
-    MatSlideToggleModule,
-    FormsModule,
-    NgxMatSelectSearchModule,
-    MatDialogModule,
-    MatTooltipModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatTableModule,
+        MatListModule,
+        MatPaginatorModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        RouterModule.forRoot(
+            appRoutes,
+        ),
+        MatFormFieldModule,
+        MatSelectModule,
+        MatSnackBarModule,
+        MatInputModule,
+        MatMenuModule,
+        ReactiveFormsModule,
+        MatSlideToggleModule,
+        FormsModule,
+        NgxMatSelectSearchModule,
+        MatDialogModule,
+        MatTooltipModule,
+        LineChartModule,
+        NgxChartsModule,
+        NgOptimizedImage,
+    ],
   providers: [
     DatePipe,
     {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}

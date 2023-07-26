@@ -13,7 +13,10 @@
                                  noEntriesFoundLabel="'no matching player found'"></ngx-mat-select-search>
         </mat-option>
         <mat-option *ngFor="let player of filteredPlayersMulti | async" [value]="player">
-          {{player.name}}
+          <span class="player__option">
+            <img ngSrc="{{player.icon}}" alt="player-icon" height="30" width="30">
+            {{player.name}}
+          </span>
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -27,7 +30,10 @@
                                  noEntriesFoundLabel="'no matching player found'"></ngx-mat-select-search>
         </mat-option>
         <mat-option *ngFor="let player of filteredPlayersMulti | async" [value]="player">
-          {{player.name}}
+          <span class="player__option">
+            <img ngSrc="{{player.icon}}" alt="player-icon" height="30" width="30">
+            {{player.name}}
+          </span>
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -41,7 +47,10 @@
                                  noEntriesFoundLabel="'no matching player found'"></ngx-mat-select-search>
         </mat-option>
         <mat-option *ngFor="let player of filteredPlayersMulti | async" [value]="player">
-          {{player.name}}
+          <span class="player__option">
+            <img ngSrc="{{player.icon}}" alt="player-icon" height="30" width="30">
+            {{player.name}}
+          </span>
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -55,7 +64,10 @@
                                  noEntriesFoundLabel="'no matching player found'"></ngx-mat-select-search>
         </mat-option>
         <mat-option *ngFor="let player of filteredPlayersMulti | async" [value]="player">
-          {{player.name}}
+          <span class="player__option">
+            <img ngSrc="{{player.icon}}" alt="player-icon" height="30" width="30">
+            {{player.name}}
+          </span>
         </mat-option>
       </mat-select>
     </mat-form-field>

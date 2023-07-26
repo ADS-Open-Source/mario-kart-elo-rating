@@ -21,6 +21,7 @@ export class RankingComponent implements OnInit, OnDestroy {
 
   playersSub!: Subscription;
   players: Array<Player> = [];
+  currentUser: Player | null = null;
   displayedColumns: string[] = ['position', 'icon', 'username', 'elo'];
   dataSource: MatTableDataSource<Player> = new MatTableDataSource<Player>();
   showOnlyChads: boolean = true;
@@ -47,7 +48,10 @@ export class RankingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.secretService.checkIfActivated();
+    this.secretService.$currentUserStore
+      .subscribe((user: Player) => {
+        this.currentUser = user;
+      });
     this.playersSub = this.mlekoService.$playersStore
       .subscribe((players: Player[]) => {
         this.players = players;
@@ -68,7 +72,7 @@ export class RankingComponent implements OnInit, OnDestroy {
   }
 
   openGameDetailsDialog(player: Player): void {
-    if (this.secretService.isActivated) {
+    if (this.currentUser?.activated) {
       this.mlekoService.getGamesByPlayer(this.secretService.secret, player.name)
         .subscribe({
           next: (res: Game[]) => {

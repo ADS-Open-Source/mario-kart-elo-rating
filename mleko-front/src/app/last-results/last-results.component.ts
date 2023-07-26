@@ -16,7 +16,7 @@ import {DeleteGameDialogComponent} from "./delete-game-dialog/delete-game-dialog
 export class LastResultsComponent implements OnInit {
 
   // TODO dynamically adjust that
-  displayedColumns: string[] = this.screenService.isDesktop ? ['date', 'result', 'reportedBy'] : ['date', 'result'];
+  displayedColumns: string[] = ['date', 'result'];
   dataSource!: MatTableDataSource<ProcessedGame>;
 
   private isActivated: boolean = false;
@@ -32,6 +32,7 @@ export class LastResultsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.displayedColumns = this.screenService.isDesktop ? ['date', 'result', 'reportedBy'] : ['date', 'result'];
     this.mlekoService.getGames(2147483647).subscribe((games: Game[]) => {
       let processedGames = Game.processGames(games)
       this.dataSource = new MatTableDataSource<ProcessedGame>(processedGames);
