@@ -2,8 +2,8 @@ name: Generate Artifacts
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
       - name: Validate, build and run backend tests
         run: mvn --batch-mode --update-snapshots verify
         
-      - name: set up mvn cache
+      - name: Set up mvn cache
         uses: actions/cache@v2
         with:
           path: ~/.m2
@@ -40,8 +40,8 @@ jobs:
           mvn -B package --file pom.xml
           mkdir staging && cp target/*spring-boot.jar staging
         
-      - name: persist data as artificats
+      - name: Persist data as artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: github-actions-artifact
+          name: ${{ github.ref }}
           path: staging
