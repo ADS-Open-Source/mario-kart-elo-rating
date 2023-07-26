@@ -58,7 +58,7 @@ export class PlayerGamesChartComponent implements OnInit {
       }
     })
     userGames.forEach(userGame => {
-      const date: string = userGame.gameDate.toLocaleDateString();
+      const date: string = userGame.gameDate.toDateString();
       if (!groupedData[date]) {
         groupedData[date] = [];
       }
