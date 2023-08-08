@@ -9,6 +9,11 @@
   </div>
 </div>
 
+<div class="chart-container" *ngIf="allGames.length" [ngClass]="{ 'chart-container--desktop': screenService.isDesktop }">
+  <app-player-games-chart [games]="allGames" [username]="currentUser ? currentUser.name : ''">
+  </app-player-games-chart>
+</div>
+
 <div class="table-container" [ngClass]="{ 'table-container--desktop': screenService.isDesktop }">
   <!--    players table    -->
   <table mat-table [dataSource]="dataSource" class="table">

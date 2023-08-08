@@ -19,6 +19,14 @@
   margin: 0.5em;
 }
 
+.chart-container{
+  margin: 0 auto;
+}
+
+.chart-container--desktop {
+  width: 75%;
+}
+
 .table-container {
   margin: auto;
 
