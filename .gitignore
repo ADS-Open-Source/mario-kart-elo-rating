@@ -43,6 +43,7 @@ persistentData/
 
 ### Docker Related ###
 mleko-env-vars.env
+mkelo.env
 /mkeloDataTest.sql
 /mkeloData.sql
 /mleko-front/node_modules/
