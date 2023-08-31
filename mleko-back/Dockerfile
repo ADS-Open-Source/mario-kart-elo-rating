@@ -7,7 +7,7 @@ RUN addgroup -S mkelo && adduser -S mkelo -G mkelo
 RUN chown -R mkelo /usr/src/app
 USER mkelo
 
-ARG JAR_FILE=./mleko-back/target/mkelo-?.?.?-spring-boot.jar
+ARG JAR_FILE=./target/mkelo-?.?.?-spring-boot.jar
 
 COPY --chown=mkelo ${JAR_FILE:?error} /usr/src/app/mkelo.jar
 
