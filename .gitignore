@@ -46,6 +46,8 @@ mleko-env-vars.env
 mkelo.env
 /mkeloDataTest.sql
 /mkeloData.sql
+/mleko-back/mkeloData.sql
+/mleko-back/mkeloDataTest.sql
 /mleko-front/node_modules/
 
 #mleko front stuff
