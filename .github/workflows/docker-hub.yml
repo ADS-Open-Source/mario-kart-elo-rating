@@ -30,7 +30,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Extract metadata (tags, labels) for Backend
-        id: meta
+        id: meta-backend
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_BACKEND }}
@@ -40,11 +40,11 @@ jobs:
         with:
           context: "{{defaultContext}}:mleko-back"
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta-backend.outputs.tags }}
+          labels: ${{ steps.meta-backend.outputs.labels }}
 
       - name: Extract metadata (tags, labels) for Frontend
-        id: meta
+        id: meta-frontend
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_FRONTEND }}
@@ -54,5 +54,5 @@ jobs:
         with:
           context: "{{defaultContext}}:mleko-front"
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta-frontend.outputs.tags }}
+          labels: ${{ steps.meta-frontend.outputs.labels }}
